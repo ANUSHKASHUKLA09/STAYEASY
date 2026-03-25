@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>StayEasy — Student Accommodation</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'DM Sans',sans-serif;background:#f7f5f0;color:#111;min-height:100vh;}
+.page{display:none!important;}
+.page.ACTIVE{display:block!important;}
+/* NAV */
+.topnav{background:#fff;border-bottom:1px solid #e5e2da;padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.logo{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#2563eb;cursor:pointer;border:none;background:none;}
+.navr{display:flex;gap:10px;align-items:center;}
+/* BUTTONS */
+button{cursor:pointer;font-family:'DM Sans',sans-serif;border:none;}
+.btn{padding:10px 22px;border-radius:100px;font-size:.88rem;font-weight:600;transition:.15s;display:inline-block;}
+.btn-dark{background:#111;color:#fff;}
+.btn-dark:hover{background:#2563eb;}
+.btn-out{background:transparent;color:#111;border:1.5px solid #ccc;}
+.btn-out:hover{border-color:#111;}
+.btn-blue{background:#2563eb;color:#fff;}
+.btn-blue:hover{background:#1d4ed8;}
+.btn-green{background:#059669;color:#fff;}
+.btn-green:hover{background:#047857;}
+.btn-purple{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;}
+.btn-grad{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;}
+.btn-w{width:100%;padding:13px;border-radius:12px;font-size:.95rem;font-weight:600;}
+.btn-sm{padding:7px 14px;font-size:.82rem;border-radius:8px;}
+/* HERO */
+.hero{padding:80px 5% 60px;background:linear-gradient(135deg,#eff6ff 0%,#f5f3ff 50%,#f7f5f0 100%);}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid #e5e2da;border-radius:100px;padding:5px 14px;font-size:.78rem;font-weight:600;color:#2563eb;margin-bottom:18px;}
+.hero-badge::before{content:'';width:7px;height:7px;background:#059669;border-radius:50%;}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(2.2rem,5vw,3.8rem);font-weight:800;line-height:1.07;margin-bottom:16px;}
+.hero h1 span{color:#2563eb;}
+.hero p{font-size:1rem;color:#6b7280;line-height:1.7;margin-bottom:28px;max-width:540px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:44px;}
+.hero-stats{display:flex;gap:32px;padding-top:28px;border-top:1px solid #e5e2da;}
+.hs .n{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;}
+.hs .l{font-size:.8rem;color:#6b7280;}
+/* SECTIONS */
+.sec{padding:64px 5%;}
+.sec-badge{display:inline-block;background:rgba(37,99,235,.1);color:#2563eb;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:100px;margin-bottom:10px;letter-spacing:.05em;text-transform:uppercase;}
+.sec h2{font-family:'Syne',sans-serif;font-size:clamp(1.6rem,3.5vw,2.3rem);font-weight:800;margin-bottom:8px;}
+.sec-sub{color:#6b7280;font-size:.92rem;max-width:480px;margin:0 auto 36px;}
+.sec-head{text-align:center;}
+/* FILTER */
+.fbar{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap;align-items:center;}
+.fbtn{padding:7px 16px;border-radius:100px;border:1.5px solid #e5e2da;background:#fff;font-size:.83rem;font-weight:500;transition:.15s;}
+.fbtn:hover,.fbtn.on{background:#111;color:#fff;border-color:#111;}
+.fsearch{flex:1;max-width:260px;padding:9px 14px;border:1.5px solid #e5e2da;border-radius:100px;font-size:.86rem;outline:none;font-family:'DM Sans',sans-serif;}
+.fsearch:focus{border-color:#2563eb;}
+/* ROOM CARDS */
+.rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;}
+.rcard{background:#fff;border:1px solid #e5e2da;border-radius:16px;overflow:hidden;transition:.25s;}
+.rcard:hover{transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.07);}
+.rimg{height:150px;display:flex;align-items:center;justify-content:center;font-size:2.8rem;background:linear-gradient(135deg,#dbeafe,#ede9fe);position:relative;}
+.rbadge{position:absolute;top:10px;right:10px;padding:3px 10px;border-radius:100px;font-size:.7rem;font-weight:700;}
+.ba{background:rgba(5,150,105,.12);color:#059669;}
+.bo{background:rgba(220,38,38,.12);color:#dc2626;}
+.rbody{padding:16px;}
+.rtitle{font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;margin-bottom:5px;}
+.rmeta{font-size:.78rem;color:#6b7280;margin-bottom:8px;}
+.ramen{font-size:.72rem;color:#6b7280;margin-bottom:8px;}
+.rprice{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;color:#2563eb;}
+.rprice span{font-size:.76rem;font-weight:400;color:#6b7280;font-family:'DM Sans',sans-serif;}
+.rapply{width:100%;padding:9px;border-radius:9px;background:#111;color:#fff;font-size:.84rem;font-weight:600;margin-top:10px;transition:.15s;}
+.rapply:hover{background:#2563eb;}
+.rapply:disabled{background:#e5e7eb;color:#9ca3af;cursor:not-allowed;}
+/* NOTICES */
+.nwrap{background:#fff;border-radius:16px;padding:20px;border:1px solid #e5e2da;}
+.nitem{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid #f3f4f6;}
+.nitem:last-child{border-bottom:none;}
+.ndot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.ntitle{font-weight:600;font-size:.88rem;margin-bottom:2px;}
+.ncontent{font-size:.8rem;color:#6b7280;line-height:1.5;}
+.ndate{font-size:.7rem;color:#9ca3af;margin-top:2px;}
+/* AUTH */
+.auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(135deg,#eff6ff,#f5f3ff,#f7f5f0);}
+.auth-card{background:#fff;border:1px solid #e5e2da;border-radius:20px;padding:36px;width:100%;max-width:420px;box-shadow:0 12px 40px rgba(0,0,0,.06);}
+.auth-logo{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#2563eb;display:block;margin-bottom:20px;}
+.auth-title{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:4px;}
+.auth-sub{color:#6b7280;font-size:.86rem;margin-bottom:20px;}
+.auth-switch{text-align:center;margin-top:14px;font-size:.84rem;color:#6b7280;}
+.auth-switch a{color:#2563eb;cursor:pointer;font-weight:600;}
+.auth-back{text-align:center;margin-top:8px;font-size:.8rem;}
+.auth-back a{color:#6b7280;cursor:pointer;}
+/* FORMS */
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.fg{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;}
+.fg label{font-size:.78rem;font-weight:600;color:#374151;}
+.fg input,.fg select,.fg textarea{padding:10px 12px;border:1.5px solid #e5e2da;border-radius:9px;font-size:.88rem;outline:none;font-family:'DM Sans',sans-serif;background:#fff;color:#111;transition:.15s;width:100%;}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#2563eb;box-shadow:0 0 0 3px rgba(37,99,235,.08);}
+.fg textarea{resize:vertical;min-height:76px;}
+/* STUDENT DASH */
+.snav{background:#fff;border-bottom:1px solid #e5e2da;padding:0 5%;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.snav-logo{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:#2563eb;}
+.snav-r{display:flex;align-items:center;gap:10px;}
+.avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#2563eb,#7c3aed);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.86rem;}
+.sbody{max-width:1080px;margin:0 auto;padding:28px 5% 40px;}
+.stitle{font-family:'Syne',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:3px;}
+.ssub{color:#6b7280;font-size:.86rem;margin-bottom:18px;}
+/* STATUS */
+.sban{border-radius:12px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;gap:12px;}
+.sban-ok{background:rgba(5,150,105,.06);border:1.5px solid rgba(5,150,105,.2);}
+.sban-wait{background:rgba(217,119,6,.06);border:1.5px solid rgba(217,119,6,.2);}
+.sban-no{background:rgba(220,38,38,.06);border:1.5px solid rgba(220,38,38,.2);}
+.sban-none{background:rgba(37,99,235,.06);border:1.5px solid rgba(37,99,235,.2);}
+.sban-icon{font-size:1.6rem;}
+.sban-title{font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;}
+.sban-sub{font-size:.8rem;color:#6b7280;margin-top:2px;}
+/* STAT GRID */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.sstat{background:#fff;border:1px solid #e5e2da;border-radius:12px;padding:14px;}
+.sstat-l{font-size:.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:5px;}
+.sstat-v{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;}
+/* TABS */
+.tabs{display:flex;gap:3px;background:#f3f4f6;padding:3px;border-radius:11px;margin-bottom:18px;overflow-x:auto;width:fit-content;max-width:100%;}
+.tab{padding:8px 14px;border-radius:8px;font-size:.82rem;font-weight:600;color:#6b7280;transition:.15s;white-space:nowrap;background:none;}
+.tab:hover{color:#111;}
+.tab.on{background:#fff;color:#111;box-shadow:0 1px 4px rgba(0,0,0,.08);}
+.tab.ai-t{color:#2563eb;}
+.tab.ai-t.on{background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;}
+.tc{display:none;}
+.tc.on{display:block;}
+/* CARDS */
+.card{background:#fff;border:1px solid #e5e2da;border-radius:14px;padding:20px;margin-bottom:16px;}
+.card-t{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:7px;}
+.cdot{width:7px;height:7px;border-radius:50%;background:#2563eb;}
+/* TABLES */
+.twrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;font-size:.84rem;}
+thead tr{background:#f9fafb;}
+th{padding:10px 12px;text-align:left;font-size:.74rem;font-weight:700;color:#6b7280;text-transform:uppercase;letter-spacing:.04em;}
+td{padding:11px 12px;border-bottom:1px solid #f3f4f6;color:#111;}
+tbody tr:last-child td{border-bottom:none;}
+tbody tr:hover{background:#fafafa;}
+/* BADGES */
+.b{display:inline-flex;align-items:center;padding:3px 9px;border-radius:100px;font-size:.7rem;font-weight:700;}
+.bg{background:rgba(5,150,105,.1);color:#059669;}
+.br{background:rgba(220,38,38,.1);color:#dc2626;}
+.by{background:rgba(217,119,6,.1);color:#d97706;}
+.bb{background:rgba(37,99,235,.1);color:#2563eb;}
+.ph::before{content:'●';color:#dc2626;margin-right:4px;}
+.pm::before{content:'●';color:#d97706;margin-right:4px;}
+.pl::before{content:'●';color:#059669;margin-right:4px;}
+/* MODAL */
+.mbg{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:500;display:none;align-items:center;justify-content:center;padding:16px;}
+.mbg.open{display:flex;}
+.mbox{background:#fff;border-radius:18px;padding:26px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;animation:sup .25s ease;}
+@keyframes sup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.mhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
+.mtitle{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;}
+.mclose{background:#f3f4f6;border:none;border-radius:8px;padding:5px 9px;font-size:.95rem;cursor:pointer;}
+/* TOAST */
+.tbox{position:fixed;top:76px;right:16px;z-index:9999;display:flex;flex-direction:column;gap:7px;}
+.toast{background:#fff;border:1px solid #e5e2da;border-radius:10px;padding:12px 14px;font-size:.83rem;display:flex;align-items:center;gap:7px;box-shadow:0 4px 20px rgba(0,0,0,.09);animation:tin .25s ease;min-width:200px;}
+@keyframes tin{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.tdot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.ts .tdot{background:#059669;}
+.te .tdot{background:#dc2626;}
+.ti .tdot{background:#2563eb;}
+/* ADMIN */
+.awrap{display:flex;min-height:100vh;}
+.aside{position:fixed;left:0;top:0;width:210px;height:100vh;background:#111118;display:flex;flex-direction:column;z-index:100;padding:20px 0;}
+.alogo{padding:0 16px 18px;border-bottom:1px solid rgba(255,255,255,.08);font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:#fff;}
+.anav{margin-top:10px;flex:1;}
+.ani{display:flex;align-items:center;gap:9px;padding:9px 16px;color:rgba(255,255,255,.45);font-size:.84rem;transition:.15s;border-left:3px solid transparent;width:100%;background:none;text-align:left;font-family:'DM Sans',sans-serif;}
+.ani:hover{color:#fff;background:rgba(255,255,255,.05);}
+.ani.on{color:#fff;border-left:3px solid #2563eb;background:rgba(37,99,235,.1);}
+.amain{margin-left:210px;flex:1;padding:26px 30px;background:#f7f5f0;min-height:100vh;}
+.ap{display:none;}
+.ap.on{display:block;animation:fdin .2s ease;}
+@keyframes fdin{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.at{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:3px;}
+.as{color:#6b7280;font-size:.84rem;margin-bottom:18px;}
+.ac{background:#fff;border:1px solid #e5e2da;border-radius:12px;padding:18px;margin-bottom:16px;}
+.act{font-family:'Syne',sans-serif;font-size:.88rem;font-weight:700;margin-bottom:14px;}
+.asgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px;}
+.astat{background:#fff;border:1px solid #e5e2da;border-radius:11px;padding:14px;}
+.asl{font-size:.7rem;color:#6b7280;text-transform:uppercase;letter-spacing:.05em;font-weight:600;margin-bottom:5px;}
+.asv{font-family:'Syne',sans-serif;font-size:1.6rem;font-weight:800;}
+.fg2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.fg3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;}
+.factions{display:flex;gap:8px;margin-top:8px;}
+.abtn{display:inline-flex;align-items:center;gap:5px;padding:8px 16px;border-radius:9px;font-size:.82rem;font-weight:600;transition:.15s;font-family:'DM Sans',sans-serif;}
+.abtn-p{background:#111;color:#fff;}
+.abtn-p:hover{background:#2563eb;}
+.abtn-s{background:#f3f4f6;color:#111;}
+.abtn-s:hover{background:#e5e7eb;}
+.abtn-ok{background:rgba(5,150,105,.1);color:#059669;border:1px solid rgba(5,150,105,.2);}
+.abtn-ok:hover{background:rgba(5,150,105,.18);}
+.abtn-del{background:rgba(220,38,38,.1);color:#dc2626;border:1px solid rgba(220,38,38,.2);}
+.abtn-del:hover{background:rgba(220,38,38,.18);}
+.abtn-sm{padding:5px 11px;font-size:.76rem;border-radius:7px;}
+.ibtn{background:#f3f4f6;border:1px solid #e5e2da;border-radius:7px;color:#6b7280;padding:5px 8px;font-size:.82rem;cursor:pointer;transition:.15s;}
+.ibtn:hover{color:#111;border-color:#111;}
+.ibtn.del:hover{color:#dc2626;border-color:#dc2626;}
+.agrp{display:flex;gap:4px;}
+.rgrid-a{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+.rcard-a{background:#fff;border:1.5px solid #e5e2da;border-radius:12px;padding:14px;transition:.2s;}
+.rcard-a:hover{border-color:#2563eb;}
+.tbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;gap:8px;flex-wrap:wrap;}
+.sbar{display:flex;align-items:center;gap:7px;background:#fff;border:1.5px solid #e5e2da;border-radius:100px;padding:0 12px;flex:1;max-width:240px;}
+.sbar input{background:transparent;border:none;outline:none;padding:8px 0;font-size:.84rem;width:100%;font-family:'DM Sans',sans-serif;}
+.sel{padding:7px 10px;border:1.5px solid #e5e2da;border-radius:8px;font-family:'DM Sans',sans-serif;font-size:.82rem;background:#fff;outline:none;}
+/* ADMIN LOGIN */
+.alwrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#111118;padding:16px;}
+.alcard{background:#1a1a24;border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:32px;width:100%;max-width:340px;}
+.alt{font-family:'Syne',sans-serif;color:#fff;font-size:1.2rem;font-weight:800;margin-bottom:4px;}
+.als{color:rgba(255,255,255,.4);font-size:.82rem;margin-bottom:20px;}
+.all{display:block;font-size:.76rem;color:rgba(255,255,255,.5);font-weight:600;margin-bottom:4px;}
+.ali{width:100%;padding:10px 12px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:9px;color:#fff;font-size:.88rem;outline:none;font-family:'DM Sans',sans-serif;transition:.15s;}
+.ali:focus{border-color:#2563eb;}
+.alb{width:100%;padding:11px;background:#2563eb;color:#fff;border:none;border-radius:9px;font-size:.9rem;font-weight:700;margin-top:12px;font-family:'DM Sans',sans-serif;cursor:pointer;transition:.15s;}
+.alb:hover{background:#1d4ed8;}
+/* AI */
+.aic{border-radius:14px;padding:20px;margin-bottom:16px;}
+.aic-r{background:linear-gradient(135deg,rgba(37,99,235,.04),rgba(124,58,237,.04));border:1.5px solid rgba(37,99,235,.18);}
+.aic-p{background:linear-gradient(135deg,rgba(5,150,105,.04),rgba(37,99,235,.04));border:1.5px solid rgba(5,150,105,.18);}
+.aic-m{background:linear-gradient(135deg,rgba(124,58,237,.04),rgba(220,38,38,.02));border:1.5px solid rgba(124,58,237,.18);}
+.ait{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:3px;}
+.ais{font-size:.81rem;color:#6b7280;margin-bottom:14px;}
+/* EMPTY */
+.empty{text-align:center;padding:32px;color:#9ca3af;}
+.ei{font-size:2rem;margin-bottom:7px;opacity:.35;}
+footer{text-align:center;padding:24px;color:#9ca3af;font-size:.82rem;border-top:1px solid #e5e2da;}
+@media(max-width:768px){
+  .sgrid,.asgrid,.fg2,.fg3,.frow{grid-template-columns:1fr;}
+  .aside{width:50px;}.ani span,.alogo span{display:none;}.amain{margin-left:50px;padding:18px 12px;}
+}
+::-webkit-scrollbar{width:5px;height:5px;}
+::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:3px;}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="page ACTIVE" id="PG-home">
+  <nav class="topnav">
+    <button class="logo" onclick="GO('home')">StayEasy</button>
+    <div class="navr">
+      <button class="btn btn-out" onclick="GO('login')">Sign In</button>
+      <button class="btn btn-dark" onclick="GO('register')">Register</button>
+    </div>
+  </nav>
+  <div class="hero">
+    <div class="hero-badge">Student Accommodation Portal</div>
+    <h1>Your Perfect<br/><span>Student Stay</span><br/>Starts Here</h1>
+    <p>Browse available rooms, apply instantly, and manage your accommodation — all in one place.</p>
+    <div class="hero-btns">
+      <button class="btn btn-dark" style="padding:12px 26px" onclick="document.getElementById('rooms-sec').scrollIntoView({behavior:'smooth'})">Browse Rooms</button>
+      <button class="btn btn-out" style="padding:12px 26px" onclick="GO('register')">Get Started →</button>
+    </div>
+    <div class="hero-stats">
+      <div class="hs"><div class="n" id="h-total">—</div><div class="l">Total Rooms</div></div>
+      <div class="hs"><div class="n" id="h-avail">—</div><div class="l">Available Now</div></div>
+      <div class="hs"><div class="n" id="h-studs">—</div><div class="l">Students Housed</div></div>
+    </div>
+  </div>
+  <div class="sec" id="rooms-sec">
+    <div class="sec-head"><div class="sec-badge">Available Rooms</div><h2>Find Your Perfect Room</h2><p class="sec-sub">Browse all rooms and apply directly.</p></div>
+    <div class="fbar">
+      <input class="fsearch" placeholder="🔍 Search rooms..." id="hsearch" oninput="renderHRooms()"/>
+      <button class="fbtn on" onclick="setHF('',this)">All</button>
+      <button class="fbtn" onclick="setHF('Single',this)">Single</button>
+      <button class="fbtn" onclick="setHF('Double',this)">Double</button>
+      <button class="fbtn" onclick="setHF('Triple',this)">Triple</button>
+      <button class="fbtn" onclick="setHF('Suite',this)">Suite</button>
+    </div>
+    <div class="rgrid" id="hrooms"><div class="empty"><div class="ei">🛏️</div>Loading rooms...</div></div>
+  </div>
+  <div class="sec" id="notices-sec" style="padding-top:0">
+    <div class="sec-head"><div class="sec-badge">Notice Board</div><h2>Latest Announcements</h2></div>
+    <div class="nwrap" id="hnotices"><div class="empty"><div class="ei">📢</div>Loading...</div></div>
+  </div>
+  <footer>© 2024 StayEasy Student Accommodation</footer>
+</div>
+
+<!-- REGISTER -->
+<div class="page" id="PG-register">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <span class="auth-logo">StayEasy</span>
+      <div class="auth-title">Create Account</div>
+      <div class="auth-sub">Register to browse and apply for rooms</div>
+      <div class="frow">
+        <div class="fg"><label>Full Name *</label><input id="rn" placeholder="Your full name"/></div>
+        <div class="fg"><label>Student ID *</label><input id="rs" placeholder="e.g. STU001"/></div>
+      </div>
+      <div class="fg"><label>Email *</label><input id="re" type="email" placeholder="you@email.com"/></div>
+      <div class="frow">
+        <div class="fg"><label>Phone</label><input id="rph" placeholder="+91 XXXXX"/></div>
+        <div class="fg"><label>Year</label><select id="ry"><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select></div>
+      </div>
+      <div class="fg"><label>Program *</label><input id="rpr" placeholder="e.g. B.Tech CSE"/></div>
+      <div class="fg"><label>Password *</label><input id="rpw" type="password" placeholder="Min 6 characters"/></div>
+      <button class="btn btn-dark btn-w" onclick="doReg()">Create Account</button>
+      <div class="auth-switch">Already have an account? <a onclick="GO('login')">Sign In</a></div>
+      <div class="auth-back"><a onclick="GO('home')">← Back to Home</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="page" id="PG-login">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <span class="auth-logo">StayEasy</span>
+      <div class="auth-title">Welcome Back</div>
+      <div class="auth-sub">Sign in to your student account</div>
+      <div class="fg"><label>Student ID *</label><input id="ls" placeholder="e.g. STU001"/></div>
+      <div class="fg"><label>Password *</label><input id="lp" type="password" placeholder="Your password" onkeydown="if(event.key==='Enter')doLogin()"/></div>
+      <button class="btn btn-dark btn-w" onclick="doLogin()">Sign In</button>
+      <div class="auth-switch">New student? <a onclick="GO('register')">Create Account</a></div>
+      <div style="text-align:center;margin-top:8px;font-size:.83rem"><a onclick="GO('forgot')" style="color:#d97706;cursor:pointer;font-weight:600">Forgot Password?</a></div>
+      <div class="auth-back"><a onclick="GO('home')">← Back to Home</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- STUDENT DASHBOARD -->
+<div class="page" id="PG-student">
+  <nav class="snav">
+    <div class="snav-logo">StayEasy</div>
+    <div class="snav-r">
+      <div class="avatar" id="sav">?</div>
+      <span id="sname" style="font-size:.86rem"></span>
+      <button class="btn btn-out btn-sm" onclick="doLogout()">Logout</button>
+    </div>
+  </nav>
+  <div class="sbody">
+    <div class="stitle">My Dashboard</div>
+    <div class="ssub">Manage your accommodation</div>
+    <div id="sban" style="display:none"></div>
+    <div class="sgrid">
+      <div class="sstat"><div class="sstat-l">My Room</div><div class="sstat-v" id="smroom">—</div></div>
+      <div class="sstat"><div class="sstat-l">Status</div><div class="sstat-v" id="sstatus" style="font-size:.95rem">None</div></div>
+      <div class="sstat"><div class="sstat-l">Complaints</div><div class="sstat-v" id="scompc">0</div></div>
+      <div class="sstat"><div class="sstat-l">Fees Paid</div><div class="sstat-v" id="sfees">₹0</div></div>
+    </div>
+    <div class="tabs" id="TABS">
+      <button class="tab on" onclick="TAB('rooms')">🛏️ Rooms</button>
+      <button class="tab" onclick="TAB('apps')">📋 Applications</button>
+      <button class="tab" onclick="TAB('comps')">⚠️ Complaints</button>
+      <button class="tab" onclick="TAB('fees')">💳 Fees</button>
+      <button class="tab" onclick="TAB('notices')">📢 Notices</button>
+      <button class="tab ai-t" onclick="TAB('ai')">✨ AI Features</button>
+    </div>
+    <div class="tc on" id="TC-rooms">
+      <div class="fbar">
+        <input class="fsearch" placeholder="🔍 Search..." id="ssearch" oninput="renderSRooms()"/>
+        <button class="fbtn on" onclick="setSF('',this)">All</button>
+        <button class="fbtn" onclick="setSF('Single',this)">Single</button>
+        <button class="fbtn" onclick="setSF('Double',this)">Double</button>
+        <button class="fbtn" onclick="setSF('Suite',this)">Suite</button>
+      </div>
+      <div class="rgrid" id="srooms"></div>
+    </div>
+    <div class="tc" id="TC-apps">
+      <div class="card"><div class="card-t"><div class="cdot"></div>My Applications</div>
+        <div class="twrap"><table><thead><tr><th>Room</th><th>Building</th><th>Price</th><th>Duration</th><th>Check-in</th><th>Applied</th><th>Status</th></tr></thead>
+        <tbody id="sapps"></tbody></table></div>
+      </div>
+    </div>
+    <div class="tc" id="TC-comps">
+      <div class="card"><div class="card-t"><div class="cdot" style="background:#dc2626"></div>Submit Complaint</div>
+        <div class="fg2">
+          <div class="fg"><label>Subject *</label><input id="csubj" placeholder="Brief subject"/></div>
+          <div class="fg"><label>Priority</label><select id="cpri"><option>Low</option><option>Medium</option><option>High</option></select></div>
+        </div>
+        <div class="fg"><label>Description *</label><textarea id="cdesc" placeholder="Describe the issue..."></textarea></div>
+        <button class="btn btn-dark btn-w" style="margin-top:6px" onclick="submitComp()">Submit Complaint</button>
+      </div>
+      <div class="card"><div class="card-t"><div class="cdot" style="background:#dc2626"></div>My Complaints</div>
+        <div class="twrap"><table><thead><tr><th>Date</th><th>Subject</th><th>Priority</th><th>Status</th></tr></thead>
+        <tbody id="scomps"></tbody></table></div>
+      </div>
+    </div>
+    <div class="tc" id="TC-fees">
+      <div class="card"><div class="card-t"><div class="cdot" style="background:#059669"></div>My Fee Records <button class="btn btn-green" style="margin-left:auto;padding:7px 16px;font-size:.8rem;border-radius:8px" onclick="openPayModal()">💳 Pay Fee</button></div>
+        <div class="twrap"><table><thead><tr><th>#</th><th>Month</th><th>Amount</th><th>Mode</th><th>Date</th><th>Status</th></tr></thead>
+        <tbody id="sfees-t"></tbody></table></div>
+      </div>
+    </div>
+    <div class="tc" id="TC-notices">
+      <div class="card"><div class="card-t"><div class="cdot" style="background:#d97706"></div>Notice Board</div>
+        <div id="snotices"></div>
+      </div>
+    </div>
+    <div class="tc" id="TC-ai">
+      <div class="aic aic-r">
+        <div class="ait">🏠 AI Room Recommender</div>
+        <div class="ais">Tell us your needs — AI finds the best rooms for you!</div>
+        <div class="fg2">
+          <div class="fg"><label>Max Budget (₹/month)</label><input id="ai-bud" type="number" placeholder="e.g. 7000"/></div>
+          <div class="fg"><label>Room Type</label><select id="ai-typ"><option value="">Any</option><option>Single</option><option>Double</option><option>Triple</option><option>Suite</option></select></div>
+          <div class="fg"><label>Floor Preference</label><select id="ai-flr"><option value="">No preference</option><option value="low">Lower floors</option><option value="high">Higher floors</option></select></div>
+          <div class="fg"><label>Lifestyle</label><select id="ai-soc"><option value="">No preference</option><option value="quiet">Quiet & focused</option><option value="social">Social & lively</option></select></div>
+        </div>
+        <div class="fg"><label>Must-have Amenities (comma separated)</label><input id="ai-amen" placeholder="e.g. WiFi, AC"/></div>
+        <button class="btn btn-grad btn-w" style="margin-top:8px" onclick="aiRec()">✨ Get AI Recommendations</button>
+        <div id="ai-rec" style="margin-top:14px"></div>
+      </div>
+      <div class="aic aic-p">
+        <div class="ait">💰 ML Price Predictor</div>
+        <div class="ais">Our ML model predicts the fair rent based on room features.</div>
+        <div class="fg3">
+          <div class="fg"><label>Room Type</label><select id="ml-typ"><option>Single</option><option>Double</option><option>Triple</option><option>Suite</option></select></div>
+          <div class="fg"><label>Building</label><select id="ml-bld"><option>A</option><option>B</option><option>C</option><option>D</option></select></div>
+          <div class="fg"><label>Floor</label><input id="ml-flr" type="number" placeholder="1" min="1"/></div>
+          <div class="fg"><label>Capacity</label><input id="ml-cap" type="number" placeholder="1" min="1"/></div>
+        </div>
+        <div class="fg"><label>Amenities (comma separated)</label><input id="ml-amen" placeholder="e.g. WiFi, AC"/></div>
+        <button class="btn btn-green btn-w" style="margin-top:8px" onclick="mlPred()">💡 Predict Fair Price</button>
+        <div id="ml-res" style="margin-top:14px"></div>
+      </div>
+      <div class="aic aic-m">
+        <div class="ait">🤝 Roommate Compatibility Match</div>
+        <div class="ais">Fill your profile — AI finds your most compatible roommates!</div>
+        <div class="fg2">
+          <div class="fg"><label>Sleep Schedule</label><select id="rm-slp"><option value="early">Early bird (before 10pm)</option><option value="normal">Normal (10pm–12am)</option><option value="late">Night owl (after 12am)</option></select></div>
+          <div class="fg"><label>Study Habits</label><select id="rm-std"><option value="morning">Morning studier</option><option value="afternoon">Afternoon studier</option><option value="night">Night studier</option></select></div>
+          <div class="fg"><label>Cleanliness</label><select id="rm-cln"><option value="very_clean">Very clean</option><option value="clean">Clean but relaxed</option><option value="casual">Casual</option></select></div>
+          <div class="fg"><label>Noise Level</label><select id="rm-nse"><option value="quiet">Prefer quiet</option><option value="moderate">Moderate OK</option><option value="loud">Noise is fine</option></select></div>
+          <div class="fg"><label>Social Level</label><select id="rm-soc"><option value="introvert">Introvert</option><option value="ambivert">Ambivert</option><option value="extrovert">Extrovert</option></select></div>
+          <div class="fg"><label>Diet</label><select id="rm-dit"><option value="veg">Vegetarian</option><option value="nonveg">Non-veg</option><option value="vegan">Vegan</option><option value="any">Any</option></select></div>
+          <div class="fg"><label>Guest Policy</label><select id="rm-gst"><option value="no_guests">No guests</option><option value="occasional">Occasional OK</option><option value="open">Open</option></select></div>
+        </div>
+        <button class="btn btn-purple btn-w" style="margin-top:8px" onclick="rmMatch()">🤝 Find Roommate Matches</button>
+        <div id="rm-res" style="margin-top:14px"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- OTP VERIFY -->
+<div class="page" id="PG-otp">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <span class="auth-logo">StayEasy</span>
+      <div class="auth-title">Verify Your Email</div>
+      <div class="auth-sub" id="otp-sub">Enter the 6-digit OTP sent to your email</div>
+      <div style="background:rgba(37,99,235,.06);border:1px solid rgba(37,99,235,.2);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:.84rem;color:#2563eb;text-align:center">
+        📧 OTP sent! Check your email inbox.<br/>
+        <span style="font-size:.76rem;color:#6b7280">(For demo: check server terminal/console for OTP)</span>
+      </div>
+      <div class="fg"><label>Email</label><input id="otp-email" readonly style="opacity:.7;background:#f9fafb"/></div>
+      <div class="fg"><label>Enter OTP *</label>
+        <input id="otp-code" placeholder="6-digit OTP" maxlength="6" style="font-size:1.4rem;letter-spacing:.3em;text-align:center;font-weight:700" oninput="this.value=this.value.replace(/[^0-9]/g,'')"/>
+      </div>
+      <button class="btn btn-dark btn-w" onclick="doVerifyOTP()">✅ Verify OTP</button>
+      <div style="text-align:center;margin-top:12px;font-size:.83rem;color:#6b7280">
+        Didn't receive? <a onclick="doResendOTP()" style="color:#2563eb;cursor:pointer;font-weight:600">Resend OTP</a>
+      </div>
+      <div class="auth-back"><a onclick="GO('register')">← Back to Register</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD -->
+<div class="page" id="PG-forgot">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <span class="auth-logo">StayEasy</span>
+      <div class="auth-title">Forgot Password</div>
+      <div class="auth-sub">Enter your email to receive a reset OTP</div>
+      <div id="fp-step1">
+        <div class="fg"><label>Email Address *</label><input id="fp-email" type="email" placeholder="your@email.com"/></div>
+        <button class="btn btn-dark btn-w" onclick="doForgotStep1()">Send Reset OTP</button>
+      </div>
+      <div id="fp-step2" style="display:none">
+        <div style="background:rgba(5,150,105,.06);border:1px solid rgba(5,150,105,.2);border-radius:10px;padding:11px 14px;margin-bottom:14px;font-size:.83rem;color:#059669;text-align:center">
+          📧 OTP sent! Check your email (or server terminal for demo)
+        </div>
+        <div class="fg"><label>OTP *</label><input id="fp-otp" placeholder="6-digit OTP" maxlength="6" style="font-size:1.3rem;letter-spacing:.25em;text-align:center;font-weight:700" oninput="this.value=this.value.replace(/[^0-9]/g,'')"/></div>
+        <div class="fg"><label>New Password *</label><input id="fp-newpw" type="password" placeholder="Min 6 characters"/></div>
+        <div class="fg"><label>Confirm Password *</label><input id="fp-confirmpw" type="password" placeholder="Re-enter password"/></div>
+        <button class="btn btn-dark btn-w" onclick="doForgotStep2()">Reset Password</button>
+      </div>
+      <div class="auth-back"><a onclick="GO('login')">← Back to Login</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- UPI PAYMENT MODAL -->
+<div class="mbg" id="PAYMODAL">
+  <div class="mbox" style="max-width:480px">
+    <div class="mhead"><div class="mtitle">💳 Pay Hostel Fee</div><button class="mclose" onclick="document.getElementById('PAYMODAL').classList.remove('open')">✕</button></div>
+    <div id="pay-step1">
+      <div style="background:#f9fafb;border-radius:10px;padding:12px;margin-bottom:14px;font-size:.86rem" id="pay-info"></div>
+      <div class="fg"><label>Payment Mode</label>
+        <select id="pay-mode" onchange="togglePayMode()">
+          <option value="UPI">UPI / QR Code</option>
+          <option value="Cash">Cash (Pay at Counter)</option>
+        </select>
+      </div>
+      <div id="upi-section">
+        <div style="background:linear-gradient(135deg,rgba(37,99,235,.06),rgba(124,58,237,.06));border:1px solid rgba(37,99,235,.2);border-radius:12px;padding:18px;text-align:center;margin-bottom:14px">
+          <div style="font-size:.78rem;color:#6b7280;margin-bottom:8px">Scan QR or pay to UPI ID</div>
+          <div style="font-size:1.1rem;font-weight:700;color:#2563eb;margin-bottom:4px">anushkashukla7878@oksbi</div>
+         <div id="pay-qr" style="margin:12px auto;width:200px;height:200px;background:#fff;border:2px solid #e5e2da;border-radius:8px;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+  <img src="/images/payment-qr.png" width="200" style="border-radius:6px;object-fit:cover;object-position:center;" onerror="this.parentElement.innerHTML='📱'" />
+</div>
+ <div style="font-size:.78rem;color:#6b7280">Amount: <strong id="pay-show-amt" style="color:#111"></strong></div>
+        </div>
+        <div class="fg"><label>UTR / Transaction Reference Number *</label><input id="pay-utr" placeholder="Enter UTR after payment"/></div>
+        <div style="font-size:.74rem;color:#6b7280;margin-bottom:12px">Enter the 12-digit UTR number from your UPI app after completing payment</div>
+      </div>
+      <div id="cash-section" style="display:none">
+        <div style="background:rgba(217,119,6,.06);border:1px solid rgba(217,119,6,.2);border-radius:10px;padding:14px;text-align:center;margin-bottom:14px">
+          <div style="font-size:1.5rem;margin-bottom:6px">🏦</div>
+          <div style="font-weight:600;margin-bottom:4px">Pay at Admin Counter</div>
+          <div style="font-size:.82rem;color:#6b7280">Visit the hostel office with the exact amount. Collect your receipt.</div>
+        </div>
+        <div class="fg"><label>Notes (optional)</label><input id="pay-cash-note" placeholder="e.g. Paid to Mr. Kumar"/></div>
+      </div>
+      <button class="btn btn-dark btn-w" onclick="doPayment()">Confirm Payment</button>
+    </div>
+    <div id="pay-success" style="display:none;text-align:center;padding:20px">
+      <div style="font-size:3rem;margin-bottom:12px">✅</div>
+      <div style="font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:6px">Payment Recorded!</div>
+      <div style="font-size:.86rem;color:#6b7280" id="pay-success-msg"></div>
+      <button class="btn btn-dark" style="margin-top:16px;padding:10px 24px" onclick="document.getElementById('PAYMODAL').classList.remove('open');loadSDash()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
+<div class="page" id="PG-adminlogin">
+  <div class="alwrap">
+    <div class="alcard">
+      <div class="alt">🔐 Admin Panel</div>
+      <div class="als">Enter your admin password</div>
+      <label class="all">Password</label>
+      <input class="ali" id="apw" type="password" placeholder="Admin password" onkeydown="if(event.key==='Enter')doAdminLogin()"/>
+      <button class="alb" onclick="doAdminLogin()">Login as Admin</button>
+      <div style="text-align:center;margin-top:12px"><a onclick="GO('home')" style="color:rgba(255,255,255,.3);font-size:.8rem;cursor:pointer">← Back to site</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN DASHBOARD -->
+<div class="page" id="PG-admin">
+  <div class="awrap">
+    <aside class="aside">
+      <div class="alogo">🏠 <span>Admin</span></div>
+      <div class="anav">
+        <button class="ani on" onclick="AN('dash')"><span>📊</span><span>Dashboard</span></button>
+        <button class="ani" onclick="AN('rooms')"><span>🛏️</span><span>Rooms</span></button>
+        <button class="ani" onclick="AN('students')"><span>👤</span><span>Students</span></button>
+        <button class="ani" onclick="AN('apps')"><span>📋</span><span>Applications</span></button>
+        <button class="ani" onclick="AN('comps')"><span>⚠️</span><span>Complaints</span></button>
+        <button class="ani" onclick="AN('fees')"><span>💳</span><span>Fees</span></button>
+        <button class="ani" onclick="AN('notices')"><span>📢</span><span>Notices</span></button>
+        <button class="ani" onclick="AN('agents')"><span>🤖</span><span>AI Agents</span></button>
+        <button class="ani" onclick="doAdminLogout()" style="margin-top:auto"><span>🚪</span><span>Logout</span></button>
+      </div>
+    </aside>
+    <main class="amain">
+      <div class="ap on" id="AP-dash">
+        <div class="at">Dashboard</div><div class="as">System overview</div>
+        <div class="asgrid">
+          <div class="astat"><div class="asl">Total Rooms</div><div class="asv" id="ad-rm">—</div></div>
+          <div class="astat"><div class="asl">Occupied</div><div class="asv" id="ad-oc">—</div></div>
+          <div class="astat"><div class="asl">Students</div><div class="asv" id="ad-st">—</div></div>
+          <div class="astat"><div class="asl">Pending Apps</div><div class="asv" id="ad-pe" style="color:#d97706">—</div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="ac"><div class="act">📋 Recent Applications</div>
+            <div class="twrap"><table><thead><tr><th>Student</th><th>Room</th><th>Status</th></tr></thead><tbody id="ad-apps"></tbody></table></div>
+          </div>
+          <div class="ac"><div class="act">⚠️ Pending Complaints</div>
+            <div class="twrap"><table><thead><tr><th>Student</th><th>Subject</th><th>Priority</th></tr></thead><tbody id="ad-comps"></tbody></table></div>
+          </div>
+        </div>
+      </div>
+      <div class="ap" id="AP-rooms">
+        <div class="at">Rooms</div><div class="as">Manage accommodation rooms</div>
+        <div class="ac">
+          <div class="act">➕ Add Room</div>
+          <div class="fg3">
+            <div class="fg"><label>Room Number *</label><input id="Rnum" placeholder="101"/></div>
+            <div class="fg"><label>Building *</label><input id="Rbld" placeholder="A"/></div>
+            <div class="fg"><label>Floor *</label><input id="Rflr" type="number" placeholder="1"/></div>
+            <div class="fg"><label>Type</label><select id="Rtyp"><option>Single</option><option>Double</option><option>Triple</option><option>Suite</option></select></div>
+            <div class="fg"><label>Capacity *</label><input id="Rcap" type="number" placeholder="1"/></div>
+            <div class="fg"><label>Price ₹/mo *</label><input id="Rprc" type="number" placeholder="5000"/></div>
+          </div>
+          <div class="fg"><label>Amenities (comma separated)</label><input id="Ramen" placeholder="WiFi, AC, Bathroom"/></div>
+          <div class="factions">
+            <button class="abtn abtn-p" onclick="addRoom()">➕ Add Room</button>
+            <button class="abtn abtn-s" onclick="['Rnum','Rbld','Rflr','Rcap','Rprc','Ramen'].forEach(x=>document.getElementById(x).value='')">Clear</button>
+          </div>
+        </div>
+        <div class="tbar">
+          <div class="sbar"><span>🔍</span><input placeholder="Search rooms..." id="ar-q" oninput="filterARooms()"/></div>
+          <select class="sel" id="ar-s" onchange="filterARooms()"><option value="">All Status</option><option>Available</option><option>Occupied</option></select>
+        </div>
+        <div class="rgrid-a" id="ar-grid"></div>
+      </div>
+      <div class="ap" id="AP-students">
+        <div class="at">Students</div><div class="as">All registered students</div>
+        <div class="tbar"><div class="sbar"><span>🔍</span><input placeholder="Search..." id="as-q" oninput="filterAStudents()"/></div></div>
+        <div class="ac" style="padding:0"><div class="twrap"><table>
+          <thead><tr><th>#</th><th>Name</th><th>ID</th><th>Email</th><th>Program</th><th>Year</th><th>Actions</th></tr></thead>
+          <tbody id="as-t"></tbody>
+        </table></div></div>
+      </div>
+      <div class="ap" id="AP-apps">
+        <div class="at">Applications</div><div class="as">Review and approve room applications</div>
+        <div class="tbar">
+          <div class="sbar"><span>🔍</span><input placeholder="Search..." id="aa-q" oninput="filterAApps()"/></div>
+          <select class="sel" id="aa-s" onchange="filterAApps()"><option value="">All Status</option><option>Pending</option><option>Approved</option><option>Rejected</option></select>
+        </div>
+        <div class="ac" style="padding:0"><div class="twrap"><table>
+          <thead><tr><th>#</th><th>Student</th><th>Room</th><th>Duration</th><th>Check-in</th><th>Applied</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="aa-t"></tbody>
+        </table></div></div>
+      </div>
+      <div class="ap" id="AP-comps">
+        <div class="at">Complaints</div><div class="as">Track and resolve complaints</div>
+        <div class="tbar">
+          <div class="sbar"><span>🔍</span><input placeholder="Search..." id="ac-q" oninput="filterAComps()"/></div>
+          <select class="sel" id="ac-s" onchange="filterAComps()"><option value="">All Status</option><option>Pending</option><option>In Progress</option><option>Resolved</option></select>
+        </div>
+        <div class="ac" style="padding:0"><div class="twrap"><table>
+          <thead><tr><th>#</th><th>Date</th><th>Student</th><th>Room</th><th>Subject</th><th>Priority</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody id="ac-t"></tbody>
+        </table></div></div>
+      </div>
+      <div class="ap" id="AP-fees">
+        <div class="at">Fees</div><div class="as">Record and track payments</div>
+        <div class="asgrid" style="grid-template-columns:repeat(3,1fr)">
+          <div class="astat"><div class="asl">Total Collected</div><div class="asv" id="af-tot">₹0</div></div>
+          <div class="astat"><div class="asl">Records</div><div class="asv" id="af-cnt">0</div></div>
+          <div class="astat"><div class="asl">This Month</div><div class="asv" id="af-mon">₹0</div></div>
+        </div>
+        <div class="ac">
+          <div class="act">💳 Record Payment</div>
+          <div class="fg2">
+            <div class="fg"><label>Student</label><select id="afs-sid" onchange="afFill()"><option value="">— Select —</option></select></div>
+            <div class="fg"><label>Room</label><input id="afs-rm" readonly style="opacity:.7"/></div>
+            <div class="fg"><label>Amount ₹ *</label><input id="afs-amt" type="number" placeholder="5000"/></div>
+            <div class="fg"><label>Month *</label><input id="afs-mth" type="month"/></div>
+            <div class="fg"><label>Mode</label><select id="afs-mod"><option>Cash</option><option>UPI</option><option>Bank Transfer</option><option>Card</option></select></div>
+            <div class="fg"><label>Notes</label><input id="afs-not" placeholder="Optional"/></div>
+          </div>
+          <div class="factions"><button class="abtn abtn-ok" onclick="addFee()">💳 Record Payment</button></div>
+        </div>
+        <div class="ac" style="padding:0"><div class="twrap"><table>
+          <thead><tr><th>#</th><th>Student</th><th>Room</th><th>Amount</th><th>Month</th><th>Mode</th><th>Date</th><th>Del</th></tr></thead>
+          <tbody id="af-t"></tbody>
+        </table></div></div>
+      </div>
+      <div class="ap" id="AP-notices">
+        <div class="at">Notices</div><div class="as">Post announcements to students</div>
+        <div class="ac">
+          <div class="act">📢 Post Notice</div>
+          <div class="fg2">
+            <div class="fg"><label>Title *</label><input id="ant" placeholder="Notice title"/></div>
+            <div class="fg"><label>Category</label><select id="anc"><option>General</option><option>Maintenance</option><option>Event</option><option>Fee</option><option>Urgent</option></select></div>
+          </div>
+          <div class="fg"><label>Content *</label><textarea id="ancon" placeholder="Notice content..."></textarea></div>
+          <div class="factions"><button class="abtn abtn-p" onclick="addNotice()">📢 Post Notice</button></div>
+        </div>
+        <div id="an-list"></div>
+      </div>
+
+      <!-- AI AGENTS PANEL -->
+      <div class="ap" id="AP-agents">
+        <div class="at">🤖 AI Agent Control Center</div>
+        <div class="as">Domain-specialized agents with compliance guardrails (PS5)</div>
+        <div class="asgrid">
+          <div class="astat"><div class="asl">Compliance Flags</div><div class="asv" style="color:#d97706" id="ag-comp">—</div></div>
+          <div class="astat"><div class="asl">Fee Alerts</div><div class="asv" style="color:#dc2626" id="ag-fee">—</div></div>
+          <div class="astat"><div class="asl">Escalations</div><div class="asv" style="color:#7c3aed" id="ag-esc">—</div></div>
+          <div class="astat"><div class="asl">Anomalies</div><div class="asv" style="color:#059669" id="ag-ano">—</div></div>
+        </div>
+        <div style="margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap">
+          <button class="abtn abtn-p" onclick="runAllAgents()">⚡ Run All Agents Now</button>
+          <button class="abtn abtn-s" onclick="loadAgentAudit()">📋 View Audit Trail</button>
+        </div>
+
+        <!-- AllocationAgent -->
+        <div class="ac" style="border-left:4px solid #2563eb">
+          <div class="act">🏠 AllocationAgent — Validate Application</div>
+          <p style="font-size:.8rem;color:#6b7280;margin-bottom:12px">Validates a student-room allocation against all institutional compliance policies before processing.</p>
+          <div class="fg2">
+            <div class="fg"><label>Student ID</label><input id="aag-sid" placeholder="e.g. STU001"/></div>
+            <div class="fg"><label>Room Number</label><input id="aag-rm" placeholder="e.g. 101"/></div>
+          </div>
+          <div class="factions"><button class="abtn abtn-p" onclick="runAllocAgent()">🔍 Validate Now</button></div>
+          <div id="aag-res" style="margin-top:12px"></div>
+        </div>
+
+        <!-- ComplianceAgent -->
+        <div class="ac" style="border-left:4px solid #d97706">
+          <div class="act">✅ ComplianceAgent — Scan Pending Applications</div>
+          <p style="font-size:.8rem;color:#6b7280;margin-bottom:12px">Scans all pending applications for policy violations and SLA breaches with full audit trail.</p>
+          <div class="factions"><button class="abtn abtn-s" onclick="runComplianceAgent()">🔎 Scan Applications</button></div>
+          <div id="comp-res" style="margin-top:12px"></div>
+        </div>
+
+        <!-- FeeAgent -->
+        <div class="ac" style="border-left:4px solid #dc2626">
+          <div class="act">💳 FeeAgent — Detect Overdue Fees</div>
+          <p style="font-size:.8rem;color:#6b7280;margin-bottom:12px">Automatically detects missing payments, calculates outstanding amounts, and escalates critical cases.</p>
+          <div class="factions"><button class="abtn abtn-s" onclick="runFeeAgent()">💰 Scan Fees</button></div>
+          <div id="fee-res" style="margin-top:12px"></div>
+        </div>
+
+        <!-- ComplaintAgent -->
+        <div class="ac" style="border-left:4px solid #7c3aed">
+          <div class="act">⚠️ ComplaintAgent — Triage & Escalate</div>
+          <p style="font-size:.8rem;color:#6b7280;margin-bottom:12px">Triages open complaints by SLA, auto-escalates high-priority issues, and generates resolution playbooks.</p>
+          <div class="factions"><button class="abtn abtn-s" onclick="runComplaintAgent()">🚨 Triage Complaints</button></div>
+          <div id="triage-res" style="margin-top:12px"></div>
+        </div>
+
+        <!-- OccupancyAgent -->
+        <div class="ac" style="border-left:4px solid #059669">
+          <div class="act">📊 OccupancyAgent — Anomaly Detection</div>
+          <p style="font-size:.8rem;color:#6b7280;margin-bottom:12px">Monitors real-time occupancy, detects data anomalies, and recommends capacity actions.</p>
+          <div class="factions"><button class="abtn abtn-s" onclick="runOccupancyAgent()">📡 Run Report</button></div>
+          <div id="occ-res" style="margin-top:12px"></div>
+        </div>
+
+        <!-- Audit Trail -->
+        <div class="ac" id="audit-panel" style="display:none">
+          <div class="act">📋 Agent Audit Trail</div>
+          <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
+            <select class="sel" id="audit-agent-filter" onchange="loadAgentAudit()">
+              <option value="">All Agents</option>
+              <option>AllocationAgent</option>
+              <option>ComplianceAgent</option>
+              <option>FeeAgent</option>
+              <option>ComplaintAgent</option>
+              <option>OccupancyAgent</option>
+              <option>MasterOrchestrator</option>
+            </select>
+          </div>
+          <div id="audit-list"></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- APPLY MODAL -->
+<div class="mbg" id="MODAL">
+  <div class="mbox">
+    <div class="mhead"><div class="mtitle">Apply for Room</div><button class="mclose" onclick="CLOSE()">✕</button></div>
+    <div id="minfo" style="background:#f9fafb;border-radius:9px;padding:11px;margin-bottom:14px;font-size:.86rem"></div>
+    <div class="fg"><label>Check-in Date *</label><input id="mcheckin" type="date"/></div>
+    <div class="fg"><label>Duration</label><select id="mdur"><option>Monthly</option><option>Semester</option><option>Yearly</option></select></div>
+    <div class="fg"><label>Message (optional)</label><textarea id="mmsg" placeholder="Any message for admin..."></textarea></div>
+    <button class="btn btn-dark btn-w" style="margin-top:8px" onclick="submitApp()">Submit Application</button>
+  </div>
+</div>
+
+<div class="tbox" id="TOASTS"></div>
+
+<script>
+// ═══════════════════════════
+// STATE
+// ═══════════════════════════
+var D = {
+  student:null, token:null, adminToken:null,
+  rooms:[], studs:[], apps:[], comps:[], fees:[], notices:[],
+  compat:new Map(), applyRoom:null, hFilter:''
+};
+
+// ═══════════════════════════
+// NAVIGATION — core fix
+// ═══════════════════════════
+function GO(pg) {
+  // Remove ACTIVE from all pages
+  var pages = document.querySelectorAll('.page');
+  for(var i=0;i<pages.length;i++) pages[i].classList.remove('ACTIVE');
+  // Add ACTIVE to target
+  var el = document.getElementById('PG-'+pg);
+  if(el) el.classList.add('ACTIVE');
+  window.scrollTo(0,0);
+}
+
+// ═══════════════════════════
+// TOAST
+// ═══════════════════════════
+function TOAST(msg, type) {
+  type = type || 'success';
+  var box = document.getElementById('TOASTS');
+  var t = document.createElement('div');
+  t.className = 'toast t'+type[0];
+  t.innerHTML = '<div class="tdot"></div><span>'+msg+'</span>';
+  box.appendChild(t);
+  setTimeout(function(){t.remove();}, 3000);
+}
+
+// ═══════════════════════════
+// API
+// ═══════════════════════════
+async function API(method, url, body) {
+  try {
+    var opts = {method:method, headers:{'Content-Type':'application/json'}};
+    if(body) opts.body = JSON.stringify(body);
+    var res = await fetch(url, opts);
+    var data = await res.json();
+    if(!res.ok) throw new Error(data.error || 'Request failed');
+    return data;
+  } catch(e) {
+    TOAST(e.message, 'error');
+    throw e;
+  }
+}
+
+var fmtD = function(d){return d?new Date(d).toLocaleDateString('en-IN'):'—';};
+var fmtR = function(n){return '₹'+(n||0).toLocaleString('en-IN');};
+
+// ═══════════════════════════
+// HOME
+// ═══════════════════════════
+async function loadHome() {
+  try {
+    var rooms = await API('GET','/api/rooms');
+    var notices = await API('GET','/api/notices');
+    D.rooms = rooms;
+    renderHRooms();
+    renderHNotices(notices);
+    document.getElementById('h-total').textContent = rooms.length;
+    document.getElementById('h-avail').textContent = rooms.filter(function(r){return r.status==='Available';}).length;
+    var studs = await API('GET','/api/students');
+    document.getElementById('h-studs').textContent = studs.length;
+  } catch(e){}
+}
+
+var hFilter = '';
+function setHF(type, el) {
+  hFilter = type;
+  var btns = document.querySelectorAll('#PG-home .fbtn');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('on');
+  el.classList.add('on');
+  renderHRooms();
+}
+
+function renderHRooms() {
+  var q = document.getElementById('hsearch').value.toLowerCase();
+  var emj = {Single:'🛏️',Double:'🛏️🛏️',Triple:'🏠',Suite:'🌟'};
+  var rooms = D.rooms.filter(function(r){
+    return (!hFilter||r.type===hFilter)&&(r.number.toLowerCase().includes(q)||r.building.toLowerCase().includes(q)||r.type.toLowerCase().includes(q));
+  });
+  var g = document.getElementById('hrooms');
+  if(!rooms.length){g.innerHTML='<div class="empty"><div class="ei">🛏️</div>No rooms found</div>';return;}
+  g.innerHTML = rooms.map(function(r){return `
+    <div class="rcard">
+      <div class="rimg">${emj[r.type]||'🛏️'}<span class="rbadge ${r.status==='Available'?'ba':'bo'}">${r.status}</span></div>
+      <div class="rbody">
+        <div class="rtitle">Room ${r.number} — Building ${r.building}</div>
+        <div class="rmeta">Floor ${r.floor} · ${r.capacity} person(s) · ${r.type}</div>
+        ${r.amenities&&r.amenities.length?'<div class="ramen">✨ '+r.amenities.join(' · ')+'</div>':''}
+        <div class="rprice">${fmtR(r.price)}<span>/month</span></div>
+        <button class="rapply" ${r.status!=='Available'?'disabled':''} onclick="APPLY('${r.number}','${r.building}',${r.price},'${r.type}')">
+          ${r.status==='Available'?'Apply Now →':'Currently Occupied'}
+        </button>
+      </div>
+    </div>`;}).join('');
+}
+
+var noticeColors = {General:'#2563eb',Maintenance:'#d97706',Event:'#7c3aed',Fee:'#059669',Urgent:'#dc2626'};
+function renderHNotices(notices) {
+  var el = document.getElementById('hnotices');
+  if(!notices.length){el.innerHTML='<div class="empty"><div class="ei">📢</div>No notices yet</div>';return;}
+  el.innerHTML = notices.slice(0,6).map(function(n){return `
+    <div class="nitem">
+      <div class="ndot" style="background:${noticeColors[n.category]||'#2563eb'}"></div>
+      <div>
+        <div class="ntitle">${n.title} <span class="b bb" style="font-size:.64rem">${n.category}</span></div>
+        <div class="ncontent">${n.content}</div>
+        <div class="ndate">${fmtD(n.createdAt)}</div>
+      </div>
+    </div>`;}).join('');
+}
+
+// ═══════════════════════════
+// APPLY MODAL
+// ═══════════════════════════
+function APPLY(num, bld, price, type) {
+  if(!D.student){TOAST('Please login or register first!','error');GO('login');return;}
+  D.applyRoom = {number:num,building:bld,price:price,type:type};
+  document.getElementById('minfo').innerHTML = '<strong>Room '+num+'</strong> · Building '+bld+' · '+type+' · <strong>'+fmtR(price)+'/month</strong>';
+  document.getElementById('mcheckin').value = new Date().toISOString().split('T')[0];
+  document.getElementById('MODAL').classList.add('open');
+}
+function CLOSE(){document.getElementById('MODAL').classList.remove('open');}
+
+async function submitApp() {
+  if(!D.applyRoom) return;
+  var checkin = document.getElementById('mcheckin').value;
+  var dur = document.getElementById('mdur').value;
+  var msg = document.getElementById('mmsg').value.trim();
+  if(!checkin){TOAST('Please select check-in date','error');return;}
+  try {
+    await API('POST','/api/applications',{
+      studentId:D.student.studentId, studentName:D.student.name,
+      email:D.student.email, phone:D.student.phone||'',
+      program:D.student.program, year:D.student.year,
+      roomNumber:D.applyRoom.number, building:D.applyRoom.building,
+      roomPrice:D.applyRoom.price, duration:dur, checkin:checkin, message:msg
+    });
+    CLOSE();
+    TOAST('Application submitted for Room '+D.applyRoom.number+'!');
+    loadSDash();
+  } catch(e){}
+}
+
+// ═══════════════════════════
+// AUTH
+// ═══════════════════════════
+
+// ═══════════════════════════════════════
+// OTP VERIFICATION
+// ═══════════════════════════════════════
+var pendingEmail = '';
+
+async function doReg() {
+  var name=document.getElementById('rn').value.trim();
+  var sid=document.getElementById('rs').value.trim();
+  var email=document.getElementById('re').value.trim();
+  var phone=document.getElementById('rph').value.trim();
+  var year=document.getElementById('ry').value;
+  var prog=document.getElementById('rpr').value.trim();
+  var pass=document.getElementById('rpw').value;
+  if(!name||!sid||!email||!prog||!pass){TOAST('Please fill all required fields','error');return;}
+  if(pass.length<6){TOAST('Password must be at least 6 characters','error');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){TOAST('Invalid email address','error');return;}
+  try {
+    var data = await API('POST','/api/students/register',{name:name,studentId:sid,email:email,phone:phone,program:prog,year:year,password:pass});
+    if(data.requireOTP) {
+      pendingEmail = email;
+      document.getElementById('otp-email').value = email;
+      document.getElementById('otp-sub').textContent = 'Enter the 6-digit OTP sent to ' + email;
+      document.getElementById('otp-code').value = '';
+      GO('otp');
+      TOAST('OTP sent! Check your email (or server terminal for demo)', 'info');
+    }
+  } catch(e) {}
+}
+
+async function doVerifyOTP() {
+  var otp = document.getElementById('otp-code').value.trim();
+  var email = document.getElementById('otp-email').value.trim();
+  if(!otp||otp.length!==6){TOAST('Enter the 6-digit OTP','error');return;}
+  try {
+    var data = await API('POST','/api/students/verify-otp',{email:email,otp:otp});
+    D.student=data.student; D.token=data.token;
+    localStorage.setItem('s_token',data.token);
+    localStorage.setItem('s_student',JSON.stringify(data.student));
+    TOAST('Email verified! Welcome '+data.student.name+'!');
+    showSDash();
+  } catch(e) {}
+}
+
+async function doResendOTP() {
+  var email = document.getElementById('otp-email').value.trim();
+  try {
+    await API('POST','/api/students/resend-otp',{email:email});
+    TOAST('OTP resent! Check your email (or server terminal)', 'info');
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════
+// FORGOT PASSWORD
+// ═══════════════════════════════════════
+async function doForgotStep1() {
+  var email = document.getElementById('fp-email').value.trim();
+  if(!email){TOAST('Enter your email','error');return;}
+  try {
+    await API('POST','/api/students/forgot-password',{email:email});
+    document.getElementById('fp-step1').style.display='none';
+    document.getElementById('fp-step2').style.display='block';
+    TOAST('OTP sent! Check your email (or server terminal)', 'info');
+  } catch(e) {}
+}
+
+async function doForgotStep2() {
+  var otp = document.getElementById('fp-otp').value.trim();
+  var newpw = document.getElementById('fp-newpw').value;
+  var confirmpw = document.getElementById('fp-confirmpw').value;
+  var email = document.getElementById('fp-email').value.trim();
+  if(!otp||otp.length!==6){TOAST('Enter the 6-digit OTP','error');return;}
+  if(!newpw||newpw.length<6){TOAST('Password must be at least 6 characters','error');return;}
+  if(newpw!==confirmpw){TOAST('Passwords do not match','error');return;}
+  try {
+    await API('POST','/api/students/reset-password',{email:email,otp:otp,newPassword:newpw});
+    TOAST('Password reset! Please login with your new password.');
+    document.getElementById('fp-step1').style.display='block';
+    document.getElementById('fp-step2').style.display='none';
+    document.getElementById('fp-email').value='';
+    document.getElementById('fp-otp').value='';
+    document.getElementById('fp-newpw').value='';
+    document.getElementById('fp-confirmpw').value='';
+    GO('login');
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════
+// UPI / PAYMENT
+// ═══════════════════════════════════════
+var payData = {};
+
+function openPayModal() {
+  if(!D.student){TOAST('Please login first','error');return;}
+  var myApp = (D.apps||[]).find(function(a){return a.studentId===D.student.studentId&&a.status==='Approved';});
+  var price = myApp ? myApp.roomPrice : 0;
+  var room  = myApp ? myApp.roomNumber : '—';
+  var month = new Date().toISOString().slice(0,7);
+  payData = {studentId:D.student.studentId, studentName:D.student.name, room:room, amount:price, month:month};
+  document.getElementById('pay-info').innerHTML = '<strong>'+D.student.name+'</strong> · Room '+room+' · <strong style="color:#2563eb">₹'+price.toLocaleString("en-IN")+'</strong> · '+month;
+  document.getElementById('pay-show-amt').textContent = '₹'+price.toLocaleString("en-IN");
+  document.getElementById('pay-utr').value='';
+  document.getElementById('pay-cash-note').value='';
+  document.getElementById('pay-step1').style.display='block';
+  document.getElementById('pay-success').style.display='none';
+  document.getElementById('pay-mode').value='UPI';
+  togglePayMode();
+  document.getElementById('PAYMODAL').classList.add('open');
+}
+
+function togglePayMode() {
+  var mode = document.getElementById('pay-mode').value;
+  document.getElementById('upi-section').style.display = mode==='UPI'?'block':'none';
+  document.getElementById('cash-section').style.display = mode==='Cash'?'block':'none';
+}
+
+async function doPayment() {
+  var mode = document.getElementById('pay-mode').value;
+  var utr  = document.getElementById('pay-utr').value.trim();
+  var note = document.getElementById('pay-cash-note').value.trim();
+  if(mode==='UPI'&&!utr){TOAST('Please enter UTR/Transaction reference number','error');return;}
+  try {
+    var orderData = await API('POST','/api/payments/create-order',{...payData, mode:mode});
+    var verifyData = await API('POST','/api/payments/verify',{
+      ...payData, mode:mode,
+      orderId: orderData.orderId,
+      utrNumber: utr,
+      notes: mode==='Cash'?note:''
+    });
+    document.getElementById('pay-step1').style.display='none';
+    document.getElementById('pay-success').style.display='block';
+    document.getElementById('pay-success-msg').textContent = mode==='UPI'
+      ? 'UPI payment of ₹'+payData.amount.toLocaleString("en-IN")+' confirmed. UTR: '+utr
+      : 'Cash payment of ₹'+payData.amount.toLocaleString("en-IN")+' recorded. Please collect receipt from admin.';
+    TOAST('Payment successful!');
+  } catch(e) {}
+}
+
+async function doLogin() {
+  var sid=document.getElementById('ls').value.trim();
+  var pass=document.getElementById('lp').value;
+  if(!sid||!pass){TOAST('Please enter ID and password','error');return;}
+  try {
+    var data = await API('POST','/api/students/login',{studentId:sid,password:pass});
+    D.student=data.student; D.token=data.token;
+    localStorage.setItem('s_token',data.token);
+    localStorage.setItem('s_student',JSON.stringify(data.student));
+    TOAST('Welcome back, '+data.student.name+'!');
+    showSDash();
+  } catch(e){}
+}
+
+function doLogout() {
+  D.student=null; D.token=null;
+  localStorage.removeItem('s_token'); localStorage.removeItem('s_student');
+  GO('home'); loadHome(); TOAST('Logged out');
+}
+
+// ═══════════════════════════
+// STUDENT DASHBOARD
+// ═══════════════════════════
+function showSDash() {
+  GO('student');
+  document.getElementById('sname').textContent = D.student.name;
+  document.getElementById('sav').textContent = D.student.name[0].toUpperCase();
+  loadSDash();
+}
+
+async function loadSDash() {
+  try {
+    var data = await API('GET','/api/students/dashboard/'+D.student.studentId);
+    var rooms = await API('GET','/api/rooms');
+    D.rooms = rooms;
+    var app = data.application, apps = data.applications, comps = data.complaints, fees = data.fees, notices = data.notices;
+    D.apps = apps||[];
+
+    // Status banner
+    var ban = document.getElementById('sban');
+    ban.style.display = 'flex';
+    if(app) {
+      ban.className='sban sban-ok';
+      ban.innerHTML='<div class="sban-icon">✅</div><div><div class="sban-title">Room '+app.roomNumber+' Approved!</div><div class="sban-sub">Building '+app.building+' · '+fmtR(app.roomPrice)+'/mo · Check-in: '+app.checkin+'</div></div>';
+      document.getElementById('smroom').textContent='Room '+app.roomNumber;
+      document.getElementById('sstatus').textContent='Approved';
+      document.getElementById('sstatus').style.color='#059669';
+    } else {
+      var pend = (apps||[]).find(function(a){return a.status==='Pending';});
+      var rej  = (apps||[]).find(function(a){return a.status==='Rejected';});
+      if(pend){
+        ban.className='sban sban-wait';
+        ban.innerHTML='<div class="sban-icon">⏳</div><div><div class="sban-title">Application Pending</div><div class="sban-sub">Room '+pend.roomNumber+' · Waiting for admin approval</div></div>';
+        document.getElementById('sstatus').textContent='Pending'; document.getElementById('sstatus').style.color='#d97706';
+      } else if(rej){
+        ban.className='sban sban-no';
+        ban.innerHTML='<div class="sban-icon">❌</div><div><div class="sban-title">Application Rejected</div><div class="sban-sub">'+(rej.adminNote||'Please apply for another room')+'</div></div>';
+        document.getElementById('sstatus').textContent='Rejected'; document.getElementById('sstatus').style.color='#dc2626';
+      } else {
+        ban.className='sban sban-none';
+        ban.innerHTML='<div class="sban-icon">🏠</div><div><div class="sban-title">No Application Yet</div><div class="sban-sub">Browse rooms and apply below!</div></div>';
+      }
+      document.getElementById('smroom').textContent='—';
+    }
+    document.getElementById('scompc').textContent=(comps||[]).length;
+    document.getElementById('sfees').textContent=fmtR((fees||[]).reduce(function(s,f){return s+f.amount;},0));
+
+    renderSRooms();
+
+    // Apps table
+    var at=document.getElementById('sapps');
+    at.innerHTML=(apps&&apps.length)?apps.map(function(a){return '<tr><td>Room '+a.roomNumber+'</td><td>'+a.building+'</td><td>'+fmtR(a.roomPrice)+'/mo</td><td>'+a.duration+'</td><td>'+a.checkin+'</td><td>'+fmtD(a.createdAt)+'</td><td><span class="b '+(a.status==='Approved'?'bg':a.status==='Rejected'?'br':'by')+'">'+a.status+'</span></td></tr>';}).join(''):'<tr><td colspan="7"><div class="empty">No applications yet</div></td></tr>';
+
+    // Complaints table
+    var ct=document.getElementById('scomps');
+    ct.innerHTML=(comps&&comps.length)?comps.map(function(c){return '<tr><td>'+fmtD(c.createdAt)+'</td><td>'+c.subject+'</td><td><span class="p'+c.priority.toLowerCase()[0]+'">'+c.priority+'</span></td><td><span class="b '+(c.status==='Resolved'?'bg':c.status==='In Progress'?'bb':'by')+'">'+c.status+'</span></td></tr>';}).join(''):'<tr><td colspan="4"><div class="empty">No complaints</div></td></tr>';
+
+    // Fees table
+    var ft=document.getElementById('sfees-t');
+    ft.innerHTML=(fees&&fees.length)?fees.map(function(f,i){return '<tr><td>'+(i+1)+'</td><td>'+f.month+'</td><td><strong>'+fmtR(f.amount)+'</strong></td><td>'+f.mode+'</td><td>'+fmtD(f.createdAt)+'</td><td><span class="b bg">Paid</span></td></tr>';}).join(''):'<tr><td colspan="6"><div class="empty">No fee records</div></td></tr>';
+
+    // Notices
+    var nl=document.getElementById('snotices');
+    nl.innerHTML=(notices&&notices.length)?notices.map(function(n){return '<div style="padding:11px 0;border-bottom:1px solid #f3f4f6"><div style="display:flex;align-items:center;gap:7px;margin-bottom:3px"><strong style="font-size:.88rem">'+n.title+'</strong><span class="b bb" style="font-size:.64rem">'+n.category+'</span><span style="font-size:.7rem;color:#9ca3af">'+fmtD(n.createdAt)+'</span></div><div style="font-size:.8rem;color:#6b7280">'+n.content+'</div></div>';}).join(''):'<div class="empty">No notices</div>';
+
+  } catch(e){}
+}
+
+function TAB(tab) {
+  var tabs=document.querySelectorAll('#TABS .tab');
+  for(var i=0;i<tabs.length;i++) tabs[i].classList.remove('on');
+  var tcs=document.querySelectorAll('.tc');
+  for(var i=0;i<tcs.length;i++) tcs[i].classList.remove('on');
+  document.querySelector('#TABS .tab[onclick="TAB(\''+tab+'\')"]').classList.add('on');
+  document.getElementById('TC-'+tab).classList.add('on');
+}
+
+var sFilter='';
+function setSF(type,el){
+  sFilter=type;
+  var btns=document.querySelectorAll('#TC-rooms .fbtn');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('on');
+  el.classList.add('on');
+  renderSRooms();
+}
+
+function renderSRooms(){
+  var q=document.getElementById('ssearch').value.toLowerCase();
+  var emj={Single:'🛏️',Double:'🛏️🛏️',Triple:'🏠',Suite:'🌟'};
+  var rooms=D.rooms.filter(function(r){return(!sFilter||r.type===sFilter)&&(r.number.toLowerCase().includes(q)||r.building.toLowerCase().includes(q));});
+  var g=document.getElementById('srooms');
+  if(!rooms.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">🛏️</div>No rooms found</div>';return;}
+  g.innerHTML=rooms.map(function(r){return `
+    <div class="rcard">
+      <div class="rimg">${emj[r.type]||'🛏️'}<span class="rbadge ${r.status==='Available'?'ba':'bo'}">${r.status}</span></div>
+      <div class="rbody">
+        <div class="rtitle">Room ${r.number} — Building ${r.building}</div>
+        <div class="rmeta">Floor ${r.floor} · ${r.capacity} person(s) · ${r.type}</div>
+        ${r.amenities&&r.amenities.length?'<div class="ramen">✨ '+r.amenities.join(' · ')+'</div>':''}
+        <div class="rprice">${fmtR(r.price)}<span>/month</span></div>
+        <button class="rapply" ${r.status!=='Available'?'disabled':''} onclick="APPLY('${r.number}','${r.building}',${r.price},'${r.type}')">
+          ${r.status==='Available'?'Apply Now →':'Currently Occupied'}
+        </button>
+      </div>
+    </div>`;}).join('');
+}
+
+async function submitComp(){
+  var subj=document.getElementById('csubj').value.trim();
+  var pri=document.getElementById('cpri').value;
+  var desc=document.getElementById('cdesc').value.trim();
+  if(!subj||!desc){TOAST('Please fill all fields','error');return;}
+  var myApp=D.apps.find(function(a){return a.studentId===D.student.studentId&&a.status==='Approved';});
+  try{
+    await API('POST','/api/complaints',{studentId:D.student.studentId,studentName:D.student.name,room:myApp?myApp.roomNumber:'N/A',subject:subj,priority:pri,description:desc});
+    document.getElementById('csubj').value=''; document.getElementById('cdesc').value='';
+    TOAST('Complaint submitted!'); loadSDash();
+  }catch(e){}
+}
+
+// ═══════════════════════════
+// ADMIN AUTH
+// ═══════════════════════════
+async function doAdminLogin(){
+  var pass=document.getElementById('apw').value;
+  if(!pass){TOAST('Enter password','error');return;}
+  try{
+    var data=await API('POST','/api/admin/login',{password:pass});
+    D.adminToken=data.token; localStorage.setItem('admin_token',data.token);
+    GO('admin'); loadADash();
+  }catch(e){}
+}
+function doAdminLogout(){D.adminToken=null;localStorage.removeItem('admin_token');GO('home');loadHome();TOAST('Admin logged out');}
+
+// ═══════════════════════════
+// ADMIN NAV
+// ═══════════════════════════
+function AN(pg){
+  var items=document.querySelectorAll('.ani');
+  for(var i=0;i<items.length;i++) items[i].classList.remove('on');
+  var pages=document.querySelectorAll('.ap');
+  for(var i=0;i<pages.length;i++) pages[i].classList.remove('on');
+  document.querySelector('.ani[onclick="AN(\''+pg+'\')"]').classList.add('on');
+  document.getElementById('AP-'+pg).classList.add('on');
+  var loaders={dash:loadADash,rooms:loadARooms,students:loadAStudents,apps:loadAApps,comps:loadAComps,fees:loadAFees,notices:loadANotices,agents:function(){runAllAgents();}};
+  if(loaders[pg]) loaders[pg]();
+}
+
+// ═══════════════════════════
+// ADMIN DASH
+// ═══════════════════════════
+async function loadADash(){
+  var rooms=await API('GET','/api/rooms');
+  var studs=await API('GET','/api/students');
+  var apps=await API('GET','/api/applications');
+  var comps=await API('GET','/api/complaints');
+  D.rooms=rooms; D.studs=studs; D.apps=apps; D.comps=comps;
+  document.getElementById('ad-rm').textContent=rooms.length;
+  document.getElementById('ad-oc').textContent=rooms.filter(function(r){return r.status==='Occupied';}).length;
+  document.getElementById('ad-st').textContent=studs.length;
+  document.getElementById('ad-pe').textContent=apps.filter(function(a){return a.status==='Pending';}).length;
+  document.getElementById('ad-apps').innerHTML=apps.slice(0,5).map(function(a){return '<tr><td><strong>'+a.studentName+'</strong></td><td>Room '+a.roomNumber+'</td><td><span class="b '+(a.status==='Approved'?'bg':a.status==='Rejected'?'br':'by')+'">'+a.status+'</span></td></tr>';}).join()||'<tr><td colspan="3"><div class="empty">None</div></td></tr>';
+  document.getElementById('ad-comps').innerHTML=comps.filter(function(c){return c.status==='Pending';}).slice(0,5).map(function(c){return '<tr><td>'+c.studentName+'</td><td>'+c.subject+'</td><td><span class="p'+c.priority.toLowerCase()[0]+'">'+c.priority+'</span></td></tr>';}).join()||'<tr><td colspan="3"><div class="empty">None</div></td></tr>';
+  popFeeStudents();
+}
+
+// ROOMS
+async function loadARooms(){D.rooms=await API('GET','/api/rooms');renderARooms(D.rooms);}
+function filterARooms(){var q=document.getElementById('ar-q').value.toLowerCase(),fs=document.getElementById('ar-s').value;renderARooms(D.rooms.filter(function(r){return(r.number.toLowerCase().includes(q)||r.building.toLowerCase().includes(q))&&(!fs||r.status===fs);}));}
+function renderARooms(rooms){
+  var g=document.getElementById('ar-grid');
+  if(!rooms.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">🛏️</div>No rooms</div>';return;}
+  g.innerHTML=rooms.map(function(r){return `
+    <div class="rcard-a">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
+        <div style="font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700">Room ${r.number}</div>
+        <span class="b ${r.status==='Available'?'bg':'br'}">${r.status}</span>
+      </div>
+      <div style="font-size:.78rem;color:#6b7280;margin-bottom:3px">Building ${r.building} · Floor ${r.floor}</div>
+      <div style="font-size:.78rem;color:#6b7280;margin-bottom:7px">${r.type} · ${r.capacity} person(s)</div>
+      <div style="font-family:'Syne',sans-serif;font-size:.95rem;font-weight:700;color:#2563eb;margin-bottom:8px">${fmtR(r.price)}/mo</div>
+      ${r.amenities&&r.amenities.length?'<div style="font-size:.7rem;color:#6b7280;margin-bottom:8px">✨ '+r.amenities.join(', ')+'</div>':''}
+      <div style="display:flex;gap:5px">
+        <button class="abtn abtn-sm ${r.status==='Available'?'abtn-del':'abtn-ok'}" onclick="toggleRoom('${r._id}','${r.status==='Available'?'Occupied':'Available'}')">
+          ${r.status==='Available'?'🔒 Occupied':'✅ Available'}
+        </button>
+        <button class="ibtn del" onclick="delRoom('${r._id}')">🗑️</button>
+      </div>
+    </div>`;}).join('');
+}
+async function addRoom(){
+  var num=document.getElementById('Rnum').value.trim(),bld=document.getElementById('Rbld').value.trim();
+  var flr=document.getElementById('Rflr').value,typ=document.getElementById('Rtyp').value;
+  var cap=document.getElementById('Rcap').value,prc=document.getElementById('Rprc').value;
+  var amen=document.getElementById('Ramen').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+  if(!num||!bld||!flr||!cap||!prc){TOAST('Fill all required fields','error');return;}
+  try{await API('POST','/api/rooms',{number:num,building:bld,floor:+flr,type:typ,capacity:+cap,price:+prc,amenities:amen});
+    ['Rnum','Rbld','Rflr','Rcap','Rprc','Ramen'].forEach(function(id){document.getElementById(id).value='';});
+    loadARooms();loadHome();TOAST('Room '+num+' added!');}catch(e){}
+}
+async function toggleRoom(id,s){try{await API('PATCH','/api/rooms/'+id+'/status',{status:s});loadARooms();loadHome();TOAST('Room updated');}catch(e){}}
+async function delRoom(id){try{await API('DELETE','/api/rooms/'+id);loadARooms();loadHome();TOAST('Room deleted');}catch(e){}}
+
+// STUDENTS
+async function loadAStudents(){D.studs=await API('GET','/api/students');renderAStudents(D.studs);}
+function filterAStudents(){var q=document.getElementById('as-q').value.toLowerCase();renderAStudents(D.studs.filter(function(s){return s.name.toLowerCase().includes(q)||s.studentId.toLowerCase().includes(q)||s.email.toLowerCase().includes(q);}));}
+function renderAStudents(studs){
+  document.getElementById('as-t').innerHTML=studs.length?studs.map(function(s,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+s.name+'</strong></td><td><span class="b bb">'+s.studentId+'</span></td><td>'+s.email+'</td><td>'+s.program+'</td><td>'+s.year+'</td><td><button class="ibtn del" onclick="delStudent(\''+s._id+'\')">🗑️</button></td></tr>';}).join(''):'<tr><td colspan="7"><div class="empty">No students</div></td></tr>';
+}
+async function delStudent(id){try{await API('DELETE','/api/students/'+id);loadAStudents();TOAST('Student deleted');}catch(e){}}
+
+// APPLICATIONS
+async function loadAApps(){D.apps=await API('GET','/api/applications');renderAApps(D.apps);}
+function filterAApps(){var q=document.getElementById('aa-q').value.toLowerCase(),fs=document.getElementById('aa-s').value;renderAApps(D.apps.filter(function(a){return(a.studentName.toLowerCase().includes(q)||a.roomNumber.toLowerCase().includes(q))&&(!fs||a.status===fs);}));}
+function renderAApps(apps){
+  document.getElementById('aa-t').innerHTML=apps.length?apps.map(function(a,i){return `<tr>
+    <td>${i+1}</td>
+    <td><strong>${a.studentName}</strong><br><span style="font-size:.72rem;color:#6b7280">${a.studentId}</span></td>
+    <td>Room ${a.roomNumber}<br><span style="font-size:.72rem;color:#6b7280">${a.building}</span></td>
+    <td>${a.duration}</td><td>${a.checkin}</td><td>${fmtD(a.createdAt)}</td>
+    <td><span class="b ${a.status==='Approved'?'bg':a.status==='Rejected'?'br':'by'}">${a.status}</span></td>
+    <td><div class="agrp">
+      ${a.status==='Pending'?`<button class="abtn abtn-sm abtn-ok" onclick="updateApp('${a._id}','Approved')">✅ Approve</button><button class="abtn abtn-sm abtn-del" onclick="updateApp('${a._id}','Rejected')">❌ Reject</button>`:'<span style="font-size:.76rem;color:#9ca3af">Done</span>'}
+    </div></td></tr>`;}).join(''):'<tr><td colspan="8"><div class="empty">No applications</div></td></tr>';
+}
+async function updateApp(id,status){try{await API('PATCH','/api/applications/'+id,{status:status});loadAApps();loadADash();loadHome();TOAST('Application '+status+'!');}catch(e){}}
+
+// COMPLAINTS
+async function loadAComps(){D.comps=await API('GET','/api/complaints');renderAComps(D.comps);}
+function filterAComps(){var q=document.getElementById('ac-q').value.toLowerCase(),fs=document.getElementById('ac-s').value;renderAComps(D.comps.filter(function(c){return(c.studentName.toLowerCase().includes(q)||c.subject.toLowerCase().includes(q))&&(!fs||c.status===fs);}));}
+function renderAComps(comps){
+  document.getElementById('ac-t').innerHTML=comps.length?comps.map(function(c,i){return `<tr>
+    <td>${i+1}</td><td>${fmtD(c.createdAt)}</td><td><strong>${c.studentName}</strong></td>
+    <td>Room ${c.room}</td><td title="${c.description}">${c.subject}</td>
+    <td><span class="p${c.priority.toLowerCase()[0]}">${c.priority}</span></td>
+    <td><span class="b ${c.status==='Resolved'?'bg':c.status==='In Progress'?'bb':'by'}">${c.status}</span></td>
+    <td><div class="agrp">
+      ${c.status==='Pending'?`<button class="ibtn" onclick="updateComp('${c._id}','In Progress')" title="In Progress">🔄</button>`:''}
+      ${c.status!=='Resolved'?`<button class="ibtn" onclick="updateComp('${c._id}','Resolved')" title="Resolve">✅</button>`:''}
+      <button class="ibtn del" onclick="delComp('${c._id}')">🗑️</button>
+    </div></td></tr>`;}).join(''):'<tr><td colspan="8"><div class="empty">No complaints</div></td></tr>';
+}
+async function updateComp(id,status){try{await API('PATCH','/api/complaints/'+id+'/status',{status:status});loadAComps();TOAST('Complaint '+status);}catch(e){}}
+async function delComp(id){try{await API('DELETE','/api/complaints/'+id);loadAComps();}catch(e){}}
+
+// FEES
+async function loadAFees(){var fees=await API('GET','/api/fees');D.fees=fees;renderAFees(fees);popFeeStudents();}
+function popFeeStudents(){document.getElementById('afs-sid').innerHTML='<option value="">— Select student —</option>'+(D.studs||[]).map(function(s){return '<option value="'+s.studentId+'">'+s.name+' ('+s.studentId+')</option>';}).join('');}
+async function afFill(){var sid=document.getElementById('afs-sid').value;var app=(D.apps||[]).find(function(a){return a.studentId===sid&&a.status==='Approved';});document.getElementById('afs-rm').value=app?'Room '+app.roomNumber:'';if(app)document.getElementById('afs-amt').value=app.roomPrice||'';}
+function renderAFees(fees){
+  var tot=fees.reduce(function(s,f){return s+f.amount;},0);
+  var tm=new Date().toISOString().slice(0,7);
+  var mt=fees.filter(function(f){return f.month===tm;}).reduce(function(s,f){return s+f.amount;},0);
+  document.getElementById('af-tot').textContent=fmtR(tot);
+  document.getElementById('af-cnt').textContent=fees.length;
+  document.getElementById('af-mon').textContent=fmtR(mt);
+  document.getElementById('af-t').innerHTML=fees.length?fees.map(function(f,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+f.studentName+'</strong></td><td>'+(f.room!=='—'?'Room '+f.room:'—')+'</td><td><strong>'+fmtR(f.amount)+'</strong></td><td>'+f.month+'</td><td>'+f.mode+'</td><td>'+fmtD(f.createdAt)+'</td><td><button class="ibtn del" onclick="delFee(\''+f._id+'\')">🗑️</button></td></tr>';}).join(''):'<tr><td colspan="8"><div class="empty">No records</div></td></tr>';
+}
+async function addFee(){
+  var sid=document.getElementById('afs-sid').value,amt=document.getElementById('afs-amt').value;
+  var mth=document.getElementById('afs-mth').value,mod=document.getElementById('afs-mod').value;
+  var not=document.getElementById('afs-not').value;
+  if(!sid||!amt||!mth){TOAST('Fill required fields','error');return;}
+  var stud=D.studs.find(function(s){return s.studentId===sid;});
+  var app=(D.apps||[]).find(function(a){return a.studentId===sid&&a.status==='Approved';});
+  try{await API('POST','/api/fees',{studentId:sid,studentName:stud.name,room:app?app.roomNumber:'—',amount:+amt,month:mth,mode:mod,notes:not});
+    ['afs-sid','afs-rm','afs-amt','afs-mth','afs-not'].forEach(function(id){document.getElementById(id).value='';});
+    loadAFees();TOAST('Payment recorded for '+stud.name+'!');}catch(e){}
+}
+async function delFee(id){try{await API('DELETE','/api/fees/'+id);loadAFees();}catch(e){}}
+
+// NOTICES
+async function loadANotices(){D.notices=await API('GET','/api/notices');renderANotices(D.notices);}
+function renderANotices(notices){
+  var list=document.getElementById('an-list');
+  list.innerHTML=notices.length?notices.map(function(n){return `<div class="ac">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-size:.9rem;font-weight:700;margin-bottom:5px">${n.title}</div>
+        <div style="display:flex;gap:7px;align-items:center"><span class="b bb">${n.category}</span><span style="font-size:.7rem;color:#9ca3af">${fmtD(n.createdAt)}</span></div>
+      </div>
+      <button class="ibtn del" onclick="delNotice('${n._id}')">🗑️</button>
+    </div>
+    <div style="color:#6b7280;font-size:.82rem;line-height:1.6;margin-top:8px">${n.content}</div>
+  </div>`;}).join(''):'<div class="empty">No notices</div>';
+}
+async function addNotice(){
+  var t=document.getElementById('ant').value.trim(),c=document.getElementById('anc').value,con=document.getElementById('ancon').value.trim();
+  if(!t||!con){TOAST('Fill all fields','error');return;}
+  try{await API('POST','/api/notices',{title:t,category:c,content:con});
+    document.getElementById('ant').value='';document.getElementById('ancon').value='';
+    loadANotices();loadHome();TOAST('Notice posted!');}catch(e){}
+}
+async function delNotice(id){try{await API('DELETE','/api/notices/'+id);loadANotices();loadHome();}catch(e){}}
+
+// ═══════════════════════════
+// AI FEATURES
+// ═══════════════════════════
+async function aiRec(){
+  var budget=+document.getElementById('ai-bud').value||null;
+  var type=document.getElementById('ai-typ').value||null;
+  var flr=document.getElementById('ai-flr').value||null;
+  var soc=document.getElementById('ai-soc').value;
+  var amen=document.getElementById('ai-amen').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+  var res=document.getElementById('ai-rec');
+  res.innerHTML='<div class="empty">🤖 AI is analyzing rooms for you...</div>';
+  try{
+    var data=await API('POST','/api/ai/recommend-rooms',{budget:budget,type:type,amenities:amen,floor_pref:flr,quiet:soc==='quiet',social:soc==='social'});
+    if(!data.rooms.length){res.innerHTML='<div class="empty">No available rooms found right now.</div>';return;}
+    res.innerHTML='<div style="font-weight:600;margin-bottom:10px;font-size:.9rem">✨ AI Recommendations</div>'+
+    data.rooms.map(function(r,i){return `
+      <div style="background:${i===0?'rgba(37,99,235,.04)':'#f9fafb'};border:1px solid ${i===0?'rgba(37,99,235,.2)':'#e5e2da'};border-radius:11px;padding:13px;margin-bottom:9px">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px">
+          <div>
+            ${i===0?'<div style="font-size:.66rem;font-weight:700;color:#2563eb;background:rgba(37,99,235,.1);padding:2px 8px;border-radius:100px;margin-bottom:4px;display:inline-block">⭐ BEST MATCH</div><br>':''}
+            <strong>Room ${r.number} — Building ${r.building}</strong>
+            <div style="font-size:.78rem;color:#6b7280;margin-top:2px">${r.type} · Floor ${r.floor} · ${fmtR(r.price)}/mo</div>
+          </div>
+          <div style="text-align:center;background:${r.matchPct>=70?'rgba(5,150,105,.1)':r.matchPct>=50?'rgba(37,99,235,.1)':'rgba(217,119,6,.1)'};border-radius:9px;padding:7px 11px">
+            <div style="font-size:1.1rem;font-weight:800;color:${r.matchPct>=70?'#059669':r.matchPct>=50?'#2563eb':'#d97706'}">${r.matchPct}%</div>
+            <div style="font-size:.62rem;color:#6b7280">match</div>
+          </div>
+        </div>
+        ${r.reasons.length?'<div style="margin-bottom:5px">'+r.reasons.map(function(x){return '<span style="font-size:.7rem;background:rgba(5,150,105,.08);color:#059669;padding:2px 7px;border-radius:100px;margin:2px;display:inline-block">✓ '+x+'</span>';}).join('')+'</div>':''}
+        <button class="rapply" style="width:auto;padding:6px 14px;font-size:.78rem;margin-top:7px" onclick="APPLY('${r.number}','${r.building}',${r.price},'${r.type}')">Apply →</button>
+      </div>`;}).join('');
+  }catch(e){res.innerHTML='<div class="empty" style="color:#dc2626">Failed. Try again!</div>';}
+}
+
+async function mlPred(){
+  var type=document.getElementById('ml-typ').value;
+  var bld=document.getElementById('ml-bld').value;
+  var flr=+document.getElementById('ml-flr').value||1;
+  var cap=+document.getElementById('ml-cap').value||1;
+  var amen=document.getElementById('ml-amen').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+  var res=document.getElementById('ml-res');
+  res.innerHTML='<div class="empty">🧠 ML model calculating...</div>';
+  try{
+    var data=await API('POST','/api/ai/predict-price',{type:type,building:bld,floor:flr,capacity:cap,amenities:amen});
+    res.innerHTML=`
+      <div style="background:rgba(5,150,105,.05);border:1px solid rgba(5,150,105,.2);border-radius:11px;padding:16px;text-align:center">
+        <div style="font-size:.78rem;color:#6b7280;margin-bottom:5px">ML Predicted Fair Price</div>
+        <div style="font-family:'Syne',sans-serif;font-size:1.9rem;font-weight:800;color:#059669">${fmtR(data.predicted)}<span style="font-size:.82rem;font-weight:400;color:#6b7280">/month</span></div>
+        <div style="font-size:.78rem;color:#6b7280;margin-top:4px">Fair range: ${fmtR(data.range.low)} – ${fmtR(data.range.high)}</div>
+        <div style="margin-top:9px;display:flex;align-items:center;justify-content:center;gap:7px">
+          <div style="flex:1;max-width:180px;height:5px;background:#e5e7eb;border-radius:3px;overflow:hidden">
+            <div style="width:${data.confidence}%;height:100%;background:linear-gradient(90deg,#059669,#2563eb);border-radius:3px"></div>
+          </div>
+          <span style="font-size:.74rem;color:#6b7280">${data.confidence}% confidence</span>
+        </div>
+        <div style="font-size:.7rem;color:#9ca3af;margin-top:7px">Based on: ${type}, Building ${bld}, Floor ${flr}, Capacity ${cap}</div>
+      </div>`;
+  }catch(e){res.innerHTML='<div class="empty" style="color:#dc2626">Prediction failed.</div>';}
+}
+
+async function rmMatch(){
+  if(!D.student){TOAST('Please login first','error');return;}
+  var pref={
+    sleep_time:document.getElementById('rm-slp').value,
+    study_habit:document.getElementById('rm-std').value,
+    cleanliness:document.getElementById('rm-cln').value,
+    noise_level:document.getElementById('rm-nse').value,
+    social_level:document.getElementById('rm-soc').value,
+    diet:document.getElementById('rm-dit').value,
+    guest_policy:document.getElementById('rm-gst').value
+  };
+  await API('POST','/api/ai/save-compatibility',{studentId:D.student.studentId,name:D.student.name,program:D.student.program,year:D.student.year,preferences:pref});
+  var res=document.getElementById('rm-res');
+  res.innerHTML='<div class="empty">🤝 Finding matches...</div>';
+  try{
+    var data=await API('POST','/api/ai/roommate-match',{studentId:D.student.studentId,preferences:pref});
+    if(!data.matches.length){
+      res.innerHTML='<div style="background:rgba(37,99,235,.05);border:1px solid rgba(37,99,235,.15);border-radius:11px;padding:16px;text-align:center"><div style="font-size:1.3rem;margin-bottom:6px">👤</div><div style="font-weight:600;margin-bottom:3px">Profile Saved!</div><div style="font-size:.8rem;color:#6b7280">No other students yet. Share this with your friends!</div></div>';
+      return;
+    }
+    var tc={green:'rgba(5,150,105,.08)',blue:'rgba(37,99,235,.08)',yellow:'rgba(217,119,6,.08)',red:'rgba(220,38,38,.08)'};
+    var tx={green:'#059669',blue:'#2563eb',yellow:'#d97706',red:'#dc2626'};
+    res.innerHTML='<div style="font-weight:600;margin-bottom:10px;font-size:.9rem">🤝 Your Roommate Matches</div>'+
+    data.matches.map(function(m,i){return `
+      <div style="background:${i===0?'rgba(124,58,237,.05)':'#f9fafb'};border:1px solid ${i===0?'rgba(124,58,237,.2)':'#e5e2da'};border-radius:11px;padding:13px;margin-bottom:9px">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:7px">
+          <div style="display:flex;align-items:center;gap:9px">
+            <div style="width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#7c3aed,#2563eb);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700">${m.name[0]}</div>
+            <div><div style="font-weight:600">${m.name}</div><div style="font-size:.74rem;color:#6b7280">${m.program} · ${m.year}</div></div>
+          </div>
+          <div style="text-align:center;background:${tc[m.tierColor]};border-radius:9px;padding:6px 11px">
+            <div style="font-size:1.05rem;font-weight:800;color:${tx[m.tierColor]}">${m.matchPct}%</div>
+            <div style="font-size:.62rem;color:#6b7280">${m.tier}</div>
+          </div>
+        </div>
+        ${m.commonalities.length?'<div style="margin-bottom:4px">'+m.commonalities.map(function(c){return '<span style="font-size:.68rem;background:rgba(5,150,105,.08);color:#059669;padding:2px 7px;border-radius:100px;margin:2px;display:inline-block">✓ '+c+'</span>';}).join('')+'</div>':''}
+        ${m.differences.length?'<div>'+m.differences.map(function(d){return '<span style="font-size:.68rem;background:rgba(220,38,38,.06);color:#dc2626;padding:2px 7px;border-radius:100px;margin:2px;display:inline-block">≠ '+d+'</span>';}).join('')+'</div>':''}
+      </div>`;}).join('');
+  }catch(e){res.innerHTML='<div class="empty" style="color:#dc2626">Matching failed.</div>';}
+}
+
+// ═══════════════════════════
+// INIT
+// ═══════════════════════════
+
+// ═══════════════════════════
+// AI AGENT FUNCTIONS (PS5)
+// ═══════════════════════════
+function agRes(el, html){ document.getElementById(el).innerHTML = html; }
+
+function agCard(color, icon, title, body) {
+  return '<div style="background:rgba('+color+');border:1px solid rgba('+color.split(',').slice(0,3).join(',')+',.3);border-radius:11px;padding:14px;margin-bottom:9px"><div style="font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:7px">'+icon+' '+title+'</div>'+body+'</div>';
+}
+
+function auditBadge(entry) {
+  var color = entry.compliant ? '#059669' : '#dc2626';
+  var bg = entry.compliant ? 'rgba(5,150,105,.08)' : 'rgba(220,38,38,.08)';
+  return '<span style="font-size:.68rem;font-weight:700;color:'+color+';background:'+bg+';padding:2px 8px;border-radius:100px">'+entry.decision+'</span>';
+}
+
+async function runAllocAgent() {
+  var sid = document.getElementById('aag-sid').value.trim();
+  var rm  = document.getElementById('aag-rm').value.trim();
+  if(!sid||!rm){TOAST('Enter Student ID and Room Number','error');return;}
+  agRes('aag-res','<div class="empty">🤖 AllocationAgent validating...</div>');
+  try {
+    var d = await API('POST','/api/agents/allocation-agent/validate',{studentId:sid,roomNumber:rm});
+    var html = d.approved
+      ? agCard('5,150,105','✅','APPROVED — Allocation is compliant','<div style="font-size:.8rem;color:#6b7280;margin-bottom:7px">'+d.reasoning+'</div>'+(d.warnings.length?'<div>'+d.warnings.map(function(w){return '<div style="font-size:.74rem;color:#d97706;margin-bottom:3px">⚠️ '+w+'</div>';}).join('')+'</div>':'')+'<div style="font-size:.7rem;color:#9ca3af;margin-top:6px">Audit ID: '+d.auditEntry.id+'</div>')
+      : agCard('220,38,38','❌','REJECTED — Policy Violation Detected','<div>'+d.violations.map(function(v){return '<div style="font-size:.76rem;color:#dc2626;margin-bottom:4px">🚫 '+v+'</div>';}).join('')+'</div>'+'<div style="font-size:.7rem;color:#9ca3af;margin-top:6px">Audit ID: '+d.auditEntry.id+'</div>');
+    agRes('aag-res', html);
+  } catch(e) { agRes('aag-res','<div class="empty" style="color:#dc2626">Agent failed</div>'); }
+}
+
+async function runComplianceAgent() {
+  agRes('comp-res','<div class="empty">🔎 ComplianceAgent scanning...</div>');
+  try {
+    var d = await API('GET','/api/agents/compliance-agent/scan');
+    document.getElementById('ag-comp').textContent = d.flagged;
+    if(!d.flagged){ agRes('comp-res', agCard('5,150,105','✅','All Clear','<div style="font-size:.8rem;color:#6b7280">Scanned '+d.scanned+' applications. No policy violations or SLA breaches found.</div>')); return; }
+    var html = '<div style="font-size:.8rem;color:#6b7280;margin-bottom:10px">Scanned <strong>'+d.scanned+'</strong> applications · <strong style="color:#dc2626">'+d.totalViolations+' violations</strong> · <strong style="color:#d97706">'+d.slaBreaches+' SLA breaches</strong></div>';
+    html += d.report.map(function(r){
+      return agCard('217,119,6','⚠️',r.application.studentName+' — Room '+r.application.roomNumber,'<div style="font-size:.76rem;color:#6b7280;margin-bottom:5px">Pending '+r.pendingDays+' day(s)</div>'+(r.violations.length?'<div>'+r.violations.map(function(v){return '<div style="font-size:.72rem;color:#dc2626;margin-bottom:2px">🚫 '+v+'</div>';}).join('')+'</div>':'')+(r.warnings.length?'<div>'+r.warnings.map(function(w){return '<div style="font-size:.72rem;color:#d97706;margin-bottom:2px">⚠️ '+w+'</div>';}).join('')+'</div>':''));
+    }).join('');
+    agRes('comp-res', html);
+  } catch(e) { agRes('comp-res','<div class="empty" style="color:#dc2626">Agent failed</div>'); }
+}
+
+async function runFeeAgent() {
+  agRes('fee-res','<div class="empty">💰 FeeAgent scanning...</div>');
+  try {
+    var d = await API('GET','/api/agents/fee-agent/scan');
+    document.getElementById('ag-fee').textContent = d.alerts.length;
+    if(!d.alerts.length){ agRes('fee-res', agCard('5,150,105','✅','No Overdue Fees','<div style="font-size:.8rem;color:#6b7280">All '+d.scanned+' active allocations have up-to-date payments.</div>')); return; }
+    var html = '<div style="font-size:.8rem;color:#6b7280;margin-bottom:10px">Total outstanding: <strong style="color:#dc2626">₹'+d.totalOutstanding.toLocaleString('en-IN')+'</strong></div>';
+    html += d.alerts.map(function(a){
+      var col = a.severity==='critical'?'220,38,38':a.severity==='warning'?'217,119,6':'37,99,235';
+      var icon = a.severity==='critical'?'🚨':a.severity==='warning'?'⚠️':'ℹ️';
+      return agCard(col, icon, a.studentName+' — Room '+a.room,'<div style="font-size:.76rem;color:#6b7280">'+a.missingPayments+' missing payment(s) · Outstanding: <strong>₹'+a.outstanding.toLocaleString('en-IN')+'</strong> · ₹'+a.roomPrice.toLocaleString('en-IN')+'/mo</div>');
+    }).join('');
+    agRes('fee-res', html);
+  } catch(e) { agRes('fee-res','<div class="empty" style="color:#dc2626">Agent failed</div>'); }
+}
+
+async function runComplaintAgent() {
+  agRes('triage-res','<div class="empty">🔍 ComplaintAgent triaging...</div>');
+  try {
+    var d = await API('GET','/api/agents/complaint-agent/triage');
+    document.getElementById('ag-esc').textContent = d.escalations;
+    if(!d.total){ agRes('triage-res', agCard('5,150,105','✅','No Open Complaints','<div style="font-size:.8rem;color:#6b7280">No unresolved complaints.</div>')); return; }
+    var html = '<div style="font-size:.8rem;color:#6b7280;margin-bottom:10px">'+d.total+' open · <strong style="color:#dc2626">'+d.escalations+' need escalation</strong></div>';
+    html += d.triage.map(function(t){
+      var col = t.decision==='ESCALATE'?'220,38,38':t.slaBreach?'217,119,6':'37,99,235';
+      var icon = t.decision==='ESCALATE'?'🚨':'🔄';
+      return agCard(col, icon, t.complaint.studentName+' — '+t.complaint.subject,'<div style="font-size:.76rem;color:#6b7280;margin-bottom:4px">Priority: <strong>'+t.complaint.priority+'</strong> · Open '+t.ageHours+'h · SLA: '+t.playbook.sla+(t.slaBreach?'<span style="color:#dc2626"> ⚠️ BREACHED</span>':'')+'</div><div style="font-size:.72rem;color:#6b7280">📋 '+t.playbook.action+'</div>');
+    }).join('');
+    agRes('triage-res', html);
+  } catch(e) { agRes('triage-res','<div class="empty" style="color:#dc2626">Agent failed</div>'); }
+}
+
+async function runOccupancyAgent() {
+  agRes('occ-res','<div class="empty">📡 OccupancyAgent scanning...</div>');
+  try {
+    var d = await API('GET','/api/agents/occupancy-agent/report');
+    document.getElementById('ag-ano').textContent = d.anomalies.length + d.allocationMismatches.length;
+    var s = d.summary;
+    var hcol = s.healthStatus==='critical'?'220,38,38':s.healthStatus==='warning'?'217,119,6':'5,150,105';
+    var html = agCard(hcol, s.healthStatus==='critical'?'🔴':s.healthStatus==='warning'?'🟡':'🟢',
+      'Occupancy: '+s.occupancyRate+'% — '+s.healthStatus.toUpperCase(),
+      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px">'+
+      '<div style="background:#f9fafb;border-radius:8px;padding:8px;text-align:center"><div style="font-size:.65rem;color:#6b7280">Total</div><div style="font-weight:800">'+s.total+'</div></div>'+
+      '<div style="background:#f9fafb;border-radius:8px;padding:8px;text-align:center"><div style="font-size:.65rem;color:#6b7280">Occupied</div><div style="font-weight:800;color:#dc2626">'+s.occupied+'</div></div>'+
+      '<div style="background:#f9fafb;border-radius:8px;padding:8px;text-align:center"><div style="font-size:.65rem;color:#6b7280">Available</div><div style="font-weight:800;color:#059669">'+s.available+'</div></div></div>'+
+      '<div>'+d.recommendations.map(function(r){return '<div style="font-size:.76rem;color:#6b7280;margin-bottom:2px">💡 '+r+'</div>';}).join('')+'</div>'
+    );
+    if(d.anomalies.length||d.allocationMismatches.length){
+      html += d.anomalies.map(function(a){return agCard('220,38,38','⚠️','Anomaly: Room '+a.room.number,'<div style="font-size:.76rem;color:#dc2626">'+a.auditEntry.violations[0]+'</div>');}).join('');
+      html += d.allocationMismatches.map(function(m){return agCard('217,119,6','⚠️','Mismatch: Room '+m.room.number,'<div style="font-size:.76rem;color:#d97706">'+m.auditEntry.violations[0]+'</div>');}).join('');
+    }
+    agRes('occ-res', html);
+  } catch(e) { agRes('occ-res','<div class="empty" style="color:#dc2626">Agent failed</div>'); }
+}
+
+async function runAllAgents() {
+  TOAST('Running all agents...');
+  var cnt = {'comp-res':runComplianceAgent,'fee-res':runFeeAgent,'triage-res':runComplaintAgent,'occ-res':runOccupancyAgent};
+  for(var k in cnt) agRes(k,'<div class="empty">⚡ Running...</div>');
+  await Promise.all([runComplianceAgent(),runFeeAgent(),runComplaintAgent(),runOccupancyAgent()]);
+  TOAST('All agents completed!');
+}
+
+async function loadAgentAudit() {
+  var panel = document.getElementById('audit-panel');
+  panel.style.display = 'block';
+  var agent = document.getElementById('audit-agent-filter').value;
+  var url = '/api/agents/audit-trail?limit=30' + (agent?'&agent='+encodeURIComponent(agent):'');
+  try {
+    var d = await API('GET', url);
+    var col = {AllocationAgent:'37,99,235',ComplianceAgent:'217,119,6',FeeAgent:'220,38,38',ComplaintAgent:'124,58,237',OccupancyAgent:'5,150,105',MasterOrchestrator:'0,0,0'};
+    document.getElementById('audit-list').innerHTML = d.entries.length ? d.entries.map(function(e){
+      var c = col[e.agent]||'100,100,100';
+      return '<div style="border-left:3px solid rgba('+c+',.6);padding:10px 12px;margin-bottom:8px;background:#f9fafb;border-radius:0 9px 9px 0">' +
+        '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">' +
+        '<div style="display:flex;align-items:center;gap:7px"><span style="font-size:.7rem;font-weight:700;color:rgba('+c+',1);background:rgba('+c+',.08);padding:2px 8px;border-radius:100px">'+e.agent+'</span><span style="font-size:.72rem;font-weight:600">'+e.action+'</span></div>' +
+        '<div style="display:flex;align-items:center;gap:5px">' + auditBadge(e) + '<span style="font-size:.65rem;color:#9ca3af">'+new Date(e.timestamp).toLocaleString('en-IN')+'</span></div></div>' +
+        '<div style="font-size:.75rem;color:#6b7280;margin-bottom:3px">'+e.reasoning+'</div>' +
+        (e.studentId&&e.studentId!=='system'?'<div style="font-size:.68rem;color:#9ca3af">Student: '+e.studentId+(e.roomId?' · Room: '+e.roomId:'')+'</div>':'') +
+        (e.violations.length?'<div style="margin-top:4px">'+e.violations.map(function(v){return '<span style="font-size:.65rem;color:#dc2626;background:rgba(220,38,38,.06);padding:2px 7px;border-radius:100px;margin:2px;display:inline-block">🚫 '+v+'</span>';}).join('')+'</div>':'') +
+        '<div style="font-size:.62rem;color:#d1d5db;margin-top:4px">ID: '+e.id+'</div></div>';
+    }).join('') : '<div class="empty">No audit entries yet</div>';
+  } catch(e){ document.getElementById('audit-list').innerHTML = '<div class="empty">Failed to load</div>'; }
+}
+
+window.addEventListener('load', function(){
+  if(location.pathname==='/admin'){GO('adminlogin');return;}
+  var st=localStorage.getItem('s_student');
+  var tk=localStorage.getItem('s_token');
+  if(st&&tk){D.student=JSON.parse(st);D.token=tk;showSDash();return;}
+  var at=localStorage.getItem('admin_token');
+  if(at){D.adminToken=at;GO('admin');loadADash();return;}
+  GO('home');loadHome();
+  document.getElementById('afs-mth').value=new Date().toISOString().slice(0,7);
+  document.getElementById('mcheckin').value=new Date().toISOString().split('T')[0];
+});
+
+document.addEventListener('keydown',function(e){
+  if(e.ctrlKey&&e.shiftKey&&e.key==='A') GO('adminlogin');
+});
+</script>
+</body>
+</html>

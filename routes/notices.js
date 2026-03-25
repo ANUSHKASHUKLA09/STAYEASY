@@ -1,0 +1,7 @@
+const express = require("express");
+const router = express.Router();
+const { Notice } = require("../models/Other");
+router.get("/", async (req, res) => { try { res.json(await Notice.find().sort({ createdAt: -1 })); } catch { res.status(500).json({ error: "Failed" }); } });
+router.post("/", async (req, res) => { try { res.json({ success: true, notice: await new Notice(req.body).save() }); } catch { res.status(500).json({ error: "Failed" }); } });
+router.delete("/:id", async (req, res) => { try { await Notice.findByIdAndDelete(req.params.id); res.json({ success: true }); } catch { res.status(500).json({ error: "Failed" }); } });
+module.exports = router;
