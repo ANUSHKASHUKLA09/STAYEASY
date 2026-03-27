@@ -185,22 +185,75 @@
 const express = require("express");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
+// const nodemailer = require("nodemailer");
+
 const Student = require("../models/Student");
 const Application = require("../models/Application");
 
 // ── EMAIL TRANSPORTER (Gmail) ────────────────────────────────────────────────
 // Uses App Password — NOT your normal Gmail password.
 // Go to: Google Account → Security → 2-Step Verification → App Passwords → Generate one
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,   // your Gmail: e.g. stayeasy.hostel@gmail.com
-    pass: process.env.EMAIL_PASS,   // 16-char App Password (not your Gmail password)
-  },
-});
 
-// ── OTP EMAIL SENDER ─────────────────────────────────────────────────────────
+
+
+//CHANGEDD NODE MAILER
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     user: process.env.EMAIL_USER,   // your Gmail: e.g. stayeasy.hostel@gmail.com
+//     pass: process.env.EMAIL_PASS,   // 16-char App Password (not your Gmail password)
+//   },
+// });
+
+// // ── OTP EMAIL SENDER ─────────────────────────────────────────────────────────
+// async function sendOTPEmail(email, otp, type) {
+//   const isReset = type === "Password Reset";
+//   const subject = isReset ? "🔐 Password Reset OTP — StayEasy" : "✅ Verify Your Email — StayEasy";
+//   const heading  = isReset ? "Reset Your Password" : "Verify Your Email Address";
+//   const bodyText = isReset
+//     ? "We received a request to reset your StayEasy account password. Use the OTP below:"
+//     : "Welcome to StayEasy! Please verify your email address to complete registration:";
+
+//   const html = `
+//   <div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">
+//     <div style="background:#4f46e5;padding:28px 32px;text-align:center">
+//       <h1 style="color:#fff;margin:0;font-size:24px">🏠 StayEasy</h1>
+//       <p style="color:#c7d2fe;margin:4px 0 0;font-size:13px">Student Accommodation Portal</p>
+//     </div>
+//     <div style="padding:32px">
+//       <h2 style="color:#111827;margin-top:0">${heading}</h2>
+//       <p style="color:#4b5563;font-size:15px">${bodyText}</p>
+//       <div style="background:#f3f4f6;border-radius:10px;padding:24px;text-align:center;margin:24px 0">
+//         <p style="color:#6b7280;font-size:13px;margin:0 0 8px">Your OTP (valid for 10 minutes)</p>
+//         <span style="font-size:40px;font-weight:800;letter-spacing:10px;color:#4f46e5">${otp}</span>
+//       </div>
+//       <p style="color:#9ca3af;font-size:13px">If you did not request this, please ignore this email. Do not share this OTP with anyone.</p>
+//     </div>
+//     <div style="background:#f9fafb;padding:16px 32px;text-align:center;border-top:1px solid #e5e7eb">
+//       <p style="color:#9ca3af;font-size:12px;margin:0">© ${new Date().getFullYear()} StayEasy · Student Accommodation</p>
+//     </div>
+//   </div>`;
+
+//   await transporter.sendMail({
+//     from: `"StayEasy Hostel" <${process.env.EMAIL_USER}>`,
+//     to: email,
+//     subject,
+//     html,
+//   });
+//   console.log(`📧 OTP email sent to ${email} [${type}]`);
+// }
+//////END
+
+
+
+//NEW
+// ── RESEND EMAIL (Works on Railway, Free Tier) ────────────────────────────────
+const { Resend } = require('resend');
+
+// Initialize Resend with API key from environment
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+// ── OTP EMAIL SENDER using Resend ──────────────────────────────────────────────
 async function sendOTPEmail(email, otp, type) {
   const isReset = type === "Password Reset";
   const subject = isReset ? "🔐 Password Reset OTP — StayEasy" : "✅ Verify Your Email — StayEasy";
@@ -211,16 +264,16 @@ async function sendOTPEmail(email, otp, type) {
 
   const html = `
   <div style="font-family:Arial,sans-serif;max-width:480px;margin:0 auto;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden">
-    <div style="background:#4f46e5;padding:28px 32px;text-align:center">
+    <div style="background:#E8325A;padding:28px 32px;text-align:center">
       <h1 style="color:#fff;margin:0;font-size:24px">🏠 StayEasy</h1>
-      <p style="color:#c7d2fe;margin:4px 0 0;font-size:13px">Student Accommodation Portal</p>
+      <p style="color:#ffd6e3;margin:4px 0 0;font-size:13px">Student Accommodation Portal</p>
     </div>
     <div style="padding:32px">
       <h2 style="color:#111827;margin-top:0">${heading}</h2>
       <p style="color:#4b5563;font-size:15px">${bodyText}</p>
       <div style="background:#f3f4f6;border-radius:10px;padding:24px;text-align:center;margin:24px 0">
         <p style="color:#6b7280;font-size:13px;margin:0 0 8px">Your OTP (valid for 10 minutes)</p>
-        <span style="font-size:40px;font-weight:800;letter-spacing:10px;color:#4f46e5">${otp}</span>
+        <span style="font-size:40px;font-weight:800;letter-spacing:10px;color:#E8325A">${otp}</span>
       </div>
       <p style="color:#9ca3af;font-size:13px">If you did not request this, please ignore this email. Do not share this OTP with anyone.</p>
     </div>
@@ -229,15 +282,30 @@ async function sendOTPEmail(email, otp, type) {
     </div>
   </div>`;
 
-  await transporter.sendMail({
-    from: `"StayEasy Hostel" <${process.env.EMAIL_USER}>`,
-    to: email,
-    subject,
-    html,
-  });
-  console.log(`📧 OTP email sent to ${email} [${type}]`);
+  try {
+    const { data, error } = await resend.emails.send({
+      from: process.env.EMAIL_FROM || 'StayEasy <onboarding@resend.dev>',
+      to: [email],
+      subject: subject,
+      html: html,
+    });
+    
+    if (error) {
+      console.error('Resend error:', error);
+      // Fallback: log OTP to console so demo still works
+      console.log(`🔐 OTP for ${email}: ${otp} (Fallback - email failed)`);
+      return false;
+    }
+    
+    console.log(`✅ OTP email sent to ${email} [${type}] via Resend`);
+    return true;
+  } catch (err) {
+    console.error('Resend exception:', err.message);
+    // Fallback: log OTP to console
+    console.log(`🔐 OTP for ${email}: ${otp} (Fallback - email failed)`);
+    return false;
+  }
 }
-
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function genOTP() { return Math.floor(100000 + Math.random() * 900000).toString(); }
 
