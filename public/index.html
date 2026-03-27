@@ -974,12 +974,12 @@ function TOAST(msg, type) {
 //   }
 // }
 
-// Set this to your deployed backend URL
-const API_BASE_URL = 'https://stayeasy.up.railway.app';
+// Use relative URLs so this works on any domain (local, Railway, etc.)
+const API_BASE_URL = '';
 
 async function API(method, url, body) {
   try {
-    // If URL already starts with http, use it as is, otherwise add base URL
+    // Relative URLs work on any host automatically
     const fullUrl = url.startsWith('http') ? url : API_BASE_URL + url;
     var opts = {method:method, headers:{'Content-Type':'application/json'}};
     if(body) opts.body = JSON.stringify(body);
