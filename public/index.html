@@ -960,11 +960,30 @@ function TOAST(msg, type) {
   setTimeout(function(){t.remove();}, 3000);
 }
 
+// async function API(method, url, body) {
+//   try {
+//     var opts = {method:method, headers:{'Content-Type':'application/json'}};
+//     if(body) opts.body = JSON.stringify(body);
+//     var res = await fetch(url, opts);
+//     var data = await res.json();
+//     if(!res.ok) throw new Error(data.error || 'Request failed');
+//     return data;
+//   } catch(e) {
+//     TOAST(e.message, 'error');
+//     throw e;
+//   }
+// }
+
+// Set this to your deployed backend URL
+const API_BASE_URL = 'https://stayeasy.up.railway.app';
+
 async function API(method, url, body) {
   try {
+    // If URL already starts with http, use it as is, otherwise add base URL
+    const fullUrl = url.startsWith('http') ? url : API_BASE_URL + url;
     var opts = {method:method, headers:{'Content-Type':'application/json'}};
     if(body) opts.body = JSON.stringify(body);
-    var res = await fetch(url, opts);
+    var res = await fetch(fullUrl, opts);
     var data = await res.json();
     if(!res.ok) throw new Error(data.error || 'Request failed');
     return data;
