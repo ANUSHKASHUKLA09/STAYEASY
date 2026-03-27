@@ -249,11 +249,15 @@ const Application = require("../models/Application");
 //NEW
 // ── RESEND EMAIL (Works on Railway, Free Tier) ────────────────────────────────
 // ── BREVO EMAIL (Free 300 emails/day, No Domain Required) ────────────────────
-const Brevo = require('@getbrevo/brevo');
+// ── BREVO EMAIL (Free 300 emails/day, No Domain Required) ────────────────────
+const SibApiV3Sdk = require('@getbrevo/brevo');
 
 // Initialize Brevo with your API key
-const apiInstance = new Brevo.TransactionalEmailsApi();
-apiInstance.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
+let defaultClient = SibApiV3Sdk.ApiClient.instance;
+let apiKey = defaultClient.authentications['api-key'];
+apiKey.apiKey = process.env.BREVO_API_KEY;
+
+let apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
 
 // ── OTP EMAIL SENDER using Brevo ──────────────────────────────────────────────
 async function sendOTPEmail(email, otp, type) {
@@ -285,7 +289,7 @@ async function sendOTPEmail(email, otp, type) {
   </div>`;
 
   try {
-    const sendSmtpEmail = new Brevo.SendSmtpEmail();
+    let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
     sendSmtpEmail.subject = subject;
     sendSmtpEmail.to = [{ email: email }];
     sendSmtpEmail.htmlContent = html;
