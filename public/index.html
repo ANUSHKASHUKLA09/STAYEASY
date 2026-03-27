@@ -356,7 +356,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
       <h1>Your Perfect<br/><span>Student Stay</span><br/>Starts Here</h1>
       <p class="hero-sub">Browse available rooms, apply instantly, and manage your accommodation — all in one place.</p>
       <div class="hero-search">
-        <input id="hero-q" placeholder="Search by room, building or type..." onkeydown="if(event.key==='Enter'){document.getElementById('hsearch').value=this.value;document.getElementById('rooms-sec').scrollIntoView({behavior:'smooth'});renderHRooms();}"/>
+        <input id="hero-q" placeholder="Search by city, location or type..." onkeydown="if(event.key==='Enter'){document.getElementById('hsearch').value=this.value;document.getElementById('rooms-sec').scrollIntoView({behavior:'smooth'});renderHRooms();}"/>
         <button onclick="document.getElementById('hsearch').value=document.getElementById('hero-q').value;document.getElementById('rooms-sec').scrollIntoView({behavior:'smooth'});renderHRooms();">🔍</button>
       </div>
       <div class="assist-badge"><div class="assist-badge-dot"></div>24×7 Assistance Available</div>
@@ -400,8 +400,9 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
     </div>
     <div class="fsearch-wrap">
       <span>🔍</span>
-      <input id="hsearch" placeholder="Search rooms, buildings..." oninput="renderHRooms()"/>
+      <input id="hsearch" placeholder="Search by city, location or apartment..." oninput="renderHRooms()"/>
     </div>
+    <div class="chips" id="city-chips" style="margin-bottom:14px"></div>
     <div class="rgrid" id="hrooms"><div class="empty"><div class="ei">🛏️</div>Loading rooms...</div></div>
   </div>
 
@@ -500,7 +501,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
     <div class="tc on" id="TC-rooms">
       <div class="fsearch-wrap">
         <span>🔍</span>
-        <input id="ssearch" placeholder="Search rooms..." oninput="renderSRooms()"/>
+        <input id="ssearch" placeholder="Search by city, location or apartment..." oninput="renderSRooms()"/>
       </div>
       <div class="chips">
         <button class="chip on" onclick="setSF('',this)">All</button>
@@ -508,6 +509,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
         <button class="chip" onclick="setSF('Double',this)">Double</button>
         <button class="chip" onclick="setSF('Suite',this)">Suite</button>
       </div>
+      <div class="chips" id="scity-chips" style="margin-bottom:14px"></div>
       <div class="rgrid" id="srooms"></div>
     </div>
     <div class="tc" id="TC-apps">
@@ -767,16 +769,18 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
           <div class="act">➕ Add Room</div>
           <div class="fg3">
             <div class="fg"><label>Room Number *</label><input id="Rnum" placeholder="101"/></div>
-            <div class="fg"><label>Building *</label><input id="Rbld" placeholder="A"/></div>
+            <div class="fg"><label>Building / Apartment Name *</label><input id="Rbld" placeholder="Sunrise Residency"/></div>
+            <div class="fg"><label>City / Location *</label><input id="Rcity" placeholder="Mumbai, Maharashtra"/></div>
             <div class="fg"><label>Floor *</label><input id="Rflr" type="number" placeholder="1"/></div>
             <div class="fg"><label>Type</label><select id="Rtyp"><option>Single</option><option>Double</option><option>Triple</option><option>Suite</option></select></div>
             <div class="fg"><label>Capacity *</label><input id="Rcap" type="number" placeholder="1"/></div>
             <div class="fg"><label>Price ₹/mo *</label><input id="Rprc" type="number" placeholder="5000"/></div>
           </div>
           <div class="fg"><label>Amenities (comma separated)</label><input id="Ramen" placeholder="WiFi, AC, Bathroom"/></div>
+          <div class="fg"><label>Building Image URL</label><input id="Rimg" placeholder="https://example.com/building.jpg" type="url"/></div>
           <div class="factions">
             <button class="abtn abtn-p" onclick="addRoom()">➕ Add Room</button>
-            <button class="abtn abtn-s" onclick="['Rnum','Rbld','Rflr','Rcap','Rprc','Ramen'].forEach(x=>document.getElementById(x).value='')">Clear</button>
+            <button class="abtn abtn-s" onclick="['Rnum','Rbld','Rcity','Rflr','Rcap','Rprc','Ramen','Rimg'].forEach(x=>document.getElementById(x).value='')">Clear</button>
           </div>
         </div>
         <div class="tbar">
@@ -1005,6 +1009,7 @@ async function loadHome() {
     var notices = await API('GET','/api/notices');
     D.rooms = rooms;
     renderHRooms();
+    renderCityChips(rooms, 'city-chips', function(city){ cityFilterH = city; renderHRooms(); });
     renderHNotices(notices);
     document.getElementById('h-total').textContent = rooms.length;
     document.getElementById('h-avail').textContent = rooms.filter(function(r){return r.status==='Available';}).length;
@@ -1014,6 +1019,27 @@ async function loadHome() {
 }
 
 var hFilter = '';
+var cityFilterH = '';
+var cityFilterS = '';
+
+function renderCityChips(rooms, containerId, onSelect) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var cities = [];
+  rooms.forEach(function(r){ if(r.city && cities.indexOf(r.city)===-1) cities.push(r.city); });
+  if (!cities.length) { el.innerHTML = ''; return; }
+  el.innerHTML = '<span class="chip on" onclick="selectCity(this,\'\',\''+containerId+'\')">📍 All Cities</span>' +
+    cities.map(function(c){ return '<span class="chip" onclick="selectCity(this,\''+c+'\',\''+containerId+'\')">'+c+'</span>'; }).join('');
+  el._onSelect = onSelect;
+}
+
+function selectCity(el, city, containerId) {
+  var wrap = document.getElementById(containerId);
+  wrap.querySelectorAll('.chip').forEach(function(c){ c.classList.remove('on'); });
+  el.classList.add('on');
+  if (wrap._onSelect) wrap._onSelect(city);
+}
+
 function setHF(type, el) {
   hFilter = type;
   var btns = document.querySelectorAll('.cat-chip');
@@ -1026,21 +1052,29 @@ function renderHRooms() {
   var q = document.getElementById('hsearch').value.toLowerCase();
   var emj = {Single:'🛏️',Double:'🛏️',Triple:'🏠',Suite:'🌟'};
   var rooms = D.rooms.filter(function(r){
-    return (!hFilter||r.type===hFilter)&&(r.number.toLowerCase().includes(q)||r.building.toLowerCase().includes(q)||r.type.toLowerCase().includes(q));
+    return (!hFilter||r.type===hFilter)&&
+      (!cityFilterH||(r.city||'')=== cityFilterH)&&(
+      r.number.toLowerCase().includes(q)||
+      r.building.toLowerCase().includes(q)||
+      r.type.toLowerCase().includes(q)||
+      (r.city||'').toLowerCase().includes(q)
+    );
   });
   var g = document.getElementById('hrooms');
   if(!rooms.length){g.innerHTML='<div class="empty"><div class="ei">🛏️</div>No rooms found</div>';return;}
   g.innerHTML = rooms.map(function(r){
     var amenTags = (r.amenities&&r.amenities.length) ? r.amenities.slice(0,3).map(function(a){return '<span class="ramen-tag">'+a+'</span>';}).join('') : '';
+    var locationLine = r.city ? r.city : (r.building ? 'Building ' + r.building : '');
     return `
     <div class="rcard">
-      <div class="rimg">${emj[r.type]||'🛏️'}
-        <button class="save-btn">♡</button>
-        <span class="rbadge ${r.status==='Available'?'ba':'bo'}">${r.status}</span>
+      <div class="rimg" style="${r.image?'padding:0;overflow:hidden;background:#f3f4f6;':''}">${r.image?`<img src="${r.image}" alt="${r.building}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentElement.innerHTML='${emj[r.type]||'🛏️'}'" />`:(emj[r.type]||'🛏️')}
+        <button class="save-btn" style="position:absolute;top:10px;right:10px">♡</button>
+        <span class="rbadge ${r.status==='Available'?'ba':'bo'}" style="position:absolute;top:10px;left:10px">${r.status}</span>
       </div>
       <div class="rbody">
-        <div class="rtitle">Room ${r.number} · Building ${r.building}</div>
-        <div class="rmeta">Floor ${r.floor} · ${r.capacity} person(s) · ${r.type}</div>
+        <div class="rmeta" style="font-size:.72rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px">📍 ${locationLine}</div>
+        <div class="rtitle">${r.building}</div>
+        <div class="rmeta">Room ${r.number} · Floor ${r.floor} · ${r.capacity} person(s) · ${r.type}</div>
         ${amenTags ? '<div class="ramen">'+amenTags+'</div>' : ''}
         <div class="rprice-row">
           <div class="rprice">${fmtR(r.price)}<span>/month</span></div>
@@ -1269,6 +1303,7 @@ async function loadSDash() {
     var data = await API('GET','/api/students/dashboard/'+D.student.studentId);
     var rooms = await API('GET','/api/rooms');
     D.rooms = rooms;
+    renderCityChips(rooms, 'scity-chips', function(city){ cityFilterS = city; renderSRooms(); });
     var app = data.application, apps = data.applications, comps = data.complaints, fees = data.fees, notices = data.notices;
     D.apps = apps||[];
 
@@ -1340,20 +1375,27 @@ function setSF(type,el){
 function renderSRooms(){
   var q=document.getElementById('ssearch').value.toLowerCase();
   var emj={Single:'🛏️',Double:'🛏️',Triple:'🏠',Suite:'🌟'};
-  var rooms=D.rooms.filter(function(r){return(!sFilter||r.type===sFilter)&&(r.number.toLowerCase().includes(q)||r.building.toLowerCase().includes(q));});
+  var rooms=D.rooms.filter(function(r){return(!sFilter||r.type===sFilter)&&
+    (!cityFilterS||(r.city||'')===cityFilterS)&&(
+    r.number.toLowerCase().includes(q)||
+    r.building.toLowerCase().includes(q)||
+    (r.city||'').toLowerCase().includes(q)
+  );});
   var g=document.getElementById('srooms');
   if(!rooms.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">🛏️</div>No rooms found</div>';return;}
   g.innerHTML=rooms.map(function(r){
     var amenTags=(r.amenities&&r.amenities.length)?r.amenities.slice(0,3).map(function(a){return '<span class="ramen-tag">'+a+'</span>';}).join(''):'';
+    var locationLine = r.city ? r.city : (r.building ? 'Building ' + r.building : '');
     return `
     <div class="rcard">
-      <div class="rimg">${emj[r.type]||'🛏️'}
-        <button class="save-btn">♡</button>
-        <span class="rbadge ${r.status==='Available'?'ba':'bo'}">${r.status}</span>
+      <div class="rimg" style="${r.image?'padding:0;overflow:hidden;background:#f3f4f6;':''}">${r.image?`<img src="${r.image}" alt="${r.building}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentElement.innerHTML='${emj[r.type]||'🛏️'}'" />`:(emj[r.type]||'🛏️')}
+        <button class="save-btn" style="position:absolute;top:10px;right:10px">♡</button>
+        <span class="rbadge ${r.status==='Available'?'ba':'bo'}" style="position:absolute;top:10px;left:10px">${r.status}</span>
       </div>
       <div class="rbody">
-        <div class="rtitle">Room ${r.number} · Building ${r.building}</div>
-        <div class="rmeta">Floor ${r.floor} · ${r.capacity} person(s) · ${r.type}</div>
+        <div class="rmeta" style="font-size:.72rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px">📍 ${locationLine}</div>
+        <div class="rtitle">${r.building}</div>
+        <div class="rmeta">Room ${r.number} · Floor ${r.floor} · ${r.capacity} person(s) · ${r.type}</div>
         ${amenTags?'<div class="ramen">'+amenTags+'</div>':''}
         <div class="rprice-row">
           <div class="rprice">${fmtR(r.price)}<span>/month</span></div>
@@ -1426,11 +1468,12 @@ function renderARooms(rooms){
   if(!rooms.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">🛏️</div>No rooms</div>';return;}
   g.innerHTML=rooms.map(function(r){return `
     <div class="rcard-a">
+      ${r.image?`<img src="${r.image}" alt="${r.building}" style="width:100%;height:110px;object-fit:cover;border-radius:10px;margin-bottom:10px;display:block" onerror="this.style.display='none'" />`:''}
       <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
         <div style="font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800">Room ${r.number}</div>
         <span class="b ${r.status==='Available'?'bg':'br'}">${r.status}</span>
       </div>
-      <div style="font-size:.76rem;color:var(--sub);margin-bottom:2px">Building ${r.building} · Floor ${r.floor}</div>
+      <div style="font-size:.76rem;color:var(--sub);margin-bottom:2px">${r.building}${r.city?' · '+r.city:''} · Floor ${r.floor}</div>
       <div style="font-size:.76rem;color:var(--sub);margin-bottom:7px">${r.type} · ${r.capacity} person(s)</div>
       <div style="font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;color:var(--red);margin-bottom:9px">${fmtR(r.price)}/mo</div>
       ${r.amenities&&r.amenities.length?'<div style="font-size:.68rem;color:var(--sub);margin-bottom:8px">'+r.amenities.join(' · ')+'</div>':''}
@@ -1440,16 +1483,18 @@ function renderARooms(rooms){
         </button>
         <button class="ibtn del" onclick="delRoom('${r._id}')">🗑️</button>
       </div>
-    </div>`;}).join('');
+    </div>`}).join('');
 }
 async function addRoom(){
   var num=document.getElementById('Rnum').value.trim(),bld=document.getElementById('Rbld').value.trim();
+  var city=document.getElementById('Rcity').value.trim();
   var flr=document.getElementById('Rflr').value,typ=document.getElementById('Rtyp').value;
   var cap=document.getElementById('Rcap').value,prc=document.getElementById('Rprc').value;
   var amen=document.getElementById('Ramen').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
+  var img=document.getElementById('Rimg').value.trim();
   if(!num||!bld||!flr||!cap||!prc){TOAST('Fill all required fields','error');return;}
-  try{await API('POST','/api/rooms',{number:num,building:bld,floor:+flr,type:typ,capacity:+cap,price:+prc,amenities:amen});
-    ['Rnum','Rbld','Rflr','Rcap','Rprc','Ramen'].forEach(function(id){document.getElementById(id).value='';});
+  try{await API('POST','/api/rooms',{number:num,building:bld,city:city,floor:+flr,type:typ,capacity:+cap,price:+prc,amenities:amen,image:img});
+    ['Rnum','Rbld','Rcity','Rflr','Rcap','Rprc','Ramen','Rimg'].forEach(function(id){document.getElementById(id).value='';});
     loadARooms();loadHome();TOAST('Room '+num+' added!');}catch(e){}
 }
 async function toggleRoom(id,s){try{await API('PATCH','/api/rooms/'+id+'/status',{status:s});loadARooms();loadHome();TOAST('Room updated');}catch(e){}}
