@@ -78,8 +78,9 @@ app.get("*", (req, res) => {
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("✅ MongoDB connected");
-   app.listen(process.env.PORT || 3000, "0.0.0.0", () =>
-  console.log(`🚀 Server running on port ${process.env.PORT || 3000}`)
-);
+   
+ app.listen(process.env.PORT || 3000, () =>
+      console.log(`🚀 Server at http://localhost:${process.env.PORT || 3000}`)
+    );
   })
   .catch(err => { console.error("❌ MongoDB failed:", err.message); process.exit(1); });
