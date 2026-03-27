@@ -248,12 +248,14 @@ const Application = require("../models/Application");
 
 //NEW
 // ── RESEND EMAIL (Works on Railway, Free Tier) ────────────────────────────────
-const { Resend } = require('resend');
+// ── BREVO EMAIL (Free 300 emails/day, No Domain Required) ────────────────────
+const Brevo = require('@getbrevo/brevo');
 
-// Initialize Resend with API key from environment
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Initialize Brevo with your API key
+const apiInstance = new Brevo.TransactionalEmailsApi();
+apiInstance.setApiKey(Brevo.TransactionalEmailsApiApiKeys.apiKey, process.env.BREVO_API_KEY);
 
-// ── OTP EMAIL SENDER using Resend ──────────────────────────────────────────────
+// ── OTP EMAIL SENDER using Brevo ──────────────────────────────────────────────
 async function sendOTPEmail(email, otp, type) {
   const isReset = type === "Password Reset";
   const subject = isReset ? "🔐 Password Reset OTP — StayEasy" : "✅ Verify Your Email — StayEasy";
@@ -283,25 +285,18 @@ async function sendOTPEmail(email, otp, type) {
   </div>`;
 
   try {
-    const { data, error } = await resend.emails.send({
-      from: process.env.EMAIL_FROM || 'StayEasy <onboarding@resend.dev>',
-      to: [email],
-      subject: subject,
-      html: html,
-    });
-    
-    if (error) {
-      console.error('Resend error:', error);
-      // Fallback: log OTP to console so demo still works
-      console.log(`🔐 OTP for ${email}: ${otp} (Fallback - email failed)`);
-      return false;
-    }
-    
-    console.log(`✅ OTP email sent to ${email} [${type}] via Resend`);
+    const sendSmtpEmail = new Brevo.SendSmtpEmail();
+    sendSmtpEmail.subject = subject;
+    sendSmtpEmail.to = [{ email: email }];
+    sendSmtpEmail.htmlContent = html;
+    sendSmtpEmail.sender = { name: "StayEasy", email: "noreply@stayeasy.com" };
+
+    await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log(`✅ OTP email sent to ${email} [${type}] via Brevo`);
     return true;
   } catch (err) {
-    console.error('Resend exception:', err.message);
-    // Fallback: log OTP to console
+    console.error('Brevo error:', err.message);
+    // Fallback: log OTP to console for demo
     console.log(`🔐 OTP for ${email}: ${otp} (Fallback - email failed)`);
     return false;
   }
