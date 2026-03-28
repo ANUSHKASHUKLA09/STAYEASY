@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2214,9 +2215,14 @@ async function runAllocAgent() {
   agRes('aag-res','<div class="empty">🤖 AllocationAgent validating...</div>');
   try {
     var d = await API('POST','/api/agents/allocation-agent/validate',{studentId:sid,roomNumber:rm});
-    var html = d.approved
-      ? agCard('0,182,122','✅','APPROVED — Allocation is compliant','<div style="font-size:.8rem;color:var(--sub);margin-bottom:7px">'+d.reasoning+'</div>'+(d.warnings.length?'<div>'+d.warnings.map(function(w){return '<div style="font-size:.74rem;color:var(--yellow);margin-bottom:3px">⚠️ '+w+'</div>';}).join('')+'</div>':'')+'<div style="font-size:.7rem;color:#bbb;margin-top:6px">Audit ID: '+d.auditEntry.id+'</div>')
-      : agCard('232,50,90','❌','REJECTED — Policy Violation Detected','<div>'+d.violations.map(function(v){return '<div style="font-size:.76rem;color:var(--red);margin-bottom:4px">🚫 '+v+'</div>';}).join('')+'</div>'+'<div style="font-size:.7rem;color:#bbb;margin-top:6px">Audit ID: '+d.auditEntry.id+'</div>');
+    var html;
+    if(d.escalate){
+      html=agCard('245,158,11','⚠️','ESCALATED TO HUMAN REVIEW','<div style="font-size:.8rem;color:var(--sub);margin-bottom:7px">'+d.escalateReason+'</div><div style="font-size:.72rem;color:#d97706;font-weight:700">Agent confidence below threshold — human judgment required</div><div style="font-size:.7rem;color:#bbb;margin-top:6px">Audit ID: '+d.auditEntry.id+'</div>');
+    } else if(d.approved){
+      html=agCard('0,182,122','✅','APPROVED — Allocation is compliant','<div style="font-size:.8rem;color:var(--sub);margin-bottom:7px">'+d.reasoning+'</div>'+(d.chainedTo&&d.chainedTo.length?'<div style="font-size:.74rem;color:#059669;margin-bottom:4px">⛓️ Chained to: <strong>'+d.chainedTo.join(', ')+'</strong> — '+(d.chainResult?d.chainResult.action:'auto-action taken')+'</div>':'')+(d.warnings&&d.warnings.length?'<div>'+d.warnings.map(function(w){return '<div style="font-size:.74rem;color:var(--yellow);margin-bottom:3px">⚠️ '+w+'</div>';}).join('')+'</div>':'')+'<div style="font-size:.7rem;color:#bbb;margin-top:6px">Audit ID: '+d.auditEntry.id+'</div>');
+    } else {
+      html=agCard('232,50,90','❌','REJECTED — Policy Violation Detected','<div>'+d.violations.map(function(v){return '<div style="font-size:.76rem;color:var(--red);margin-bottom:4px">🚫 '+v+'</div>';}).join('')+'</div>'+'<div style="font-size:.7rem;color:#bbb;margin-top:6px">Audit ID: '+d.auditEntry.id+'</div>');
+    }
     agRes('aag-res', html);
   } catch(e) { agRes('aag-res','<div class="empty" style="color:var(--red)">Agent failed</div>'); }
 }
@@ -2313,10 +2319,13 @@ async function loadAgentAudit() {
       return '<div style="border-left:3px solid rgba('+c+',.7);padding:10px 13px;margin-bottom:8px;background:#fafafa;border-radius:0 10px 10px 0">' +
         '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:4px">' +
         '<div style="display:flex;align-items:center;gap:7px"><span style="font-size:.7rem;font-weight:700;color:rgba('+c+',1);background:rgba('+c+',.08);padding:2px 8px;border-radius:100px">'+e.agent+'</span><span style="font-size:.72rem;font-weight:600">'+e.action+'</span></div>' +
-        '<div style="display:flex;align-items:center;gap:5px">' + auditBadge(e) + '<span style="font-size:.65rem;color:#bbb">'+new Date(e.timestamp).toLocaleString('en-IN')+'</span></div></div>' +
+        '<div style="display:flex;align-items:center;gap:5px">' + auditBadge(e) + '<span style="font-size:.65rem;color:#bbb">'+new Date(e.timestamp||e.createdAt).toLocaleString('en-IN',{day:'2-digit',month:'short',hour:'2-digit',minute:'2-digit'})+'</span></div></div>' +
         '<div style="font-size:.75rem;color:var(--sub);margin-bottom:3px">'+e.reasoning+'</div>' +
         (e.studentId&&e.studentId!=='system'?'<div style="font-size:.68rem;color:#bbb">Student: '+e.studentId+(e.roomId?' · Room: '+e.roomId:'')+'</div>':'') +
-        (e.violations.length?'<div style="margin-top:4px">'+e.violations.map(function(v){return '<span style="font-size:.65rem;color:var(--red);background:rgba(232,50,90,.06);padding:2px 8px;border-radius:100px;margin:2px;display:inline-block">🚫 '+v+'</span>';}).join('')+'</div>':'') +
+        (e.violations&&e.violations.length?'<div style="margin-top:4px">'+e.violations.map(function(v){return '<span style="font-size:.65rem;color:var(--red);background:rgba(232,50,90,.06);padding:2px 8px;border-radius:100px;margin:2px;display:inline-block">🚫 '+v+'</span>';}).join('')+'</div>':'') +
+        (e.chainedFrom?'<div style="font-size:.65rem;color:#7c3aed;margin-top:3px">⛓️ Triggered by: '+e.chainedFrom+'</div>':'') +
+        (e.chainedTo&&e.chainedTo.length?'<div style="font-size:.65rem;color:#059669;margin-top:2px">→ Chained to: '+e.chainedTo.join(', ')+'</div>':'') +
+        (e.decision==='ESCALATE_TO_HUMAN'?'<div style="font-size:.65rem;font-weight:700;color:#d97706;background:rgba(217,119,6,.08);padding:3px 10px;border-radius:100px;margin-top:4px;display:inline-block">⚠️ ESCALATED TO HUMAN REVIEW</div>':'') +
         '<div style="font-size:.62rem;color:#ddd;margin-top:4px">ID: '+e.id+'</div></div>';
     }).join('') : '<div class="empty">No audit entries yet</div>';
   } catch(e){ document.getElementById('audit-list').innerHTML = '<div class="empty">Failed to load</div>'; }
