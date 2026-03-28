@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>StayEasy — Student Accommodation</title>
+<title>Stayo — Student Accommodation</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -27,7 +27,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 /* ── TOP NAV ── */
 .topnav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,.06);}
-.logo{font-family:'Nunito',sans-serif;font-size:1.45rem;font-weight:900;color:var(--red);cursor:pointer;border:none;background:none;letter-spacing:-.5px;}
+.logo{font-family:'Nunito',sans-serif;font-size:1.55rem;font-weight:900;font-style:italic;color:var(--red);cursor:pointer;border:none;background:none;letter-spacing:-.5px;}
 .navr{display:flex;gap:10px;align-items:center;}
 
 /* ── BUTTONS ── */
@@ -132,7 +132,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;}
 /* ── AUTH ── */
 .auth-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;background:linear-gradient(160deg,var(--red-light) 0%,#fff 60%);}
 .auth-card{background:var(--white);border-radius:24px;padding:32px;width:100%;max-width:420px;box-shadow:0 8px 40px rgba(232,50,90,.1);}
-.auth-logo{font-family:'Nunito',sans-serif;font-size:1.2rem;font-weight:900;color:var(--red);display:block;margin-bottom:22px;}
+.auth-logo{font-family:'Nunito',sans-serif;font-size:1.3rem;font-weight:900;font-style:italic;color:var(--red);display:block;margin-bottom:22px;}
 .auth-title{font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;margin-bottom:4px;}
 .auth-sub{color:var(--sub);font-size:.86rem;margin-bottom:22px;}
 .auth-switch{text-align:center;margin-top:16px;font-size:.84rem;color:var(--sub);}
@@ -150,7 +150,7 @@ button{cursor:pointer;font-family:'Inter',sans-serif;border:none;}
 
 /* ── STUDENT DASHBOARD ── */
 .snav{background:var(--white);border-bottom:1px solid var(--border);padding:0 5%;height:62px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 1px 8px rgba(0,0,0,.06);}
-.snav-logo{font-family:'Nunito',sans-serif;font-size:1.25rem;font-weight:900;color:var(--red);}
+.snav-logo{font-family:'Nunito',sans-serif;font-size:1.35rem;font-weight:900;font-style:italic;color:var(--red);}
 .snav-r{display:flex;align-items:center;gap:10px;}
 .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--red),#ff6b8a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:.86rem;font-family:'Nunito',sans-serif;}
 .sbody{max-width:1080px;margin:0 auto;padding:24px 5% 80px;}
@@ -242,6 +242,7 @@ tbody tr:hover{background:#fafafa;}
 .ap{display:none;}
 .ap.on{display:block;animation:fdin .2s ease;}
 @keyframes fdin{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .at{font-family:'Nunito',sans-serif;font-size:1.45rem;font-weight:900;margin-bottom:3px;}
 .as{color:var(--sub);font-size:.84rem;margin-bottom:18px;}
 .ac{background:var(--white);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 2px 10px rgba(0,0,0,.05);}
@@ -342,7 +343,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
 <!-- HOME PAGE -->
 <div class="page ACTIVE" id="PG-home">
   <nav class="topnav">
-    <button class="logo" onclick="GO('home')">StayEasy</button>
+    <button class="logo" onclick="GO('home')">Stayo</button>
     <div class="navr">
       <button class="btn btn-out" style="padding:8px 18px" onclick="GO('login')">Sign In</button>
       <button class="btn btn-red" style="padding:8px 18px" onclick="GO('register')">Register</button>
@@ -361,8 +362,8 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
       </div>
       <div class="assist-badge"><div class="assist-badge-dot"></div>24×7 Assistance Available</div>
       <div class="hero-stats">
-        <div class="hs"><div class="n" id="h-total">—</div><div class="l">Total Rooms</div></div>
-        <div class="hs"><div class="n" id="h-avail">—</div><div class="l">Available Now</div></div>
+        <div class="hs"><div class="n" id="h-total">—</div><div class="l">Buildings</div></div>
+        <div class="hs"><div class="n" id="h-avail">—</div><div class="l">With Rooms Available</div></div>
         <div class="hs"><div class="n" id="h-studs">—</div><div class="l">Students Housed</div></div>
         <div class="hs"><div class="n">4.8★</div><div class="l">Avg Rating</div></div>
       </div>
@@ -414,7 +415,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
     <div class="nwrap" id="hnotices"><div class="empty"><div class="ei">📢</div>Loading...</div></div>
   </div>
 
-  <footer>© 2024 StayEasy Student Accommodation · Made with ❤️</footer>
+  <footer>© 2024 Stayo Student Accommodation · Made with ❤️</footer>
 
   <!-- MOBILE BOTTOM NAV -->
   <div class="bottomnav">
@@ -431,7 +432,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
 <div class="page" id="PG-register">
   <div class="auth-wrap">
     <div class="auth-card">
-      <span class="auth-logo">StayEasy</span>
+      <span class="auth-logo">Stayo</span>
       <div class="auth-title">Create Account</div>
       <div class="auth-sub">Register to browse and apply for rooms</div>
       <div class="frow">
@@ -456,7 +457,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
 <div class="page" id="PG-login">
   <div class="auth-wrap">
     <div class="auth-card">
-      <span class="auth-logo">StayEasy</span>
+      <span class="auth-logo">Stayo</span>
       <div class="auth-title">Welcome Back 👋</div>
       <div class="auth-sub">Sign in to your student account</div>
       <div class="fg"><label>Student ID *</label><input id="ls" placeholder="e.g. STU001"/></div>
@@ -472,7 +473,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
 <!-- STUDENT DASHBOARD -->
 <div class="page" id="PG-student">
   <nav class="snav">
-    <div class="snav-logo">StayEasy</div>
+    <div class="snav-logo">Stayo</div>
     <div class="snav-r">
       <div class="avatar" id="sav">?</div>
       <span id="sname" style="font-size:.86rem;font-weight:600"></span>
@@ -499,9 +500,12 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
       <button class="tab ai-t" onclick="TAB('chat')">🤖 AI Chat</button>
     </div>
     <div class="tc on" id="TC-rooms">
-      <div class="fsearch-wrap">
-        <span>🔍</span>
-        <input id="ssearch" placeholder="Search by city, location or apartment..." oninput="renderSRooms()"/>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+        <div class="fsearch-wrap" style="margin-bottom:0;flex:1;min-width:180px">
+          <span>🔍</span>
+          <input id="ssearch" placeholder="Search by city, location or apartment..." oninput="renderSRooms()"/>
+        </div>
+        <button class="btn btn-red" style="border-radius:100px;padding:10px 20px;font-size:.84rem;white-space:nowrap" onclick="OPEN_APPLY()">🏠 Apply for a Room</button>
       </div>
       <div class="chips">
         <button class="chip on" onclick="setSF('',this)">All</button>
@@ -594,7 +598,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
     <div class="tc" id="TC-chat">
       <div style="background:linear-gradient(135deg,rgba(232,50,90,.04),rgba(255,107,138,.04));border:1.5px solid rgba(232,50,90,.15);border-radius:18px;padding:20px;">
         <div style="font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;margin-bottom:3px;display:flex;align-items:center;gap:8px;">
-          🤖 StayEasy AI Assistant
+          🤖 Stayo AI Assistant
           <span style="font-size:.64rem;background:linear-gradient(135deg,var(--red),#ff6b8a);color:#fff;padding:2px 9px;border-radius:100px;font-weight:700;">Powered by GROQ</span>
         </div>
         <div style="font-size:.8rem;color:var(--sub);margin-bottom:14px;">Ask anything about rooms, fees, complaints, or hostel rules!</div>
@@ -602,7 +606,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
           <div style="display:flex;gap:9px;align-items:flex-start;">
             <div style="width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--red),#ff6b8a);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.7rem;font-weight:800;flex-shrink:0;font-family:'Nunito',sans-serif">AI</div>
             <div style="background:#fff;border:1px solid var(--border);border-radius:0 14px 14px 14px;padding:10px 14px;font-size:.84rem;line-height:1.6;max-width:85%;box-shadow:0 1px 4px rgba(0,0,0,.05);">
-              👋 Hi! I'm your StayEasy AI Assistant. Ask me about room availability, how to pay fees, filing complaints, hostel rules, or anything else!
+              👋 Hi! I'm your Stayo AI Assistant. Ask me about room availability, how to pay fees, filing complaints, hostel rules, or anything else!
             </div>
           </div>
         </div>
@@ -625,7 +629,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
 <div class="page" id="PG-otp">
   <div class="auth-wrap">
     <div class="auth-card">
-      <span class="auth-logo">StayEasy</span>
+      <span class="auth-logo">Stayo</span>
       <div class="auth-title">Verify Your Email</div>
       <div class="auth-sub" id="otp-sub">Enter the 6-digit OTP sent to your email</div>
       <div style="background:rgba(59,130,246,.06);border:1px solid rgba(59,130,246,.2);border-radius:14px;padding:14px 16px;margin-bottom:16px;font-size:.84rem;color:var(--blue);text-align:center">
@@ -649,7 +653,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
 <div class="page" id="PG-forgot">
   <div class="auth-wrap">
     <div class="auth-card">
-      <span class="auth-logo">StayEasy</span>
+      <span class="auth-logo">Stayo</span>
       <div class="auth-title">Forgot Password</div>
       <div class="auth-sub">Enter your email to receive a reset OTP</div>
       <div id="fp-step1">
@@ -764,9 +768,11 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
         </div>
       </div>
       <div class="ap" id="AP-rooms">
-        <div class="at">Rooms</div><div class="as">Manage accommodation rooms</div>
-        <div class="ac">
-          <div class="act">➕ Add Room</div>
+        <div class="at">Rooms</div><div class="as">Manage accommodation rooms — grouped by building</div>
+
+        <!-- Add Room Form -->
+        <div class="ac" id="ar-add-form" style="display:none">
+          <div class="act">➕ Add Room to Building</div>
           <div class="fg3">
             <div class="fg"><label>Room Number *</label><input id="Rnum" placeholder="101"/></div>
             <div class="fg"><label>Building / Apartment Name *</label><input id="Rbld" placeholder="Sunrise Residency"/></div>
@@ -780,14 +786,16 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
           <div class="fg"><label>Building Image URL</label><input id="Rimg" placeholder="https://example.com/building.jpg" type="url"/></div>
           <div class="factions">
             <button class="abtn abtn-p" onclick="addRoom()">➕ Add Room</button>
-            <button class="abtn abtn-s" onclick="['Rnum','Rbld','Rcity','Rflr','Rcap','Rprc','Ramen','Rimg'].forEach(x=>document.getElementById(x).value='')">Clear</button>
+            <button class="abtn abtn-s" onclick="document.getElementById('ar-add-form').style.display='none'">Cancel</button>
           </div>
         </div>
+
         <div class="tbar">
-          <div class="sbar"><span>🔍</span><input placeholder="Search rooms..." id="ar-q" oninput="filterARooms()"/></div>
+          <div class="sbar"><span>🔍</span><input placeholder="Search building or city..." id="ar-q" oninput="filterARooms()"/></div>
           <select class="sel" id="ar-s" onchange="filterARooms()"><option value="">All Status</option><option>Available</option><option>Occupied</option></select>
+          <button class="abtn abtn-p" onclick="toggleAddRoomForm()">➕ Add Room</button>
         </div>
-        <div class="rgrid-a" id="ar-grid"></div>
+        <div id="ar-grid"></div>
       </div>
       <div class="ap" id="AP-students">
         <div class="at">Students</div><div class="as">All registered students</div>
@@ -804,7 +812,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
           <select class="sel" id="aa-s" onchange="filterAApps()"><option value="">All Status</option><option>Pending</option><option>Approved</option><option>Rejected</option></select>
         </div>
         <div class="ac" style="padding:0"><div class="twrap"><table>
-          <thead><tr><th>#</th><th>Student</th><th>Room</th><th>Duration</th><th>Check-in</th><th>Applied</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead><tr><th>#</th><th>Student</th><th>Request</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody id="aa-t"></tbody>
          </table></div></div>
       </div>
@@ -860,81 +868,193 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
       <!-- AI AGENTS PANEL -->
       <div class="ap" id="AP-agents">
         <div class="at">🤖 AI Agent Control Center</div>
-        <div class="as">Domain-specialized agents with compliance guardrails (PS5)</div>
-        <div class="asgrid">
-          <div class="astat"><div class="asl">Compliance Flags</div><div class="asv" style="color:var(--yellow)" id="ag-comp">—</div></div>
-          <div class="astat"><div class="asl">Fee Alerts</div><div class="asv" style="color:var(--red)" id="ag-fee">—</div></div>
-          <div class="astat"><div class="asl">Escalations</div><div class="asv" style="color:#7c3aed" id="ag-esc">—</div></div>
-          <div class="astat"><div class="asl">Anomalies</div><div class="asv" style="color:var(--green)" id="ag-ano">—</div></div>
-        </div>
-        <div style="margin-bottom:16px;display:flex;gap:8px;flex-wrap:wrap">
-          <button class="abtn abtn-p" onclick="runAllAgents()">⚡ Run All Agents Now</button>
-          <button class="abtn abtn-s" onclick="loadAgentAudit()">📋 View Audit Trail</button>
-        </div>
-        <div class="ac" style="border-left:4px solid var(--blue)">
-          <div class="act">🏠 AllocationAgent — Validate Application</div>
-          <p style="font-size:.8rem;color:var(--sub);margin-bottom:12px">Validates a student-room allocation against all institutional compliance policies before processing.</p>
-          <div class="fg2">
-            <div class="fg"><label>Student ID</label><input id="aag-sid" placeholder="e.g. STU001"/></div>
-            <div class="fg"><label>Room Number</label><input id="aag-rm" placeholder="e.g. 101"/></div>
+        <div class="as">PS5 — Domain-specialized agents with compliance guardrails · Multi-agent orchestration for student accommodation</div>
+
+        <!-- POLICY GUARDRAILS BANNER -->
+        <div style="background:linear-gradient(135deg,#1a1a2e,#222240);border-radius:16px;padding:16px 20px;margin-bottom:16px;color:#fff">
+          <div style="font-family:'Nunito',sans-serif;font-size:.85rem;font-weight:800;margin-bottom:10px;opacity:.7;letter-spacing:.08em;text-transform:uppercase">🛡️ Active Compliance Guardrails</div>
+          <div style="display:flex;flex-wrap:wrap;gap:8px">
+            <span style="background:rgba(232,50,90,.2);color:#ff8fab;border:1px solid rgba(232,50,90,.3);border-radius:100px;padding:4px 12px;font-size:.72rem;font-weight:700">Max 1 Room/Student</span>
+            <span style="background:rgba(245,158,11,.2);color:#fcd34d;border:1px solid rgba(245,158,11,.3);border-radius:100px;padding:4px 12px;font-size:.72rem;font-weight:700">SLA: 5-day Review</span>
+            <span style="background:rgba(124,58,237,.2);color:#c4b5fd;border:1px solid rgba(124,58,237,.3);border-radius:100px;padding:4px 12px;font-size:.72rem;font-weight:700">Price Cap Enforcement</span>
+            <span style="background:rgba(0,182,122,.2);color:#6ee7b7;border:1px solid rgba(0,182,122,.3);border-radius:100px;padding:4px 12px;font-size:.72rem;font-weight:700">Auto-Escalate High Priority</span>
+            <span style="background:rgba(59,130,246,.2);color:#93c5fd;border:1px solid rgba(59,130,246,.3);border-radius:100px;padding:4px 12px;font-size:.72rem;font-weight:700">Occupancy Anomaly Detection</span>
+            <span style="background:rgba(255,255,255,.1);color:#e2e8f0;border:1px solid rgba(255,255,255,.2);border-radius:100px;padding:4px 12px;font-size:.72rem;font-weight:700">Full Audit Trail</span>
           </div>
-          <div class="factions"><button class="abtn abtn-p" onclick="runAllocAgent()">🔍 Validate Now</button></div>
-          <div id="aag-res" style="margin-top:12px"></div>
         </div>
-        <div class="ac" style="border-left:4px solid var(--yellow)">
-          <div class="act">✅ ComplianceAgent — Scan Pending Applications</div>
-          <p style="font-size:.8rem;color:var(--sub);margin-bottom:12px">Scans all pending applications for policy violations and SLA breaches with full audit trail.</p>
-          <div class="factions"><button class="abtn abtn-s" onclick="runComplianceAgent()">🔎 Scan Applications</button></div>
-          <div id="comp-res" style="margin-top:12px"></div>
+
+        <!-- LIVE STATS -->
+        <div class="asgrid" style="margin-bottom:16px">
+          <div class="astat" style="border-top:3px solid var(--yellow)">
+            <div class="asl">Compliance Flags</div>
+            <div class="asv" style="color:var(--yellow)" id="ag-comp">—</div>
+            <div style="font-size:.68rem;color:var(--sub)">Policy violations</div>
+          </div>
+          <div class="astat" style="border-top:3px solid var(--red)">
+            <div class="asl">Fee Alerts</div>
+            <div class="asv" style="color:var(--red)" id="ag-fee">—</div>
+            <div style="font-size:.68rem;color:var(--sub)">Overdue payments</div>
+          </div>
+          <div class="astat" style="border-top:3px solid #7c3aed">
+            <div class="asl">Escalations</div>
+            <div class="asv" style="color:#7c3aed" id="ag-esc">—</div>
+            <div style="font-size:.68rem;color:var(--sub)">Auto-escalated</div>
+          </div>
+          <div class="astat" style="border-top:3px solid var(--green)">
+            <div class="asl">Anomalies</div>
+            <div class="asv" style="color:var(--green)" id="ag-ano">—</div>
+            <div style="font-size:.68rem;color:var(--sub)">Data mismatches</div>
+          </div>
         </div>
-        <div class="ac" style="border-left:4px solid var(--red)">
-          <div class="act">💳 FeeAgent — Detect Overdue Fees</div>
-          <p style="font-size:.8rem;color:var(--sub);margin-bottom:12px">Automatically detects missing payments, calculates outstanding amounts, and escalates critical cases.</p>
-          <div class="factions"><button class="abtn abtn-s" onclick="runFeeAgent()">💰 Scan Fees</button></div>
-          <div id="fee-res" style="margin-top:12px"></div>
+
+        <!-- MASTER RUN BUTTON -->
+        <div style="background:linear-gradient(135deg,rgba(232,50,90,.06),rgba(124,58,237,.06));border:1.5px solid rgba(232,50,90,.15);border-radius:16px;padding:16px 20px;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div>
+            <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:.95rem;margin-bottom:3px">⚡ MasterOrchestrator</div>
+            <div style="font-size:.78rem;color:var(--sub)">Runs all 5 agents in parallel, aggregates results, logs every decision</div>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <button class="abtn abtn-p" onclick="runAllAgents()" style="border-radius:100px">⚡ Run All Agents</button>
+            <button class="abtn abtn-s" onclick="loadAgentAudit()" style="border-radius:100px">📋 Audit Trail</button>
+          </div>
         </div>
-        <div class="ac" style="border-left:4px solid #7c3aed">
-          <div class="act">⚠️ ComplaintAgent — Triage & Escalate</div>
-          <p style="font-size:.8rem;color:var(--sub);margin-bottom:12px">Triages open complaints by SLA, auto-escalates high-priority issues, and generates resolution playbooks.</p>
-          <div class="factions"><button class="abtn abtn-s" onclick="runComplaintAgent()">🚨 Triage Complaints</button></div>
-          <div id="triage-res" style="margin-top:12px"></div>
+
+        <!-- AGENT PIPELINE VISUAL -->
+        <div class="ac" style="padding:16px 20px;margin-bottom:16px;overflow-x:auto">
+          <div style="font-family:'Nunito',sans-serif;font-size:.8rem;font-weight:800;color:var(--sub);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px">Agent Pipeline</div>
+          <div style="display:flex;align-items:center;gap:0;min-width:600px">
+            <div style="background:#1a1a2e;color:#fff;border-radius:12px;padding:10px 14px;text-align:center;flex:1;font-size:.72rem;font-weight:700"><div style="font-size:1.1rem;margin-bottom:3px">📥</div>Application<br>Submitted</div>
+            <div style="color:#bbb;font-size:1.2rem;padding:0 4px">→</div>
+            <div style="background:rgba(59,130,246,.12);border:1.5px solid rgba(59,130,246,.3);color:#2563eb;border-radius:12px;padding:10px 14px;text-align:center;flex:1;font-size:.72rem;font-weight:700"><div style="font-size:1.1rem;margin-bottom:3px">🏠</div>Allocation<br>Agent</div>
+            <div style="color:#bbb;font-size:1.2rem;padding:0 4px">→</div>
+            <div style="background:rgba(245,158,11,.12);border:1.5px solid rgba(245,158,11,.3);color:#b45309;border-radius:12px;padding:10px 14px;text-align:center;flex:1;font-size:.72rem;font-weight:700"><div style="font-size:1.1rem;margin-bottom:3px">✅</div>Compliance<br>Agent</div>
+            <div style="color:#bbb;font-size:1.2rem;padding:0 4px">→</div>
+            <div style="background:rgba(232,50,90,.12);border:1.5px solid rgba(232,50,90,.3);color:#c0183a;border-radius:12px;padding:10px 14px;text-align:center;flex:1;font-size:.72rem;font-weight:700"><div style="font-size:1.1rem;margin-bottom:3px">💳</div>Fee<br>Agent</div>
+            <div style="color:#bbb;font-size:1.2rem;padding:0 4px">→</div>
+            <div style="background:rgba(124,58,237,.12);border:1.5px solid rgba(124,58,237,.3);color:#6d28d9;border-radius:12px;padding:10px 14px;text-align:center;flex:1;font-size:.72rem;font-weight:700"><div style="font-size:1.1rem;margin-bottom:3px">⚠️</div>Complaint<br>Agent</div>
+            <div style="color:#bbb;font-size:1.2rem;padding:0 4px">→</div>
+            <div style="background:rgba(0,182,122,.12);border:1.5px solid rgba(0,182,122,.3);color:#007a52;border-radius:12px;padding:10px 14px;text-align:center;flex:1;font-size:.72rem;font-weight:700"><div style="font-size:1.1rem;margin-bottom:3px">📊</div>Occupancy<br>Agent</div>
+            <div style="color:#bbb;font-size:1.2rem;padding:0 4px">→</div>
+            <div style="background:#1a1a2e;color:#fff;border-radius:12px;padding:10px 14px;text-align:center;flex:1;font-size:.72rem;font-weight:700"><div style="font-size:1.1rem;margin-bottom:3px">📋</div>Audit<br>Trail</div>
+          </div>
         </div>
-        <div class="ac" style="border-left:4px solid var(--green)">
-          <div class="act">📊 OccupancyAgent — Anomaly Detection</div>
-          <p style="font-size:.8rem;color:var(--sub);margin-bottom:12px">Monitors real-time occupancy, detects data anomalies, and recommends capacity actions.</p>
-          <div class="factions"><button class="abtn abtn-s" onclick="runOccupancyAgent()">📡 Run Report</button></div>
-          <div id="occ-res" style="margin-top:12px"></div>
+
+        <!-- TWO COLUMN LAYOUT -->
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+          <!-- AllocationAgent -->
+          <div class="ac" style="border-left:4px solid #3b82f6;margin-bottom:0">
+            <div class="act" style="font-size:.85rem">🏠 AllocationAgent</div>
+            <p style="font-size:.75rem;color:var(--sub);margin-bottom:10px">Validates student-room allocation against all policy rules before processing.</p>
+            <div class="fg"><label style="font-size:.75rem">Student ID</label><input id="aag-sid" placeholder="e.g. STU001" style="font-size:.82rem"/></div>
+            <div class="fg"><label style="font-size:.75rem">Room Number</label><input id="aag-rm" placeholder="e.g. 101" style="font-size:.82rem"/></div>
+            <button class="abtn abtn-p" style="width:100%;justify-content:center;font-size:.8rem;margin-top:4px" onclick="runAllocAgent()">🔍 Validate</button>
+            <div id="aag-res" style="margin-top:10px"></div>
+          </div>
+          <!-- ComplianceAgent -->
+          <div class="ac" style="border-left:4px solid var(--yellow);margin-bottom:0">
+            <div class="act" style="font-size:.85rem">✅ ComplianceAgent</div>
+            <p style="font-size:.75rem;color:var(--sub);margin-bottom:10px">Scans all pending applications for policy violations and SLA breaches.</p>
+            <button class="abtn abtn-s" style="width:100%;justify-content:center;font-size:.8rem" onclick="runComplianceAgent()">🔎 Scan Now</button>
+            <div id="comp-res" style="margin-top:10px"></div>
+          </div>
+          <!-- FeeAgent -->
+          <div class="ac" style="border-left:4px solid var(--red);margin-bottom:0">
+            <div class="act" style="font-size:.85rem">💳 FeeAgent</div>
+            <p style="font-size:.75rem;color:var(--sub);margin-bottom:10px">Detects missing payments, calculates outstanding dues, escalates critical cases.</p>
+            <button class="abtn abtn-s" style="width:100%;justify-content:center;font-size:.8rem" onclick="runFeeAgent()">💰 Scan Fees</button>
+            <div id="fee-res" style="margin-top:10px"></div>
+          </div>
+          <!-- ComplaintAgent -->
+          <div class="ac" style="border-left:4px solid #7c3aed;margin-bottom:0">
+            <div class="act" style="font-size:.85rem">⚠️ ComplaintAgent</div>
+            <p style="font-size:.75rem;color:var(--sub);margin-bottom:10px">Triages open complaints by SLA, auto-escalates high-priority issues.</p>
+            <button class="abtn abtn-s" style="width:100%;justify-content:center;font-size:.8rem" onclick="runComplaintAgent()">🚨 Triage</button>
+            <div id="triage-res" style="margin-top:10px"></div>
+          </div>
         </div>
-        <div class="ac" id="audit-panel" style="display:none">
-          <div class="act">📋 Agent Audit Trail</div>
-          <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
-            <select class="sel" id="audit-agent-filter" onchange="loadAgentAudit()">
+
+        <!-- OccupancyAgent full width -->
+        <div class="ac" style="border-left:4px solid var(--green);margin-bottom:14px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div class="act" style="font-size:.85rem;margin-bottom:0">📊 OccupancyAgent — Real-time Anomaly Detection</div>
+            <button class="abtn abtn-s" style="font-size:.78rem" onclick="runOccupancyAgent()">📡 Run Report</button>
+          </div>
+          <p style="font-size:.75rem;color:var(--sub);margin-bottom:10px">Monitors occupancy rates, detects data anomalies (orphaned rooms, mismatched allocations), and generates capacity recommendations.</p>
+          <div id="occ-res"></div>
+        </div>
+
+        <!-- AUDIT TRAIL — always visible -->
+        <div class="ac" id="audit-panel">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px">
+            <div class="act" style="margin-bottom:0">📋 Live Audit Trail <span style="font-size:.7rem;font-weight:500;color:var(--sub);margin-left:6px">Every agent decision logged with reasoning</span></div>
+            <select class="sel" id="audit-agent-filter" onchange="loadAgentAudit()" style="font-size:.78rem">
               <option value="">All Agents</option>
               <option>AllocationAgent</option><option>ComplianceAgent</option><option>FeeAgent</option>
               <option>ComplaintAgent</option><option>OccupancyAgent</option><option>MasterOrchestrator</option>
             </select>
           </div>
-          <div id="audit-list"></div>
+          <div id="audit-list"><div class="empty" style="font-size:.82rem">Run agents above to populate the audit trail</div></div>
         </div>
       </div>
     </main>
   </div>
 </div>
 
-<!-- APPLY MODAL -->
+<!-- APPLY MODAL (2-step) -->
 <div class="mbg" id="MODAL">
-  <div class="mbox">
+  <div class="mbox" style="max-width:540px">
     <div class="drag-handle"></div>
-    <div class="mhead"><div class="mtitle">Apply for Room</div><button class="mclose" onclick="CLOSE()">✕</button></div>
-    <div id="minfo" style="background:#fafafa;border-radius:12px;padding:13px;margin-bottom:16px;font-size:.86rem"></div>
-    <div class="fg"><label>Check-in Date *</label><input id="mcheckin" type="date"/></div>
-    <div class="fg"><label>Duration</label><select id="mdur"><option>Monthly</option><option>Semester</option><option>Yearly</option></select></div>
-    <div class="fg"><label>Message (optional)</label><textarea id="mmsg" placeholder="Any message for admin..."></textarea></div>
-    <button class="btn btn-red btn-w" style="margin-top:8px" onclick="submitApp()">Submit Application</button>
+
+    <!-- STEP 1: Choose Room Type -->
+    <div id="mstep1">
+      <div class="mhead">
+        <div class="mtitle">🏠 Choose Room Type</div>
+        <button class="mclose" onclick="CLOSE()">✕</button>
+      </div>
+      <div style="font-size:.84rem;color:var(--sub);margin-bottom:18px;">Select the type of room you'd like to apply for</div>
+      <div id="mtype-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px"></div>
+    </div>
+
+    <!-- STEP 2: Choose specific room + fill form -->
+    <div id="mstep2" style="display:none">
+      <div class="mhead">
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onclick="MBACK()" style="background:#f3f4f6;border:none;border-radius:50%;width:32px;height:32px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;">←</button>
+          <div class="mtitle" id="mstep2-title">Available Rooms</div>
+        </div>
+        <button class="mclose" onclick="CLOSE()">✕</button>
+      </div>
+      <div style="font-size:.82rem;color:var(--sub);margin-bottom:14px;">Select a room to apply for</div>
+      <div id="mroom-list" style="display:flex;flex-direction:column;gap:10px;max-height:260px;overflow-y:auto;margin-bottom:18px;padding-right:2px"></div>
+      <div id="mform" style="display:none">
+        <div style="height:1px;background:var(--border);margin-bottom:16px"></div>
+        <div id="minfo" style="background:linear-gradient(135deg,rgba(232,50,90,.06),rgba(255,107,138,.04));border:1.5px solid rgba(232,50,90,.15);border-radius:12px;padding:13px;margin-bottom:14px;font-size:.86rem"></div>
+        <div class="fg"><label>Check-in Date *</label><input id="mcheckin" type="date"/></div>
+        <div class="fg"><label>Duration</label><select id="mdur"><option>Monthly</option><option>Semester</option><option>Yearly</option></select></div>
+        <div class="fg"><label>Message (optional)</label><textarea id="mmsg" placeholder="Any message for admin..."></textarea></div>
+        <button class="btn btn-red btn-w" style="margin-top:8px" onclick="submitApp()">Submit Application →</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="tbox" id="TOASTS"></div>
+
+<!-- ADMIN: Room Allocation Modal -->
+<div class="mbg" id="ALLOC-MODAL">
+  <div class="mbox" style="max-width:520px">
+    <div class="drag-handle"></div>
+    <div class="mhead">
+      <div class="mtitle">🏠 Allocate Room</div>
+      <button class="mclose" onclick="document.getElementById('ALLOC-MODAL').classList.remove('open')">✕</button>
+    </div>
+    <div id="alloc-student-info" style="background:rgba(59,130,246,.06);border:1.5px solid rgba(59,130,246,.15);border-radius:12px;padding:12px 16px;margin-bottom:16px;font-size:.86rem"></div>
+    <div style="font-size:.83rem;font-weight:700;margin-bottom:10px;color:var(--sub)">SELECT A ROOM TO ALLOCATE</div>
+    <div id="alloc-room-list" style="display:flex;flex-direction:column;gap:8px;max-height:320px;overflow-y:auto;margin-bottom:16px"></div>
+    <div class="fg"><label>Admin Note (optional)</label><input id="alloc-note" placeholder="e.g. Room allocated as per availability"/></div>
+    <button class="btn btn-red btn-w" style="margin-top:10px" onclick="confirmAllocate()">✅ Approve & Allocate Room</button>
+  </div>
+</div>
 
 <script>
 // ═══════════════════════════
@@ -1011,8 +1131,7 @@ async function loadHome() {
     renderHRooms();
     renderCityChips(rooms, 'city-chips', function(city){ cityFilterH = city; renderHRooms(); });
     renderHNotices(notices);
-    document.getElementById('h-total').textContent = rooms.length;
-    document.getElementById('h-avail').textContent = rooms.filter(function(r){return r.status==='Available';}).length;
+    var buildings=[...new Set(rooms.map(function(r){return r.building;}))]; var availBlds=[...new Set(rooms.filter(function(r){return r.status==='Available';}).map(function(r){return r.building;}))]; document.getElementById('h-total').textContent=buildings.length; document.getElementById('h-avail').textContent=availBlds.length;
     var studs = await API('GET','/api/students');
     document.getElementById('h-studs').textContent = studs.length;
   } catch(e){}
@@ -1050,40 +1169,58 @@ function setHF(type, el) {
 
 function renderHRooms() {
   var q = document.getElementById('hsearch').value.toLowerCase();
-  var emj = {Single:'🛏️',Double:'🛏️',Triple:'🏠',Suite:'🌟'};
-  var rooms = D.rooms.filter(function(r){
-    return (!hFilter||r.type===hFilter)&&
-      (!cityFilterH||(r.city||'')=== cityFilterH)&&(
-      r.number.toLowerCase().includes(q)||
-      r.building.toLowerCase().includes(q)||
-      r.type.toLowerCase().includes(q)||
+  var allRooms = D.rooms.filter(function(r){
+    return (!hFilter || r.type === hFilter) &&
+      (!cityFilterH || (r.city||'') === cityFilterH) && (
+      r.building.toLowerCase().includes(q) ||
+      r.type.toLowerCase().includes(q) ||
       (r.city||'').toLowerCase().includes(q)
     );
   });
   var g = document.getElementById('hrooms');
-  if(!rooms.length){g.innerHTML='<div class="empty"><div class="ei">🛏️</div>No rooms found</div>';return;}
-  g.innerHTML = rooms.map(function(r){
-    var amenTags = (r.amenities&&r.amenities.length) ? r.amenities.slice(0,3).map(function(a){return '<span class="ramen-tag">'+a+'</span>';}).join('') : '';
-    var locationLine = r.city ? r.city : (r.building ? 'Building ' + r.building : '');
-    return `
-    <div class="rcard">
-      <div class="rimg" style="${r.image?'padding:0;overflow:hidden;background:#f3f4f6;':''}">${r.image?`<img src="${r.image}" alt="${r.building}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentElement.innerHTML='${emj[r.type]||'🛏️'}'" />`:(emj[r.type]||'🛏️')}
-        <button class="save-btn" style="position:absolute;top:10px;right:10px">♡</button>
-        <span class="rbadge ${r.status==='Available'?'ba':'bo'}" style="position:absolute;top:10px;left:10px">${r.status}</span>
-      </div>
-      <div class="rbody">
-        <div class="rmeta" style="font-size:.72rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px">📍 ${locationLine}</div>
-        <div class="rtitle">${r.building}</div>
-        <div class="rmeta">Room ${r.number} · Floor ${r.floor} · ${r.capacity} person(s) · ${r.type}</div>
-        ${amenTags ? '<div class="ramen">'+amenTags+'</div>' : ''}
-        <div class="rprice-row">
-          <div class="rprice">${fmtR(r.price)}<span>/month</span></div>
-          <button class="rapply" ${r.status!=='Available'?'disabled':''} onclick="APPLY('${r.number}','${r.building}',${r.price},'${r.type}')">
-            ${r.status==='Available'?'Apply →':'Occupied'}
-          </button>
-        </div>
-      </div>
-    </div>`;
+  if(!allRooms.length){g.innerHTML='<div class="empty"><div class="ei">🛏️</div>No rooms found</div>';return;}
+  var byBuilding = {};
+  allRooms.forEach(function(r){
+    if(!byBuilding[r.building]) byBuilding[r.building] = {city:r.city||'',image:'',rooms:[]};
+    if(r.image && !byBuilding[r.building].image) byBuilding[r.building].image = r.image;
+    byBuilding[r.building].rooms.push(r);
+  });
+  var typeColors = {Single:'#E8325A',Double:'#7c3aed',Triple:'#0891b2',Suite:'#059669'};
+  g.innerHTML = Object.keys(byBuilding).map(function(bld){
+    var info = byBuilding[bld];
+    var bRooms = info.rooms;
+    var availRooms = bRooms.filter(function(r){return r.status==='Available';});
+    var hasAvail = availRooms.length > 0;
+    var imgUrl = info.image || '';
+    var allAmen = [];
+    bRooms.forEach(function(r){ (r.amenities||[]).forEach(function(a){ if(allAmen.indexOf(a)===-1) allAmen.push(a); }); });
+    var amenTags = allAmen.slice(0,4).map(function(a){return '<span class="ramen-tag">'+a+'</span>';}).join('');
+    var typesSummary = availRooms.length
+      ? [...new Set(availRooms.map(function(r){return r.type;}))].map(function(t){
+          var price = Math.min.apply(null, availRooms.filter(function(r){return r.type===t;}).map(function(r){return r.price;}));
+          var tc = typeColors[t]||'#888';
+          return '<span style="background:'+tc+'18;color:'+tc+';border-radius:100px;padding:3px 10px;font-size:.72rem;font-weight:700">'+t+' \u00b7 '+fmtR(price)+'</span>';
+        }).join('')
+      : '<span style="color:var(--sub);font-size:.78rem">No rooms available</span>';
+    var minPrice = availRooms.length ? Math.min.apply(null, availRooms.map(function(r){return r.price;})) : null;
+    var bldEsc = bld.replace(/'/g,"\\'");
+    var firstAvail = availRooms[0] || bRooms[0];
+    var applyCall = "APPLY('" + firstAvail.number + "','" + bldEsc + "'," + firstAvail.price + ",'" + firstAvail.type + "')";
+    return '<div class="rcard" onclick="'+applyCall+'" style="cursor:pointer">'
+      +'<div class="rimg" style="'+(imgUrl?'padding:0;overflow:hidden;background:#f3f4f6;':'')+'">'
+      +(imgUrl?'<img src="'+imgUrl+'" alt="'+bldEsc+'" style="width:100%;height:100%;object-fit:cover;display:block" />':'🏢')
+      +'<button class="save-btn" style="position:absolute;top:10px;right:10px" onclick="event.stopPropagation()">&#9825;</button>'
+      +'<span class="rbadge '+(hasAvail?'ba':'bo')+'" style="position:absolute;top:10px;left:10px">'+(hasAvail?availRooms.length+' Available':'Fully Occupied')+'</span>'
+      +'</div>'
+      +'<div class="rbody">'
+      +'<div class="rmeta" style="font-size:.72rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px">\ud83d\udccd '+(info.city||bld)+'</div>'
+      +'<div class="rtitle">'+bld+'</div>'
+      +'<div style="display:flex;flex-wrap:wrap;gap:5px;margin:6px 0">'+typesSummary+'</div>'
+      +(amenTags?'<div class="ramen" style="margin-bottom:6px">'+amenTags+'</div>':'')
+      +'<div class="rprice-row">'
+      +'<div class="rprice">'+(minPrice?'From '+fmtR(minPrice):'&mdash;')+'<span>/month</span></div>'
+      +'<button class="rapply" '+(hasAvail?'':'disabled')+' onclick="event.stopPropagation();'+applyCall+'">'+(hasAvail?'Apply &rarr;':'Occupied')+'</button>'
+      +'</div></div></div>';
   }).join('');
 }
 
@@ -1105,14 +1242,125 @@ function renderHNotices(notices) {
 // ═══════════════════════════
 // APPLY MODAL
 // ═══════════════════════════
-function APPLY(num, bld, price, type) {
+// ── NEW 2-STEP APPLY FLOW ──
+var ROOM_TYPE_INFO = {
+  Single:  { icon: '🛏️',  desc: 'Private room for one person',      color: '#E8325A' },
+  Double:  { icon: '🛏️🛏️', desc: 'Shared room for two people',       color: '#7c3aed' },
+  Triple:  { icon: '🏠',  desc: 'Shared room for three people',      color: '#0891b2' },
+  Suite:   { icon: '✨',  desc: 'Premium suite with extra amenities', color: '#059669' },
+};
+
+function OPEN_APPLY() {
   if(!D.student){TOAST('Please login or register first!','error');GO('login');return;}
-  D.applyRoom = {number:num,building:bld,price:price,type:type};
-  document.getElementById('minfo').innerHTML = '<strong>Room '+num+'</strong> · Building '+bld+' · '+type+' · <strong style="color:var(--red)">'+fmtR(price)+'/month</strong>';
-  document.getElementById('mcheckin').value = new Date().toISOString().split('T')[0];
+  _applyBuilding = null; // no building filter — show all
+  var availableTypes = [...new Set((D.rooms||[]).filter(function(r){return r.status==='Available';}).map(function(r){return r.type;}))];
+  if(!availableTypes.length){TOAST('No rooms available right now','error');return;}
+  var grid = document.getElementById('mtype-grid');
+  grid.innerHTML = availableTypes.map(function(t){
+    var info = ROOM_TYPE_INFO[t] || {icon:'🛏️',desc:t+' room',color:'var(--red)'};
+    var count = (D.rooms||[]).filter(function(r){return r.type===t&&r.status==='Available';}).length;
+    return `<button onclick="MSTEP2('${t}')" style="background:#fff;border:2px solid #e5e7eb;border-radius:16px;padding:20px 14px;text-align:center;cursor:pointer;transition:.2s;font-family:'Inter',sans-serif;" 
+      onmouseover="this.style.borderColor='${info.color}';this.style.background='rgba(232,50,90,.03)'" 
+      onmouseout="this.style.borderColor='#e5e7eb';this.style.background='#fff'">
+      <div style="font-size:1.8rem;margin-bottom:8px">${info.icon}</div>
+      <div style="font-weight:800;font-size:.95rem;margin-bottom:4px;font-family:'Nunito',sans-serif">${t}</div>
+      <div style="font-size:.73rem;color:var(--sub);margin-bottom:8px">${info.desc}</div>
+      <div style="font-size:.72rem;font-weight:700;color:${info.color};background:rgba(232,50,90,.07);padding:3px 10px;border-radius:100px;display:inline-block">${count} available</div>
+    </button>`;
+  }).join('');
+  document.getElementById('mstep1').style.display='';
+  document.getElementById('mstep2').style.display='none';
   document.getElementById('MODAL').classList.add('open');
 }
-function CLOSE(){document.getElementById('MODAL').classList.remove('open');}
+
+// currentBuilding: set when user clicks Apply from a specific building card
+var _applyBuilding = null;
+
+function MSTEP2(type) {
+  // Filter by building if coming from a specific card, otherwise all
+  var rooms = (D.rooms||[]).filter(function(r){
+    return r.type===type && r.status==='Available' && (!_applyBuilding || r.building===_applyBuilding);
+  });
+  document.getElementById('mstep2-title').textContent = type+' Rooms';
+  var list = document.getElementById('mroom-list');
+  if(!rooms.length){
+    list.innerHTML='<div style="text-align:center;padding:30px 0;color:var(--sub);font-size:.86rem">No '+type+' rooms available right now</div>';
+  } else {
+    list.innerHTML = rooms.map(function(r){
+      var amenTags = (r.amenities&&r.amenities.length)?r.amenities.slice(0,3).map(function(a){return '<span style="background:#f3f4f6;border-radius:100px;padding:2px 8px;font-size:.68rem;font-weight:600">'+a+'</span>';}).join(''):'';
+      return `<div onclick="MSELECT_ROOM(this,'${r.number}','${r.building}',${r.price},'${r.type}')"
+        data-rnum="${r.number}"
+        style="border:2px solid #e5e7eb;border-radius:14px;padding:14px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:14px"
+        onmouseover="this.style.borderColor='var(--red)'" onmouseout="if(!this.classList.contains('sel-room'))this.style.borderColor='#e5e7eb'">
+        <div style="width:52px;height:52px;border-radius:12px;background:${r.image?'#f3f4f6':'linear-gradient(135deg,rgba(232,50,90,.08),rgba(255,107,138,.08))'};display:flex;align-items:center;justify-content:center;font-size:1.4rem;flex-shrink:0;overflow:hidden">
+          ${r.image?`<img src="${r.image}" style="width:100%;height:100%;object-fit:cover;border-radius:12px" onerror="this.parentElement.innerHTML='🛏️'"/>`:ROOM_TYPE_INFO[r.type]?.icon||'🛏️'}
+        </div>
+        <div style="flex:1;min-width:0">
+          <div style="font-weight:800;font-size:.88rem;font-family:'Nunito',sans-serif">${r.type} Room</div>
+          <div style="font-size:.75rem;color:var(--sub);margin-bottom:4px">${r.capacity} person(s) · ${r.city||r.building}</div>
+          <div style="display:flex;gap:4px;flex-wrap:wrap">${amenTags}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-weight:800;color:var(--red);font-size:.92rem;font-family:'Nunito',sans-serif">${fmtR(r.price)}</div>
+          <div style="font-size:.7rem;color:var(--sub)">/month</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('mform').style.display='none';
+  D.applyRoom = null;
+  document.getElementById('mstep1').style.display='none';
+  document.getElementById('mstep2').style.display='';
+}
+
+function MSELECT_ROOM(el, num, bld, price, type) {
+  document.querySelectorAll('#mroom-list > div').forEach(function(d){
+    d.style.borderColor='#e5e7eb';d.style.background='#fff';d.classList.remove('sel-room');
+  });
+  el.style.borderColor='var(--red)';el.style.background='rgba(232,50,90,.03)';el.classList.add('sel-room');
+  D.applyRoom = {number:num,building:bld,price:price,type:type};
+  document.getElementById('minfo').innerHTML = '<strong>'+type+'</strong> · '+bld+' · <strong style="color:var(--red)">'+fmtR(price)+'/month</strong>';
+  document.getElementById('mcheckin').value = new Date().toISOString().split('T')[0];
+  document.getElementById('mform').style.display='';
+  setTimeout(function(){document.getElementById('mform').scrollIntoView({behavior:'smooth',block:'nearest'});},100);
+}
+
+function MBACK() {
+  document.getElementById('mstep2').style.display='none';
+  document.getElementById('mstep1').style.display='';
+  D.applyRoom=null;
+}
+
+// Called from a specific building card — skip step 1, show only that building's room types
+function APPLY(num, bld, price, type) {
+  if(!D.student){TOAST('Please login or register first!','error');GO('login');return;}
+  _applyBuilding = bld; // lock to this building
+  // Build step 1 showing only types available in THIS building
+  var availableTypes = [...new Set((D.rooms||[]).filter(function(r){return r.status==='Available'&&r.building===bld;}).map(function(r){return r.type;}))];
+  if(!availableTypes.length){TOAST('No rooms available in this building','error');return;}
+  var grid = document.getElementById('mtype-grid');
+  grid.innerHTML = availableTypes.map(function(t){
+    var info = ROOM_TYPE_INFO[t]||{icon:'🛏️',desc:t+' room',color:'var(--red)'};
+    var count = (D.rooms||[]).filter(function(r){return r.type===t&&r.status==='Available'&&r.building===bld;}).length;
+    return `<button onclick="MSTEP2('${t}')" style="background:#fff;border:2px solid #e5e7eb;border-radius:16px;padding:20px 14px;text-align:center;cursor:pointer;transition:.2s;font-family:'Inter',sans-serif;"
+      onmouseover="this.style.borderColor='${info.color}';this.style.background='rgba(232,50,90,.03)'"
+      onmouseout="this.style.borderColor='#e5e7eb';this.style.background='#fff'">
+      <div style="font-size:1.8rem;margin-bottom:8px">${info.icon}</div>
+      <div style="font-weight:800;font-size:.95rem;margin-bottom:4px;font-family:'Nunito',sans-serif">${t}</div>
+      <div style="font-size:.73rem;color:var(--sub);margin-bottom:8px">${info.desc}</div>
+      <div style="font-size:.72rem;font-weight:700;color:${info.color};background:rgba(232,50,90,.07);padding:3px 10px;border-radius:100px;display:inline-block">${count} available</div>
+    </button>`;
+  }).join('');
+  document.getElementById('mstep1').style.display='';
+  document.getElementById('mstep2').style.display='none';
+  document.getElementById('MODAL').classList.add('open');
+}
+
+function CLOSE(){
+  document.getElementById('MODAL').classList.remove('open');
+  D.applyRoom=null;
+  _applyBuilding=null;
+}
 
 async function submitApp() {
   if(!D.applyRoom) return;
@@ -1125,11 +1373,11 @@ async function submitApp() {
       studentId:D.student.studentId, studentName:D.student.name,
       email:D.student.email, phone:D.student.phone||'',
       program:D.student.program, year:D.student.year,
-      roomNumber:D.applyRoom.number, building:D.applyRoom.building,
+      roomType:D.applyRoom.type, building:D.applyRoom.building,
       roomPrice:D.applyRoom.price, duration:dur, checkin:checkin, message:msg
     });
     CLOSE();
-    TOAST('Application submitted for Room '+D.applyRoom.number+'!');
+    TOAST('Application submitted! Admin will allocate your room. ✅');
     loadSDash();
   } catch(e){}
 }
@@ -1311,7 +1559,7 @@ async function loadSDash() {
     ban.style.display = 'flex';
     if(app) {
       ban.className='sban sban-ok';
-      ban.innerHTML='<div class="sban-icon">✅</div><div><div class="sban-title">Room '+app.roomNumber+' Approved!</div><div class="sban-sub">Building '+app.building+' · '+fmtR(app.roomPrice)+'/mo · Check-in: '+app.checkin+'</div></div>';
+      ban.innerHTML='<div class="sban-icon">✅</div><div><div class="sban-title">Room '+app.roomNumber+' Allocated!</div><div class="sban-sub">'+app.building+' · '+fmtR(app.roomPrice)+'/mo · Check-in: '+app.checkin+'</div></div>';
       document.getElementById('smroom').textContent='Room '+app.roomNumber;
       document.getElementById('sstatus').textContent='Approved';
       document.getElementById('sstatus').style.color='var(--green)';
@@ -1320,7 +1568,7 @@ async function loadSDash() {
       var rej  = (apps||[]).find(function(a){return a.status==='Rejected';});
       if(pend){
         ban.className='sban sban-wait';
-        ban.innerHTML='<div class="sban-icon">⏳</div><div><div class="sban-title">Application Pending</div><div class="sban-sub">Room '+pend.roomNumber+' · Waiting for admin approval</div></div>';
+        ban.innerHTML='<div class="sban-icon">⏳</div><div><div class="sban-title">Application Pending</div><div class="sban-sub">'+(pend.roomType||'Room')+' · '+pend.building+' · Waiting for admin to allocate a room</div></div>';
         document.getElementById('sstatus').textContent='Pending'; document.getElementById('sstatus').style.color='var(--yellow)';
       } else if(rej){
         ban.className='sban sban-no';
@@ -1338,7 +1586,10 @@ async function loadSDash() {
     renderSRooms();
 
     var at=document.getElementById('sapps');
-    at.innerHTML=(apps&&apps.length)?apps.map(function(a){return '<tr><td>Room '+a.roomNumber+'</td><td>'+a.building+'</td><td>'+fmtR(a.roomPrice)+'/mo</td><td>'+a.duration+'</td><td>'+a.checkin+'</td><td>'+fmtD(a.createdAt)+'</td><td><span class="b '+(a.status==='Approved'?'bg':a.status==='Rejected'?'br':'by')+'">'+a.status+'</span></td></tr>';}).join(''):'<tr><td colspan="7"><div class="empty">No applications yet</div></td></tr>';
+    at.innerHTML=(apps&&apps.length)?apps.map(function(a){
+      var roomInfo = a.status==='Approved'&&a.roomNumber ? 'Room '+a.roomNumber : (a.roomType||'—')+' (pending allocation)';
+      return '<tr><td>'+a.building+'</td><td>'+roomInfo+'</td><td>'+fmtR(a.roomPrice)+'/mo</td><td>'+a.duration+'</td><td>'+a.checkin+'</td><td>'+fmtD(a.createdAt)+'</td><td><span class="b '+(a.status==='Approved'?'bg':a.status==='Rejected'?'br':'by')+'">'+a.status+'</span></td></tr>';
+    }).join(''):'<tr><td colspan="7"><div class="empty">No applications yet</div></td></tr>';
 
     var ct=document.getElementById('scomps');
     ct.innerHTML=(comps&&comps.length)?comps.map(function(c){return '<tr><td>'+fmtD(c.createdAt)+'</td><td>'+c.subject+'</td><td><span class="p'+c.priority.toLowerCase()[0]+'">'+c.priority+'</span></td><td><span class="b '+(c.status==='Resolved'?'bg':c.status==='In Progress'?'bb':'by')+'">'+c.status+'</span></td></tr>';}).join(''):'<tr><td colspan="4"><div class="empty">No complaints</div></td></tr>';
@@ -1374,37 +1625,56 @@ function setSF(type,el){
 
 function renderSRooms(){
   var q=document.getElementById('ssearch').value.toLowerCase();
-  var emj={Single:'🛏️',Double:'🛏️',Triple:'🏠',Suite:'🌟'};
-  var rooms=D.rooms.filter(function(r){return(!sFilter||r.type===sFilter)&&
+  var allRooms=D.rooms.filter(function(r){
+    return(!sFilter||r.type===sFilter)&&
     (!cityFilterS||(r.city||'')===cityFilterS)&&(
-    r.number.toLowerCase().includes(q)||
     r.building.toLowerCase().includes(q)||
     (r.city||'').toLowerCase().includes(q)
   );});
   var g=document.getElementById('srooms');
-  if(!rooms.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">🛏️</div>No rooms found</div>';return;}
-  g.innerHTML=rooms.map(function(r){
-    var amenTags=(r.amenities&&r.amenities.length)?r.amenities.slice(0,3).map(function(a){return '<span class="ramen-tag">'+a+'</span>';}).join(''):'';
-    var locationLine = r.city ? r.city : (r.building ? 'Building ' + r.building : '');
-    return `
-    <div class="rcard">
-      <div class="rimg" style="${r.image?'padding:0;overflow:hidden;background:#f3f4f6;':''}">${r.image?`<img src="${r.image}" alt="${r.building}" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.parentElement.innerHTML='${emj[r.type]||'🛏️'}'" />`:(emj[r.type]||'🛏️')}
-        <button class="save-btn" style="position:absolute;top:10px;right:10px">♡</button>
-        <span class="rbadge ${r.status==='Available'?'ba':'bo'}" style="position:absolute;top:10px;left:10px">${r.status}</span>
-      </div>
-      <div class="rbody">
-        <div class="rmeta" style="font-size:.72rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px">📍 ${locationLine}</div>
-        <div class="rtitle">${r.building}</div>
-        <div class="rmeta">Room ${r.number} · Floor ${r.floor} · ${r.capacity} person(s) · ${r.type}</div>
-        ${amenTags?'<div class="ramen">'+amenTags+'</div>':''}
-        <div class="rprice-row">
-          <div class="rprice">${fmtR(r.price)}<span>/month</span></div>
-          <button class="rapply" ${r.status!=='Available'?'disabled':''} onclick="APPLY('${r.number}','${r.building}',${r.price},'${r.type}')">
-            ${r.status==='Available'?'Apply →':'Occupied'}
-          </button>
-        </div>
-      </div>
-    </div>`;
+  if(!allRooms.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">🛏️</div>No rooms found</div>';return;}
+  var byBuilding={};
+  allRooms.forEach(function(r){
+    if(!byBuilding[r.building]) byBuilding[r.building]={city:r.city||'',image:'',rooms:[]};
+    if(r.image&&!byBuilding[r.building].image) byBuilding[r.building].image=r.image;
+    byBuilding[r.building].rooms.push(r);
+  });
+  var typeColors={Single:'#E8325A',Double:'#7c3aed',Triple:'#0891b2',Suite:'#059669'};
+  g.innerHTML=Object.keys(byBuilding).map(function(bld){
+    var info=byBuilding[bld];
+    var bRooms=info.rooms;
+    var availRooms=bRooms.filter(function(r){return r.status==='Available';});
+    var hasAvail=availRooms.length>0;
+    var imgUrl=info.image||'';
+    var allAmen=[];
+    bRooms.forEach(function(r){(r.amenities||[]).forEach(function(a){if(allAmen.indexOf(a)===-1)allAmen.push(a);});});
+    var amenTags=allAmen.slice(0,4).map(function(a){return '<span class="ramen-tag">'+a+'</span>';}).join('');
+    var typesSummary=availRooms.length
+      ?[...new Set(availRooms.map(function(r){return r.type;}))].map(function(t){
+          var price=Math.min.apply(null,availRooms.filter(function(r){return r.type===t;}).map(function(r){return r.price;}));
+          var tc=typeColors[t]||'#888';
+          return '<span style="background:'+tc+'18;color:'+tc+';border-radius:100px;padding:3px 10px;font-size:.72rem;font-weight:700">'+t+' \u00b7 '+fmtR(price)+'</span>';
+        }).join('')
+      :'<span style="color:var(--sub);font-size:.78rem">No rooms available</span>';
+    var minPrice=availRooms.length?Math.min.apply(null,availRooms.map(function(r){return r.price;})):null;
+    var bldEsc=bld.replace(/'/g,"\\'");
+    var firstAvail=availRooms[0]||bRooms[0];
+    var applyCall="APPLY('"+firstAvail.number+"','"+bldEsc+"',"+firstAvail.price+",'"+firstAvail.type+"')";
+    return '<div class="rcard" onclick="'+applyCall+'" style="cursor:pointer">'
+      +'<div class="rimg" style="'+(imgUrl?'padding:0;overflow:hidden;background:#f3f4f6;':'')+'">'
+      +(imgUrl?'<img src="'+imgUrl+'" alt="'+bldEsc+'" style="width:100%;height:100%;object-fit:cover;display:block" />':'🏢')
+      +'<button class="save-btn" style="position:absolute;top:10px;right:10px" onclick="event.stopPropagation()">&#9825;</button>'
+      +'<span class="rbadge '+(hasAvail?'ba':'bo')+'" style="position:absolute;top:10px;left:10px">'+(hasAvail?availRooms.length+' Available':'Fully Occupied')+'</span>'
+      +'</div>'
+      +'<div class="rbody">'
+      +'<div class="rmeta" style="font-size:.72rem;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px">\ud83d\udccd '+(info.city||bld)+'</div>'
+      +'<div class="rtitle">'+bld+'</div>'
+      +'<div style="display:flex;flex-wrap:wrap;gap:5px;margin:6px 0">'+typesSummary+'</div>'
+      +(amenTags?'<div class="ramen" style="margin-bottom:6px">'+amenTags+'</div>':'')
+      +'<div class="rprice-row">'
+      +'<div class="rprice">'+(minPrice?'From '+fmtR(minPrice):'&mdash;')+'<span>/month</span></div>'
+      +'<button class="rapply" '+(hasAvail?'':'disabled')+' onclick="event.stopPropagation();'+applyCall+'">'+(hasAvail?'Apply &rarr;':'Occupied')+'</button>'
+      +'</div></div></div>';
   }).join('');
 }
 
@@ -1442,7 +1712,7 @@ function AN(pg){
   for(var i=0;i<pages.length;i++) pages[i].classList.remove('on');
   document.querySelector('.ani[onclick="AN(\''+pg+'\')"]').classList.add('on');
   document.getElementById('AP-'+pg).classList.add('on');
-  var loaders={dash:loadADash,rooms:loadARooms,students:loadAStudents,apps:loadAApps,comps:loadAComps,fees:loadAFees,notices:loadANotices,agents:function(){runAllAgents();}};
+  var loaders={dash:loadADash,rooms:loadARooms,students:loadAStudents,apps:loadAApps,comps:loadAComps,fees:loadAFees,notices:loadANotices,agents:function(){runAllAgents();loadAgentAudit();}};
   if(loaders[pg]) loaders[pg]();
 }
 
@@ -1462,28 +1732,93 @@ async function loadADash(){
 }
 
 async function loadARooms(){D.rooms=await API('GET','/api/rooms');renderARooms(D.rooms);}
-function filterARooms(){var q=document.getElementById('ar-q').value.toLowerCase(),fs=document.getElementById('ar-s').value;renderARooms(D.rooms.filter(function(r){return(r.number.toLowerCase().includes(q)||r.building.toLowerCase().includes(q))&&(!fs||r.status===fs);}));}
+
+function toggleAddRoomForm(){
+  var f=document.getElementById('ar-add-form');
+  f.style.display=f.style.display==='none'?'':'none';
+  ['Rnum','Rbld','Rcity','Rflr','Rcap','Rprc','Ramen','Rimg'].forEach(function(id){document.getElementById(id).value='';});
+}
+
+function filterARooms(){
+  var q=document.getElementById('ar-q').value.toLowerCase();
+  var fs=document.getElementById('ar-s').value;
+  renderARooms(D.rooms.filter(function(r){
+    return (r.building.toLowerCase().includes(q)||(r.city||'').toLowerCase().includes(q)||r.number.toLowerCase().includes(q))
+      && (!fs||r.status===fs);
+  }));
+}
+
 function renderARooms(rooms){
   var g=document.getElementById('ar-grid');
-  if(!rooms.length){g.innerHTML='<div class="empty" style="grid-column:1/-1"><div class="ei">🛏️</div>No rooms</div>';return;}
-  g.innerHTML=rooms.map(function(r){return `
-    <div class="rcard-a">
-      ${r.image?`<img src="${r.image}" alt="${r.building}" style="width:100%;height:110px;object-fit:cover;border-radius:10px;margin-bottom:10px;display:block" onerror="this.style.display='none'" />`:''}
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">
-        <div style="font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:800">Room ${r.number}</div>
-        <span class="b ${r.status==='Available'?'bg':'br'}">${r.status}</span>
+  if(!rooms.length){g.innerHTML='<div class="empty" style="padding:40px;text-align:center"><div class="ei">🏢</div>No rooms found</div>';return;}
+
+  // Group by building
+  var byBuilding={};
+  rooms.forEach(function(r){
+    if(!byBuilding[r.building]) byBuilding[r.building]={city:r.city||'',image:r.image||'',rooms:[]};
+    byBuilding[r.building].rooms.push(r);
+  });
+
+  var typeColors={Single:'#E8325A',Double:'#7c3aed',Triple:'#0891b2',Suite:'#059669'};
+
+  g.innerHTML = Object.keys(byBuilding).map(function(bld){
+    var info=byBuilding[bld];
+    var bRooms=info.rooms;
+    var avail=bRooms.filter(function(r){return r.status==='Available';}).length;
+    var total=bRooms.length;
+
+    var rows=bRooms.map(function(r){
+      var tc=typeColors[r.type]||'#888';
+      return `<tr>
+        <td><span style="font-weight:700;font-size:.85rem">Room ${r.number}</span></td>
+        <td><span style="background:${tc}18;color:${tc};border-radius:100px;padding:2px 10px;font-size:.73rem;font-weight:700">${r.type}</span></td>
+        <td style="font-size:.8rem;color:var(--sub)">Floor ${r.floor}</td>
+        <td style="font-size:.8rem;color:var(--sub)">${r.capacity} person(s)</td>
+        <td><span style="font-weight:700;color:var(--red);font-size:.85rem">${fmtR(r.price)}/mo</span></td>
+        <td><span class="b ${r.status==='Available'?'bg':'br'}" style="font-size:.7rem">${r.status}</span></td>
+        <td>
+          <div style="display:flex;gap:5px;align-items:center">
+            <button class="abtn abtn-sm ${r.status==='Available'?'abtn-del':'abtn-ok'}" onclick="toggleRoom('${r._id}','${r.status==='Available'?'Occupied':'Available'}')">
+              ${r.status==='Available'?'🔒 Mark Occupied':'✅ Mark Available'}
+            </button>
+            <button class="ibtn del abtn-sm" onclick="delRoom('${r._id}')">🗑️</button>
+          </div>
+        </td>
+      </tr>`;
+    }).join('');
+
+    return `<div class="ac" style="margin-bottom:16px;padding:0;overflow:hidden">
+      <div style="display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border);background:#fafafa;border-radius:16px 16px 0 0">
+        ${info.image?`<img src="${info.image}" style="width:54px;height:54px;object-fit:cover;border-radius:10px;flex-shrink:0" onerror="this.style.display='none'"/>`:'<div style="width:54px;height:54px;border-radius:10px;background:linear-gradient(135deg,rgba(232,50,90,.1),rgba(255,107,138,.08));display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0">🏢</div>'}
+        <div style="flex:1;min-width:0">
+          <div style="font-family:\'Nunito\',sans-serif;font-size:1rem;font-weight:900">${bld}</div>
+          <div style="font-size:.76rem;color:var(--sub);margin-top:1px">📍 ${info.city||'—'}</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;flex-shrink:0">
+          <span style="background:rgba(0,182,122,.1);color:#007a52;border-radius:100px;padding:3px 12px;font-size:.73rem;font-weight:700">${avail} available</span>
+          <span style="background:#f3f4f6;color:var(--sub);border-radius:100px;padding:3px 12px;font-size:.73rem;font-weight:700">${total} total</span>
+        </div>
       </div>
-      <div style="font-size:.76rem;color:var(--sub);margin-bottom:2px">${r.building}${r.city?' · '+r.city:''} · Floor ${r.floor}</div>
-      <div style="font-size:.76rem;color:var(--sub);margin-bottom:7px">${r.type} · ${r.capacity} person(s)</div>
-      <div style="font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;color:var(--red);margin-bottom:9px">${fmtR(r.price)}/mo</div>
-      ${r.amenities&&r.amenities.length?'<div style="font-size:.68rem;color:var(--sub);margin-bottom:8px">'+r.amenities.join(' · ')+'</div>':''}
-      <div style="display:flex;gap:5px">
-        <button class="abtn abtn-sm ${r.status==='Available'?'abtn-del':'abtn-ok'}" onclick="toggleRoom('${r._id}','${r.status==='Available'?'Occupied':'Available'}')">
-          ${r.status==='Available'?'🔒 Occupied':'✅ Available'}
-        </button>
-        <button class="ibtn del" onclick="delRoom('${r._id}')">🗑️</button>
+      <div style="overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-family:\'Inter\',sans-serif">
+          <thead>
+            <tr style="background:#f9fafb;border-bottom:1px solid var(--border)">
+              <th style="padding:10px 20px;text-align:left;font-size:.72rem;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.04em">Room</th>
+              <th style="padding:10px 12px;text-align:left;font-size:.72rem;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.04em">Type</th>
+              <th style="padding:10px 12px;text-align:left;font-size:.72rem;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.04em">Floor</th>
+              <th style="padding:10px 12px;text-align:left;font-size:.72rem;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.04em">Capacity</th>
+              <th style="padding:10px 12px;text-align:left;font-size:.72rem;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.04em">Price</th>
+              <th style="padding:10px 12px;text-align:left;font-size:.72rem;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.04em">Status</th>
+              <th style="padding:10px 20px;text-align:left;font-size:.72rem;color:var(--sub);font-weight:700;text-transform:uppercase;letter-spacing:.04em">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows}
+          </tbody>
+        </table>
       </div>
-    </div>`}).join('');
+    </div>`;
+  }).join('');
 }
 async function addRoom(){
   var num=document.getElementById('Rnum').value.trim(),bld=document.getElementById('Rbld').value.trim();
@@ -1493,9 +1828,12 @@ async function addRoom(){
   var amen=document.getElementById('Ramen').value.split(',').map(function(s){return s.trim();}).filter(Boolean);
   var img=document.getElementById('Rimg').value.trim();
   if(!num||!bld||!flr||!cap||!prc){TOAST('Fill all required fields','error');return;}
-  try{await API('POST','/api/rooms',{number:num,building:bld,city:city,floor:+flr,type:typ,capacity:+cap,price:+prc,amenities:amen,image:img});
+  try{
+    await API('POST','/api/rooms',{number:num,building:bld,city:city,floor:+flr,type:typ,capacity:+cap,price:+prc,amenities:amen,image:img});
+    document.getElementById('ar-add-form').style.display='none';
     ['Rnum','Rbld','Rcity','Rflr','Rcap','Rprc','Ramen','Rimg'].forEach(function(id){document.getElementById(id).value='';});
-    loadARooms();loadHome();TOAST('Room '+num+' added!');}catch(e){}
+    loadARooms();loadHome();TOAST('Room '+num+' added to '+bld+'!');
+  }catch(e){}
 }
 async function toggleRoom(id,s){try{await API('PATCH','/api/rooms/'+id+'/status',{status:s});loadARooms();loadHome();TOAST('Room updated');}catch(e){}}
 async function delRoom(id){try{await API('DELETE','/api/rooms/'+id);loadARooms();loadHome();TOAST('Room deleted');}catch(e){}}
@@ -1508,19 +1846,115 @@ function renderAStudents(studs){
 async function delStudent(id){try{await API('DELETE','/api/students/'+id);loadAStudents();TOAST('Student deleted');}catch(e){}}
 
 async function loadAApps(){D.apps=await API('GET','/api/applications');renderAApps(D.apps);}
-function filterAApps(){var q=document.getElementById('aa-q').value.toLowerCase(),fs=document.getElementById('aa-s').value;renderAApps(D.apps.filter(function(a){return(a.studentName.toLowerCase().includes(q)||a.roomNumber.toLowerCase().includes(q))&&(!fs||a.status===fs);}));}
+function filterAApps(){var q=document.getElementById('aa-q').value.toLowerCase(),fs=document.getElementById('aa-s').value;renderAApps(D.apps.filter(function(a){return(a.studentName.toLowerCase().includes(q)||(a.roomNumber||'').toLowerCase().includes(q)||a.building.toLowerCase().includes(q))&&(!fs||a.status===fs);}));}
 function renderAApps(apps){
-  document.getElementById('aa-t').innerHTML=apps.length?apps.map(function(a,i){return `<tr>
+  document.getElementById('aa-t').innerHTML=apps.length?apps.map(function(a,i){
+    var roomInfo = a.status==='Approved' && a.roomNumber
+      ? 'Room '+a.roomNumber+' · '+a.building
+      : (a.roomType||'—')+' type · '+a.building;
+    return `<tr>
      <td>${i+1}</td>
      <td><strong>${a.studentName}</strong><br><span style="font-size:.72rem;color:var(--sub)">${a.studentId}</span></td>
-     <td>Room ${a.roomNumber}<br><span style="font-size:.72rem;color:var(--sub)">${a.building}</span></td>
-     <td>${a.duration}</td><td>${a.checkin}</td><td>${fmtD(a.createdAt)}</td>
-     <td><span class="b ${a.status==='Approved'?'bg':a.status==='Rejected'?'br':'by'}">${a.status}</span></td>
+     <td style="font-size:.82rem">${roomInfo}<br><span style="font-size:.7rem;color:var(--sub)">${a.duration} · Check-in: ${a.checkin}</span></td>
+     <td><span class="b ${a.status==='Approved'?'bg':a.status==='Rejected'?'br':'by'}">${a.status}</span>${a.roomNumber&&a.status==='Approved'?'<br><span style="font-size:.7rem;color:#007a52;font-weight:700">Room '+a.roomNumber+'</span>':''}</td>
      <td><div class="agrp">
-      ${a.status==='Pending'?`<button class="abtn abtn-sm abtn-ok" onclick="updateApp('${a._id}','Approved')">✅ Approve</button><button class="abtn abtn-sm abtn-del" onclick="updateApp('${a._id}','Rejected')">❌ Reject</button>`:'<span style="font-size:.76rem;color:#bbb">Done</span>'}
-    </div></td></tr>`;}).join(''):'<tr><td colspan="8"><div class="empty">No applications</div></td></tr>';
+      ${a.status==='Pending'
+        ? `<button class="abtn abtn-sm abtn-ok" onclick="openAllocModal('${a._id}','${a.studentName}','${a.building}','${a.roomType||''}',${a.roomPrice||0})">🏠 Approve & Allocate</button>
+           <button class="abtn abtn-sm abtn-del" onclick="rejectApp('${a._id}')">❌ Reject</button>`
+        : '<span style="font-size:.76rem;color:#bbb">Done</span>'}
+      <button class="ibtn del abtn-sm" onclick="deleteApp('${a._id}')">🗑️</button>
+    </div></td></tr>`;
+  }).join(''):'<tr><td colspan="5"><div class="empty">No applications</div></td></tr>';
 }
-async function updateApp(id,status){try{await API('PATCH','/api/applications/'+id,{status:status});loadAApps();loadADash();loadHome();TOAST('Application '+status+'!');}catch(e){}}
+
+// State for allocation modal
+var _allocAppId = null;
+var _allocRoomId = null;
+
+async function openAllocModal(appId, studentName, building, roomType, roomPrice) {
+  _allocAppId = appId;
+  _allocRoomId = null;
+  document.getElementById('alloc-note').value = '';
+
+  // Show student info
+  document.getElementById('alloc-student-info').innerHTML =
+    '<strong>'+studentName+'</strong> applied for a <strong>'+(roomType||'any')+' room</strong> in <strong>'+building+'</strong>';
+
+  // Load available rooms in this building (filtered by type if specified)
+  var allRooms = D.rooms || [];
+  var available = allRooms.filter(function(r){
+    return r.building === building && r.status === 'Available' && (!roomType || r.type === roomType);
+  });
+
+  // If nothing found for that type, show all available in the building
+  if(!available.length) {
+    available = allRooms.filter(function(r){ return r.building === building && r.status === 'Available'; });
+  }
+
+  var list = document.getElementById('alloc-room-list');
+  if(!available.length){
+    list.innerHTML='<div style="text-align:center;padding:24px;color:var(--sub);font-size:.86rem">⚠️ No available rooms in '+building+'. Mark a room as Available first.</div>';
+  } else {
+    var typeColors={Single:'#E8325A',Double:'#7c3aed',Triple:'#0891b2',Suite:'#059669'};
+    list.innerHTML = available.map(function(r){
+      var tc = typeColors[r.type]||'#888';
+      var amenStr = r.amenities&&r.amenities.length ? r.amenities.slice(0,3).join(' · ') : '';
+      return `<div onclick="ALLOC_SELECT(this,'${r._id}')"
+        style="border:2px solid #e5e7eb;border-radius:12px;padding:14px 16px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:14px"
+        onmouseover="this.style.borderColor='var(--red)'" onmouseout="if(!this.dataset.sel)this.style.borderColor='#e5e7eb'">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
+            <span style="font-weight:800;font-size:.92rem">Room ${r.number}</span>
+            <span style="background:${tc}18;color:${tc};border-radius:100px;padding:2px 10px;font-size:.71rem;font-weight:700">${r.type}</span>
+            <span style="background:#f3f4f6;color:var(--sub);border-radius:100px;padding:2px 9px;font-size:.71rem">Floor ${r.floor}</span>
+            <span style="background:#f3f4f6;color:var(--sub);border-radius:100px;padding:2px 9px;font-size:.71rem">${r.capacity} person(s)</span>
+          </div>
+          ${amenStr?'<div style="font-size:.72rem;color:var(--sub)">'+amenStr+'</div>':''}
+        </div>
+        <div style="text-align:right;flex-shrink:0">
+          <div style="font-weight:800;color:var(--red);font-size:.95rem">${fmtR(r.price)}</div>
+          <div style="font-size:.7rem;color:var(--sub)">/month</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  document.getElementById('ALLOC-MODAL').classList.add('open');
+}
+
+function ALLOC_SELECT(el, roomId) {
+  document.querySelectorAll('#alloc-room-list > div').forEach(function(d){
+    d.style.borderColor='#e5e7eb'; d.style.background='#fff'; delete d.dataset.sel;
+  });
+  el.style.borderColor='var(--red)'; el.style.background='rgba(232,50,90,.03)'; el.dataset.sel='1';
+  _allocRoomId = roomId;
+}
+
+async function confirmAllocate() {
+  if(!_allocAppId){TOAST('No application selected','error');return;}
+  if(!_allocRoomId){TOAST('Please select a room to allocate','error');return;}
+  var note = document.getElementById('alloc-note').value.trim();
+  try {
+    await API('PATCH','/api/applications/'+_allocAppId,{status:'Approved',allocatedRoomId:_allocRoomId,adminNote:note});
+    document.getElementById('ALLOC-MODAL').classList.remove('open');
+    _allocAppId=null; _allocRoomId=null;
+    await loadAApps(); await loadADash(); await loadARooms(); loadHome();
+    TOAST('Room allocated & application approved! ✅');
+  } catch(e){}
+}
+
+async function rejectApp(id) {
+  var note = prompt('Reason for rejection (optional):') || '';
+  try {
+    await API('PATCH','/api/applications/'+id,{status:'Rejected',adminNote:note});
+    loadAApps(); loadADash(); loadHome();
+    TOAST('Application rejected');
+  } catch(e){}
+}
+
+async function deleteApp(id) {
+  try { await API('DELETE','/api/applications/'+id); loadAApps(); TOAST('Application deleted'); } catch(e){}
+}
 
 async function loadAComps(){D.comps=await API('GET','/api/complaints');renderAComps(D.comps);}
 function filterAComps(){var q=document.getElementById('ac-q').value.toLowerCase(),fs=document.getElementById('ac-s').value;renderAComps(D.comps.filter(function(c){return(c.studentName.toLowerCase().includes(q)||c.subject.toLowerCase().includes(q))&&(!fs||c.status===fs);}));}
@@ -1607,8 +2041,8 @@ async function aiRec(){
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:7px">
           <div>
             ${i===0?'<div style="font-size:.66rem;font-weight:700;color:var(--red);background:rgba(232,50,90,.1);padding:2px 9px;border-radius:100px;margin-bottom:4px;display:inline-block">⭐ BEST MATCH</div><br>':''}
-            <strong>Room ${r.number} — Building ${r.building}</strong>
-            <div style="font-size:.78rem;color:var(--sub);margin-top:2px">${r.type} · Floor ${r.floor} · ${fmtR(r.price)}/mo</div>
+            <strong>${r.building}</strong>
+            <div style="font-size:.78rem;color:var(--sub);margin-top:2px">${r.type} · ${fmtR(r.price)}/mo</div>
           </div>
           <div style="text-align:center;background:${r.matchPct>=70?'rgba(0,182,122,.1)':r.matchPct>=50?'rgba(59,130,246,.1)':'rgba(245,158,11,.1)'};border-radius:10px;padding:7px 12px">
             <div style="font-size:1.1rem;font-weight:900;font-family:'Nunito',sans-serif;color:${r.matchPct>=70?'var(--green)':r.matchPct>=50?'var(--blue)':'var(--yellow)'}">${r.matchPct}%</div>
@@ -1857,16 +2291,18 @@ async function runOccupancyAgent() {
 }
 
 async function runAllAgents() {
-  TOAST('Running all agents...');
-  var cnt = {'comp-res':runComplianceAgent,'fee-res':runFeeAgent,'triage-res':runComplaintAgent,'occ-res':runOccupancyAgent};
-  for(var k in cnt) agRes(k,'<div class="empty">⚡ Running...</div>');
+  TOAST('⚡ MasterOrchestrator running all agents...','info');
+  ['comp-res','fee-res','triage-res','occ-res'].forEach(function(id){
+    agRes(id,'<div style="padding:10px;color:var(--sub);font-size:.82rem">⚙️ Agent running...</div>');
+  });
   await Promise.all([runComplianceAgent(),runFeeAgent(),runComplaintAgent(),runOccupancyAgent()]);
-  TOAST('All agents completed!');
+  await loadAgentAudit();
+  TOAST('✅ All agents completed — audit trail updated!');
 }
 
 async function loadAgentAudit() {
   var panel = document.getElementById('audit-panel');
-  panel.style.display = 'block';
+  panel.style.display = '';
   var agent = document.getElementById('audit-agent-filter').value;
   var url = '/api/agents/audit-trail?limit=30' + (agent?'&agent='+encodeURIComponent(agent):'');
   try {
