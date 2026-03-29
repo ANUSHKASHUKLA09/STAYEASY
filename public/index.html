@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -333,10 +332,6 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
 .cat-chip-icon{font-size:1.4rem;}
 .cat-chip-label{font-size:.65rem;font-weight:700;color:var(--sub);}
 .cat-chip.on .cat-chip-label{color:var(--red);}
-/*new css*/
-/* LOCATION STYLES - ADD THIS AT THE END */
-
-
 </style>
 </head>
 <body>
@@ -521,7 +516,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
       <div class="card"><div class="card-t"><div class="cdot"></div>My Applications</div>
         <div class="twrap"><table><thead><tr><th>Room</th><th>Building</th><th>Price</th><th>Duration</th><th>Check-in</th><th>Applied</th><th>Status</th></tr></thead>
         <tbody id="sapps"></tbody>
-       </table></div>
+        </table></div>
       </div>
     </div>
     <div class="tc" id="TC-comps">
@@ -536,14 +531,14 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
       <div class="card"><div class="card-t"><div class="cdot" style="background:#dc2626"></div>My Complaints</div>
         <div class="twrap"><table><thead><tr><th>Date</th><th>Subject</th><th>Priority</th><th>Status</th></tr></thead>
         <tbody id="scomps"></tbody>
-       </table></div>
+        </table></div>
       </div>
     </div>
     <div class="tc" id="TC-fees">
       <div class="card"><div class="card-t"><div class="cdot" style="background:var(--green)"></div>My Fee Records <button class="btn btn-green" style="margin-left:auto;padding:7px 16px;font-size:.8rem;border-radius:100px" onclick="openPayModal()">💳 Pay Fee</button></div>
-        <div class="twrap"><table><thead><tr><th>#</th><th>Month</th><th>Amount</th><th>Mode</th><th>Date</th><th>Status</th></tr></thead>
+        <div class="twrap"><tr><thead><tr><th>#</th><th>Month</th><th>Amount</th><th>Mode</th><th>Date</th><th>Status</th></tr></thead>
         <tbody id="sfees-t"></tbody>
-       </table></div>
+        </table></div>
       </div>
     </div>
     <div class="tc" id="TC-notices">
@@ -801,7 +796,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
       <div class="ap" id="AP-students">
         <div class="at">Students</div><div class="as">All registered students</div>
         <div class="tbar"><div class="sbar"><span>🔍</span><input placeholder="Search..." id="as-q" oninput="filterAStudents()"/></div></div>
-        <div class="ac" style="padding:0"><div class="twrap"><table>
+        <div class="ac" style="padding:0"><div class="twrap"></table>
           <thead><tr><th>#</th><th>Name</th><th>ID</th><th>Email</th><th>Program</th><th>Year</th><th>Actions</th></tr></thead>
           <tbody id="as-t"></tbody>
          </table></div></div>
@@ -847,7 +842,7 @@ footer{text-align:center;padding:28px;color:#bbb;font-size:.8rem;border-top:1px 
           </div>
           <div class="factions"><button class="abtn abtn-ok" onclick="addFee()">💳 Record Payment</button></div>
         </div>
-        <div class="ac" style="padding:0"><div class="twrap"><table>
+        <div class="ac" style="padding:0"><div class="twrap"></table>
           <thead><tr><th>#</th><th>Student</th><th>Room</th><th>Amount</th><th>Month</th><th>Mode</th><th>Date</th><th>Del</th></tr></thead>
           <tbody id="af-t"></tbody>
          </table></div></div>
@@ -1085,26 +1080,10 @@ function TOAST(msg, type) {
   setTimeout(function(){t.remove();}, 3000);
 }
 
-// async function API(method, url, body) {
-//   try {
-//     var opts = {method:method, headers:{'Content-Type':'application/json'}};
-//     if(body) opts.body = JSON.stringify(body);
-//     var res = await fetch(url, opts);
-//     var data = await res.json();
-//     if(!res.ok) throw new Error(data.error || 'Request failed');
-//     return data;
-//   } catch(e) {
-//     TOAST(e.message, 'error');
-//     throw e;
-//   }
-// }
-
-// Use relative URLs so this works on any domain (local, Railway, etc.)
 const API_BASE_URL = '';
 
 async function API(method, url, body) {
   try {
-    // Relative URLs work on any host automatically
     const fullUrl = url.startsWith('http') ? url : API_BASE_URL + url;
     var opts = {method:method, headers:{'Content-Type':'application/json'}};
     if(body) opts.body = JSON.stringify(body);
@@ -1243,7 +1222,6 @@ function renderHNotices(notices) {
 // ═══════════════════════════
 // APPLY MODAL
 // ═══════════════════════════
-// ── NEW 2-STEP APPLY FLOW ──
 var ROOM_TYPE_INFO = {
   Single:  { icon: '🛏️',  desc: 'Private room for one person',      color: '#E8325A' },
   Double:  { icon: '🛏️🛏️', desc: 'Shared room for two people',       color: '#7c3aed' },
@@ -1253,7 +1231,7 @@ var ROOM_TYPE_INFO = {
 
 function OPEN_APPLY() {
   if(!D.student){TOAST('Please login or register first!','error');GO('login');return;}
-  _applyBuilding = null; // no building filter — show all
+  _applyBuilding = null;
   var availableTypes = [...new Set((D.rooms||[]).filter(function(r){return r.status==='Available';}).map(function(r){return r.type;}))];
   if(!availableTypes.length){TOAST('No rooms available right now','error');return;}
   var grid = document.getElementById('mtype-grid');
@@ -1274,11 +1252,9 @@ function OPEN_APPLY() {
   document.getElementById('MODAL').classList.add('open');
 }
 
-// currentBuilding: set when user clicks Apply from a specific building card
 var _applyBuilding = null;
 
 function MSTEP2(type) {
-  // Filter by building if coming from a specific card, otherwise all
   var rooms = (D.rooms||[]).filter(function(r){
     return r.type===type && r.status==='Available' && (!_applyBuilding || r.building===_applyBuilding);
   });
@@ -1332,11 +1308,9 @@ function MBACK() {
   D.applyRoom=null;
 }
 
-// Called from a specific building card — skip step 1, show only that building's room types
 function APPLY(num, bld, price, type) {
   if(!D.student){TOAST('Please login or register first!','error');GO('login');return;}
-  _applyBuilding = bld; // lock to this building
-  // Build step 1 showing only types available in THIS building
+  _applyBuilding = bld;
   var availableTypes = [...new Set((D.rooms||[]).filter(function(r){return r.status==='Available'&&r.building===bld;}).map(function(r){return r.type;}))];
   if(!availableTypes.length){TOAST('No rooms available in this building','error');return;}
   var grid = document.getElementById('mtype-grid');
@@ -1727,8 +1701,8 @@ async function loadADash(){
   document.getElementById('ad-oc').textContent=rooms.filter(function(r){return r.status==='Occupied';}).length;
   document.getElementById('ad-st').textContent=studs.length;
   document.getElementById('ad-pe').textContent=apps.filter(function(a){return a.status==='Pending';}).length;
-  document.getElementById('ad-apps').innerHTML=apps.slice(0,5).map(function(a){return '<tr><td><strong>'+a.studentName+'</strong></td><td>Room '+a.roomNumber+'</td><td><span class="b '+(a.status==='Approved'?'bg':a.status==='Rejected'?'br':'by')+'">'+a.status+'</span></td></tr>';}).join()||'<tr><td colspan="3"><div class="empty">None</div></td></tr>';
-  document.getElementById('ad-comps').innerHTML=comps.filter(function(c){return c.status==='Pending';}).slice(0,5).map(function(c){return '<tr><td>'+c.studentName+'</td><td>'+c.subject+'</td><td><span class="p'+c.priority.toLowerCase()[0]+'">'+c.priority+'</span></td></tr>';}).join()||'<tr><td colspan="3"><div class="empty">None</div></td></tr>';
+  document.getElementById('ad-apps').innerHTML=apps.slice(0,5).map(function(a){return 'restaurant<td><strong>'+a.studentName+'</strong></td><td>Room '+a.roomNumber+'</td><td><span class="b '+(a.status==='Approved'?'bg':a.status==='Rejected'?'br':'by')+'">'+a.status+'</span></td></tr>';}).join()||'<tr><td colspan="3"><div class="empty">None</div></td></tr>';
+  document.getElementById('ad-comps').innerHTML=comps.filter(function(c){return c.status==='Pending';}).slice(0,5).map(function(c){return 'restaurant<td>'+c.studentName+'</td></td><td>'+c.subject+'</td><td><span class="p'+c.priority.toLowerCase()[0]+'">'+c.priority+'</span></td></tr>';}).join()||'<tr><td colspan="3"><div class="empty">None</div></td></tr>';
   popFeeStudents();
 }
 
@@ -1842,7 +1816,7 @@ async function delRoom(id){try{await API('DELETE','/api/rooms/'+id);loadARooms()
 async function loadAStudents(){D.studs=await API('GET','/api/students');renderAStudents(D.studs);}
 function filterAStudents(){var q=document.getElementById('as-q').value.toLowerCase();renderAStudents(D.studs.filter(function(s){return s.name.toLowerCase().includes(q)||s.studentId.toLowerCase().includes(q)||s.email.toLowerCase().includes(q);}));}
 function renderAStudents(studs){
-  document.getElementById('as-t').innerHTML=studs.length?studs.map(function(s,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+s.name+'</strong></td><td><span class="b bb">'+s.studentId+'</span></td><td>'+s.email+'</td><td>'+s.program+'</td><td>'+s.year+'</td><td><button class="ibtn del" onclick="delStudent(\''+s._id+'\')">🗑️</button></td></tr>';}).join(''):'<tr><td colspan="7"><div class="empty">No students</div></td></tr>';
+  document.getElementById('as-t').innerHTML=studs.length?studs.map(function(s,i){return 'restaurant<td>'+(i+1)+'</td></td><td><strong>'+s.name+'</strong></td><td><span class="b bb">'+s.studentId+'</span></td><td>'+s.email+'</td></td><td>'+s.program+'</td><td>'+s.year+'</td><td><button class="ibtn del" onclick="delStudent(\''+s._id+'\')">🗑️</button></td></tr>';}).join(''):'<tr><td colspan="7"><div class="empty">No students</div></td></tr>';
 }
 async function delStudent(id){try{await API('DELETE','/api/students/'+id);loadAStudents();TOAST('Student deleted');}catch(e){}}
 
@@ -1864,84 +1838,122 @@ function renderAApps(apps){
            <button class="abtn abtn-sm abtn-del" onclick="rejectApp('${a._id}')">❌ Reject</button>`
         : '<span style="font-size:.76rem;color:#bbb">Done</span>'}
       <button class="ibtn del abtn-sm" onclick="deleteApp('${a._id}')">🗑️</button>
-    </div></td></tr>`;
+    </div></td>
+    </tr>`;
   }).join(''):'<tr><td colspan="5"><div class="empty">No applications</div></td></tr>';
 }
 
 // State for allocation modal
 var _allocAppId = null;
-var _allocRoomId = null;
 
+// FIXED: ALLOC_SELECT function - properly stores selected room ID
+function ALLOC_SELECT(el, roomId) {
+  // Remove selection from all room items
+  var items = document.querySelectorAll('#alloc-room-list > div');
+  for (var i = 0; i < items.length; i++) {
+    items[i].style.borderColor = '#e5e7eb';
+    items[i].style.background = '#fff';
+    items[i].classList.remove('selected');
+  }
+  // Mark current as selected
+  el.style.borderColor = 'var(--red)';
+  el.style.background = 'rgba(232,50,90,.03)';
+  el.classList.add('selected');
+  // Store the selected room ID globally
+  window._allocRoomId = roomId;
+}
+
+// FIXED: openAllocModal - properly resets selection state
 async function openAllocModal(appId, studentName, building, roomType, roomPrice) {
   _allocAppId = appId;
-  _allocRoomId = null;
+  window._allocRoomId = null;
   document.getElementById('alloc-note').value = '';
+  
+  // Clear any previous selections
+  var items = document.querySelectorAll('#alloc-room-list > div');
+  for (var i = 0; i < items.length; i++) {
+    items[i].style.borderColor = '#e5e7eb';
+    items[i].style.background = '#fff';
+    items[i].classList.remove('selected');
+  }
 
   // Show student info
   document.getElementById('alloc-student-info').innerHTML =
-    '<strong>'+studentName+'</strong> applied for a <strong>'+(roomType||'any')+' room</strong> in <strong>'+building+'</strong>';
+    '<strong>' + studentName + '</strong> applied for a <strong>' + (roomType || 'any') + ' room</strong> in <strong>' + building + '</strong>';
 
   // Load available rooms in this building (filtered by type if specified)
   var allRooms = D.rooms || [];
-  var available = allRooms.filter(function(r){
+  var available = allRooms.filter(function(r) {
     return r.building === building && r.status === 'Available' && (!roomType || r.type === roomType);
   });
 
   // If nothing found for that type, show all available in the building
-  if(!available.length) {
-    available = allRooms.filter(function(r){ return r.building === building && r.status === 'Available'; });
+  if (!available.length) {
+    available = allRooms.filter(function(r) { 
+      return r.building === building && r.status === 'Available'; 
+    });
   }
 
   var list = document.getElementById('alloc-room-list');
-  if(!available.length){
-    list.innerHTML='<div style="text-align:center;padding:24px;color:var(--sub);font-size:.86rem">⚠️ No available rooms in '+building+'. Mark a room as Available first.</div>';
+  if (!available.length) {
+    list.innerHTML = '<div style="text-align:center;padding:24px;color:var(--sub);font-size:.86rem">⚠️ No available rooms in ' + building + '. Mark a room as Available first.</div>';
   } else {
-    var typeColors={Single:'#E8325A',Double:'#7c3aed',Triple:'#0891b2',Suite:'#059669'};
-    list.innerHTML = available.map(function(r){
-      var tc = typeColors[r.type]||'#888';
-      var amenStr = r.amenities&&r.amenities.length ? r.amenities.slice(0,3).join(' · ') : '';
-      return `<div onclick="ALLOC_SELECT(this,'${r._id}')"
-        style="border:2px solid #e5e7eb;border-radius:12px;padding:14px 16px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:14px"
-        onmouseover="this.style.borderColor='var(--red)'" onmouseout="if(!this.dataset.sel)this.style.borderColor='#e5e7eb'">
-        <div style="flex:1">
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
-            <span style="font-weight:800;font-size:.92rem">Room ${r.number}</span>
-            <span style="background:${tc}18;color:${tc};border-radius:100px;padding:2px 10px;font-size:.71rem;font-weight:700">${r.type}</span>
-            <span style="background:#f3f4f6;color:var(--sub);border-radius:100px;padding:2px 9px;font-size:.71rem">Floor ${r.floor}</span>
-            <span style="background:#f3f4f6;color:var(--sub);border-radius:100px;padding:2px 9px;font-size:.71rem">${r.capacity} person(s)</span>
-          </div>
-          ${amenStr?'<div style="font-size:.72rem;color:var(--sub)">'+amenStr+'</div>':''}
-        </div>
-        <div style="text-align:right;flex-shrink:0">
-          <div style="font-weight:800;color:var(--red);font-size:.95rem">${fmtR(r.price)}</div>
-          <div style="font-size:.7rem;color:var(--sub)">/month</div>
-        </div>
-      </div>`;
+    var typeColors = { Single: '#E8325A', Double: '#7c3aed', Triple: '#0891b2', Suite: '#059669' };
+    list.innerHTML = available.map(function(r) {
+      var tc = typeColors[r.type] || '#888';
+      var amenStr = r.amenities && r.amenities.length ? r.amenities.slice(0, 3).join(' · ') : '';
+      return '<div onclick="ALLOC_SELECT(this, \'' + r._id + '\')" ' +
+        'style="border:2px solid #e5e7eb;border-radius:12px;padding:14px 16px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:14px" ' +
+        'onmouseover="this.style.borderColor=\'var(--red)\'" onmouseout="if(!this.classList.contains(\'selected\')) this.style.borderColor=\'#e5e7eb\'">' +
+        '<div style="flex:1">' +
+        '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">' +
+        '<span style="font-weight:800;font-size:.92rem">Room ' + r.number + '</span>' +
+        '<span style="background:' + tc + '18;color:' + tc + ';border-radius:100px;padding:2px 10px;font-size:.71rem;font-weight:700">' + r.type + '</span>' +
+        '<span style="background:#f3f4f6;color:var(--sub);border-radius:100px;padding:2px 9px;font-size:.71rem">Floor ' + r.floor + '</span>' +
+        '<span style="background:#f3f4f6;color:var(--sub);border-radius:100px;padding:2px 9px;font-size:.71rem">' + r.capacity + ' person(s)</span>' +
+        '</div>' +
+        (amenStr ? '<div style="font-size:.72rem;color:var(--sub)">' + amenStr + '</div>' : '') +
+        '</div>' +
+        '<div style="text-align:right;flex-shrink:0">' +
+        '<div style="font-weight:800;color:var(--red);font-size:.95rem">' + fmtR(r.price) + '</div>' +
+        '<div style="font-size:.7rem;color:var(--sub)">/month</div>' +
+        '</div>' +
+        '</div>';
     }).join('');
   }
 
   document.getElementById('ALLOC-MODAL').classList.add('open');
 }
 
-function ALLOC_SELECT(el, roomId) {
-  document.querySelectorAll('#alloc-room-list > div').forEach(function(d){
-    d.style.borderColor='#e5e7eb'; d.style.background='#fff'; delete d.dataset.sel;
-  });
-  el.style.borderColor='var(--red)'; el.style.background='rgba(232,50,90,.03)'; el.dataset.sel='1';
-  _allocRoomId = roomId;
-}
-
+// FIXED: confirmAllocate - checks the correct variable
 async function confirmAllocate() {
-  if(!_allocAppId){TOAST('No application selected','error');return;}
-  if(!_allocRoomId){TOAST('Please select a room to allocate','error');return;}
+  if (!_allocAppId) {
+    TOAST('No application selected', 'error');
+    return;
+  }
+  if (!window._allocRoomId) {
+    TOAST('Please select a room to allocate first', 'error');
+    return;
+  }
   var note = document.getElementById('alloc-note').value.trim();
   try {
-    await API('PATCH','/api/applications/'+_allocAppId,{status:'Approved',allocatedRoomId:_allocRoomId,adminNote:note});
+    await API('PATCH', '/api/applications/' + _allocAppId, {
+      status: 'Approved',
+      roomId: window._allocRoomId,
+      adminNote: note
+    });
     document.getElementById('ALLOC-MODAL').classList.remove('open');
-    _allocAppId=null; _allocRoomId=null;
-    await loadAApps(); await loadADash(); await loadARooms(); loadHome();
+    _allocAppId = null;
+    window._allocRoomId = null;
+    await loadAApps();
+    await loadADash();
+    await loadARooms();
+    loadHome();
     TOAST('Room allocated & application approved! ✅');
-  } catch(e){}
+  } catch(e) {
+    console.error(e);
+    TOAST('Allocation failed: ' + (e.message || 'Unknown error'), 'error');
+  }
 }
 
 async function rejectApp(id) {
@@ -1961,15 +1973,18 @@ async function loadAComps(){D.comps=await API('GET','/api/complaints');renderACo
 function filterAComps(){var q=document.getElementById('ac-q').value.toLowerCase(),fs=document.getElementById('ac-s').value;renderAComps(D.comps.filter(function(c){return(c.studentName.toLowerCase().includes(q)||c.subject.toLowerCase().includes(q))&&(!fs||c.status===fs);}));}
 function renderAComps(comps){
   document.getElementById('ac-t').innerHTML=comps.length?comps.map(function(c,i){return `<tr>
-     <td>${i+1}</td><td>${fmtD(c.createdAt)}</td><td><strong>${c.studentName}</strong></td>
-     <td>Room ${c.room}</td><td title="${c.description}">${c.subject}</td>
-     <td><span class="p${c.priority.toLowerCase()[0]}">${c.priority}</span></td>
-     <td><span class="b ${c.status==='Resolved'?'bg':c.status==='In Progress'?'bb':'by'}">${c.status}</span></td>
-     <td><div class="agrp">
+      <td>${i+1}</td>
+      <td>${fmtD(c.createdAt)}</td>
+      <td><strong>${c.studentName}</strong></td>
+      <td>Room ${c.room}</td><td title="${c.description}">${c.subject}</td>
+      <td><span class="p${c.priority.toLowerCase()[0]}">${c.priority}</span></td>
+      <td><span class="b ${c.status==='Resolved'?'bg':c.status==='In Progress'?'bb':'by'}">${c.status}</span></td>
+      <td><div class="agrp">
       ${c.status==='Pending'?`<button class="ibtn" onclick="updateComp('${c._id}','In Progress')" title="In Progress">🔄</button>`:''}
       ${c.status!=='Resolved'?`<button class="ibtn" onclick="updateComp('${c._id}','Resolved')" title="Resolve">✅</button>`:''}
       <button class="ibtn del" onclick="delComp('${c._id}')">🗑️</button>
-    </div></td></tr>`;}).join(''):'<tr><td colspan="8"><div class="empty">No complaints</div></td></tr>';
+    </div></td>
+    </tr>`;}).join(''):'<tr><td colspan="8"><div class="empty">No complaints</div></td></tr>';
 }
 async function updateComp(id,status){try{await API('PATCH','/api/complaints/'+id+'/status',{status:status});loadAComps();TOAST('Complaint '+status);}catch(e){}}
 async function delComp(id){try{await API('DELETE','/api/complaints/'+id);loadAComps();}catch(e){}}
@@ -1984,7 +1999,7 @@ function renderAFees(fees){
   document.getElementById('af-tot').textContent=fmtR(tot);
   document.getElementById('af-cnt').textContent=fees.length;
   document.getElementById('af-mon').textContent=fmtR(mt);
-  document.getElementById('af-t').innerHTML=fees.length?fees.map(function(f,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+f.studentName+'</strong></td><td>'+(f.room!=='—'?'Room '+f.room:'—')+'</td><td><strong>'+fmtR(f.amount)+'</strong></td><td>'+f.month+'</td><td>'+f.mode+'</td><td>'+fmtD(f.createdAt)+'</td><td><button class="ibtn del" onclick="delFee(\''+f._id+'\')">🗑️</button></td></tr>';}).join(''):'<tr><td colspan="8"><div class="empty">No records</div></td></tr>';
+  document.getElementById('af-t').innerHTML=fees.length?fees.map(function(f,i){return '<tr><td>'+(i+1)+'</td><td><strong>'+f.studentName+'</strong></td><td>'+(f.room!=='—'?'Room '+f.room:'—')+'</td><td><strong>'+fmtR(f.amount)+'</strong></td><td>'+f.month+'</td><td>'+f.mode+'</td><td>'+fmtD(f.createdAt)+'</td><td><button class="ibtn del" onclick="delFee(\''+f._id+'\')">🗑️</button></td></tr>';}).join(''):'<tr><td colspan="8"><div class="empty">No records</div></tr>';
 }
 async function addFee(){
   var sid=document.getElementById('afs-sid').value,amt=document.getElementById('afs-amt').value;
