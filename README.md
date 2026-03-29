@@ -112,9 +112,13 @@ Runs all 5 agents in parallel via `Promise.all()`, aggregates results, writes a 
 - 💳 Pay fees via UPI simulation
 - ⚠️ Submit complaints with priority levels
 - 📢 View notice board and compliance alerts
-- 🤖 AI Room Recommender powered by Groq LLaMA
-- 🤝 Roommate Compatibility Matcher
-- 💬 AI Chatbot for hostel queries
+- 🤖 **AI Room Recommender** — Enter budget, room type, floor preference, 
+  lifestyle and amenities — Groq LLaMA finds best matching rooms
+- 💰 **ML Price Predictor** — Predicts fair rent based on room type, 
+  building, floor, capacity and amenities
+- 🤝 **Roommate Compatibility Matcher** — Matches based on sleep schedule, 
+  study habits, cleanliness, noise level, social level, diet and guest policy
+- 💬 **AI Chatbot** — Answers hostel queries powered by Groq LLaMA
 
 ### Admin Side
 - 🏢 Rooms grouped by building with full room table inside each
