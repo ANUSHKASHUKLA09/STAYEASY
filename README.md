@@ -234,9 +234,16 @@ http://localhost:3000/admin     # Admin panel
 
 ## 🔑 Demo Access
 
-**Live App:** https://stayeasy-production.up.railway.app
+**Live App:** https://stayeasy-production.up.railway.app   
+
+
 **Admin Panel:** https://stayeasy-production.up.railway.app/admin
+
+
+
 **Admin Password:** admin123
+
+
 **Quick Access:** Press Ctrl+Shift+A on any page
 
 ## 🔐 Environment Variables
