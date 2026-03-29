@@ -17,6 +17,15 @@ Stayo is a compliance-aware, multi-agent student accommodation management system
 
 ---
 
+
+### Test Student Account (Use this to Sign in!)
+- **Student ID:** TEST12
+- **Password:** TEST123
+
+> ⚠️ **Note:** New student registration requires OTP verification.
+> OTP is printed in the Railway server terminal (demo mode).
+> Please use the test account above to directly explore the student dashboard!
+
 ## 📋 Table of Contents
 
 - [Problem Statement](#-problem-statement)
